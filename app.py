@@ -1,108 +1,10 @@
 import streamlit as st
 
-# ---------- Custom Styling ---------- #
-st.markdown("""
-<style>
-/* Smooth transitions for hover */
-.stButton>button, .stSelectbox div {
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
+# ---------------- UTILITY FUNCTIONS ---------------- #
 
-/* Hover effect for buttons */
-.stButton>button:hover {
-  background-color: #a291b9 !important; /* soft pastel purple */
-  color: #0f0f0f !important; /* dark text on hover */
-}
-
-/* Headings */
-h1, h2, h3 {
-  color: #e0dede; /* light gray for headings */
-  font-weight: 700;
-  padding: 0.3rem 0;
-  text-shadow: 0 0 5px rgba(0,0,0,0.5);
-}
-
-/* Section container */
-.section {
-  background-color: #2c2c2c; /* dark gray container */
-  padding: 15px;
-  border-radius: 10px;
-  margin-top: 20px;
-  color: #dcdcdc; /* lighter text inside containers */
-}
-
-/* Result output box */
-.result-box {
-  background-color: #3a3a3a; /* slightly lighter dark */
-  padding: 12px;
-  border-radius: 8px;
-  font-style: italic;
-  margin-top: 10px;
-  color: #cfcfcf;
-  border: 1px solid #6b6b6b;
-}
-
-/* Sidebar tweaks */
-.sidebar .sidebar-content {
-  padding-top: 1rem;
-  background-color: #f6f7fb;
-  color: #222222;
-}
-
-/* Main app background and text color */
-[data-testid="stAppViewContainer"] {
-  background-color: #0b0b0b !important;
-  color: #e0e0e0 !important;
-  transition: background-color 0.5s ease, color 0.5s ease;
-}
-
-/* Make inner containers transparent */
-section.main > div {
-  background-color: transparent !important;
-}
-
-/* Input widgets text color */
-.css-1v3fvcr, .css-1r6slb0, .stTextArea textarea {
-  color: #e0e0e0 !important;
-  background-color: #222 !important;
-  border: 1px solid #555 !important;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Input widgets on focus */
-.css-1v3fvcr:focus, .css-1r6slb0:focus, .stTextArea textarea:focus {
-  background-color: #333 !important;
-  color: #fff !important;
-  border-color: #a291b9 !important;
-}
-
-/* Selectbox dropdown background */
-.stSelectbox div[role="combobox"] {
-  background-color: #222 !important;
-  color: #ddd !important;
-}
-
-/* Scrollbar for better dark mode */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #111;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #a291b9;
-  border-radius: 20px;
-  border: 2px solid #111;
-}
-</style>
-""", unsafe_allow_html=True)
-
-
-# ---------- Utility Functions ---------- #
 def analyze_food(ingredients, calories, fat, sugar, fiber, protein):
     ing_list = [i.strip().lower() for i in ingredients.split(",")]
+
     unhealthy_ingredients = ["sugar", "corn syrup", "hydrogenated oil", "trans fat", "artificial"]
     healthy_tags = []
     unhealthy_tags = []
@@ -113,20 +15,34 @@ def analyze_food(ingredients, calories, fat, sugar, fiber, protein):
         elif "whole" in ing or "vegetable" in ing or "fiber" in ing:
             healthy_tags.append(ing)
 
+    # Rule-based analysis
     if len(unhealthy_tags) > 2 or sugar > 15 or fat > 20:
-        return "_**Unhealthy:** High sugar/fat content. May lead to weight gain, heart issues._"
+        return """
+        <span style='color: red; font-weight: bold; font-size:18px;'>❌ Unhealthy:</span> 
+        High sugar/fat content. May lead to weight gain, heart issues.
+        """
     elif calories < 100 and fat < 5 and sugar < 5:
-        return "_**Healthy** and suitable for **weight loss**._"
+        return """
+        <span style='color: green; font-weight: bold; font-size:18px;'>✅ Healthy</span> and suitable for 
+        <span style='color: blue; font-weight: bold;'>weight loss</span>.
+        """
     elif calories > 300 and protein > 10:
-        return "_**Healthy** and suitable for **weight gain** (high protein/calories)._"
+        return """
+        <span style='color: green; font-weight: bold; font-size:18px;'>✅ Healthy</span> and suitable for 
+        <span style='color: blue; font-weight: bold;'>weight gain</span> (high protein/calories).
+        """
     else:
-        return "_**Moderately healthy**. Watch out for specific ingredients._"
+        return """
+        <span style='color: orange; font-weight: bold; font-size:18px;'>⚠️ Moderately healthy</span>. 
+        Watch out for specific ingredients.
+        """
 
 def suggest_fabric(skin_type, skin_tone, weather, work_level, season):
     avoid_fabrics = []
     preferred_fabrics = []
     color_suggestions = []
 
+    # Skin type rules
     if skin_type == "Sensitive":
         avoid_fabrics += ["Polyester", "Nylon"]
         preferred_fabrics += ["Cotton", "Bamboo"]
@@ -136,6 +52,7 @@ def suggest_fabric(skin_type, skin_tone, weather, work_level, season):
     else:
         preferred_fabrics += ["Cotton", "Linen"]
 
+    # Weather rules
     if weather == "Hot":
         avoid_fabrics += ["Wool"]
         preferred_fabrics += ["Cotton", "Linen"]
@@ -145,14 +62,17 @@ def suggest_fabric(skin_type, skin_tone, weather, work_level, season):
         avoid_fabrics += ["Polyester"]
         preferred_fabrics += ["Bamboo", "Cotton"]
 
+    # work level
     if work_level == "High":
         preferred_fabrics += ["Moisture-wicking blends"]
 
+    # Season
     if season == "Winter":
         preferred_fabrics += ["Wool", "Fleece"]
     elif season == "Summer":
         preferred_fabrics += ["Cotton", "Linen"]
 
+    # Skin tone rules
     if skin_tone == "Fair":
         color_suggestions = ["Soft pastels", "Cool blues", "Lavender"]
     elif skin_tone == "Medium":
@@ -164,32 +84,38 @@ def suggest_fabric(skin_type, skin_tone, weather, work_level, season):
     preferred_fabrics = list(set(preferred_fabrics))
 
     return f"""
-_**Avoid Fabrics:**_ {", ".join(avoid_fabrics)}  
-_**Recommended Fabrics:**_ {", ".join(preferred_fabrics)}  
-_**Suggested Colors for You:**_ {", ".join(color_suggestions)}
-"""
+    <div style='font-size:16px;'>
+    <span style='color:#D9534F; font-weight:bold;'>❌ Avoid Fabrics:</span> {", ".join(avoid_fabrics)}<br><br>
+    <span style='color:#5CB85C; font-weight:bold;'>✅ Recommended Fabrics:</span> {", ".join(preferred_fabrics)}<br><br>
+    <span style='color:#0275D8; font-weight:bold;'>🎨 Suggested Colors for You:</span> {", ".join(color_suggestions)}
+    </div>
+    """
 
-# ---------- App Layout ---------- #
-st.set_page_config(page_title="Selection Assistant", layout="centered")
-st.sidebar.markdown("## **Selection Assistant**")
+# ---------------- MAIN APP ---------------- #
+
+st.set_page_config(page_title="Lifestyle Helper App", layout="centered")
+
+st.sidebar.title("🛍️ Lifestyle Helper")
 page = st.sidebar.radio("Go to", ["Home", "Food", "Electronics", "Fabric"])
 
-# ---------- Pages ---------- #
-if page == "Home":
-    st.markdown("## **Kraya**")
-    st.markdown('<div class="section">', unsafe_allow_html=True)
-    st.write("""
-Welcome to **Kraya**, your personal selection assistant for smarter decisions in:
+# ---------------- HOME PAGE ---------------- #
 
-- **Food**: Is it healthy?  
-- **Electronics**: Need troubleshooting tips?  
-- **Fabric**: Perfect match for your skin and weather  
+if page == "Home":
+    st.title("🏠 Kraya")
+    st.markdown("""
+    The customer support system for making better choices before purchasing and after purchasing a product in food, electronics, and fabric categories.
+
+    -  **🍎 Food**: Check if your food is healthy or not.
+    -  **📱 Electronics**: Get help for your electronic products.
+    -  **🧵 Fabric**: Know what fabrics suit your skin and weather.
     """)
-    st.markdown('</div>', unsafe_allow_html=True)
+
+# ---------------- FOOD PAGE ---------------- #
 
 elif page == "Food":
-    st.markdown("## **Food Health Analyzer**")
-    st.markdown('<div class="section">', unsafe_allow_html=True)
+    st.title("🍎 Food Health Analyzer")
+
+    st.subheader("Enter Food Information")
 
     ingredients = st.text_area("Ingredients (comma-separated)", "sugar, salt, whole grain, vegetable oil")
     calories = st.number_input("Calories per serving", min_value=0)
@@ -198,44 +124,44 @@ elif page == "Food":
     fiber = st.number_input("Dietary Fiber (g)", min_value=0.0)
     protein = st.number_input("Protein (g)", min_value=0.0)
 
-    if st.button("Analyze"):
+    if st.button("🔍 Analyze Food"):
         result = analyze_food(ingredients, calories, fat, sugar, fiber, protein)
-        st.markdown(f'<div class="result-box">{result}</div>', unsafe_allow_html=True)
+        st.markdown(result, unsafe_allow_html=True)
 
-    st.markdown('</div>', unsafe_allow_html=True)
+# ---------------- ELECTRONICS PAGE ---------------- #
 
 elif page == "Electronics":
-    st.markdown("## **Electronics AI Troubleshooter**")
-    st.markdown('<div class="section">', unsafe_allow_html=True)
+    st.title("📱 Electronics Help Desk")
 
-    device = st.selectbox("Select your device", ["Smartphone", "Laptop", "TV", "Washing Machine", "Refrigerator"])
+    devices = ["Smartphone", "Laptop", "TV", "Washing Machine", "Refrigerator"]
+    device = st.selectbox("Select your device", devices)
+
     user_input = st.text_area("Describe your issue here")
 
-    if st.button("Apply"):
+    if st.button("🛠️ Get Support"):
         if user_input.strip() == "":
-            st.warning("Please describe your issue before applying.")
+            st.warning("⚠️ Please describe your issue before applying.")
         else:
-            st.markdown("### **Support Suggestion**")
+            st.markdown("### **🔧 Support Suggestion:**")
             user_input_lower = user_input.lower()
 
             if "battery" in user_input_lower:
-                suggestion = "Check if the battery is swollen or not holding charge. Try replacing it."
+                st.write("🔋 Check if the battery is swollen or not holding charge. Try replacing it.")
             elif "screen" in user_input_lower:
-                suggestion = "Screen issues may be due to physical damage or loose connectors."
+                st.write("🖥️ Screen issues may be due to physical damage or loose connectors.")
             elif "not turning on" in user_input_lower:
-                suggestion = "Ensure the power cable is connected. Try a hard reset."
+                st.write("⚡ Ensure the power cable is connected. Try a hard reset.")
             elif "noise" in user_input_lower:
-                suggestion = "Unusual noise may indicate motor issues or loose parts."
+                st.write("🔊 Unusual noise may indicate motor issues or loose parts.")
             else:
-                suggestion = "Please contact customer support for detailed troubleshooting."
+                st.write("📞 Please contact customer support for detailed troubleshooting.")
 
-            st.markdown(f'<div class="result-box">{suggestion}</div>', unsafe_allow_html=True)
-
-    st.markdown('</div>', unsafe_allow_html=True)
+# ---------------- FABRIC PAGE ---------------- #
 
 elif page == "Fabric":
-    st.markdown("## **Fabric Recommendation System**")
-    st.markdown('<div class="section">', unsafe_allow_html=True)
+    st.title("🧵 Fabric Recommendation System")
+
+    st.subheader("Enter your profile")
 
     skin_type = st.selectbox("Skin Type", ["Dry", "Oily", "Sensitive", "Normal"])
     skin_tone = st.selectbox("Skin Tone", ["Fair", "Medium", "Dark"])
@@ -243,8 +169,6 @@ elif page == "Fabric":
     work_level = st.selectbox("Work Level", ["High", "Medium", "Low"])
     season = st.selectbox("Season", ["Summer", "Winter", "Spring", "Autumn"])
 
-    if st.button("Get Fabric Suggestions"):
+    if st.button("🎯 Get Fabric Suggestions"):
         result = suggest_fabric(skin_type, skin_tone, weather, work_level, season)
-        st.markdown(f'<div class="result-box">{result}</div>', unsafe_allow_html=True)
-
-    st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown(result, unsafe_allow_html=True)
