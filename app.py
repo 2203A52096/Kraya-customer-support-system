@@ -1,10 +1,54 @@
 import streamlit as st
 
-# ---------------- UTILITY FUNCTIONS ---------------- #
+# ---------- Custom Styling ---------- #
+st.markdown("""
+<style>
+/* Smooth transitions for hover */
+.stButton>button, .stSelectbox div {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
+/* Hover effect for buttons */
+.stButton>button:hover {
+  background-color: #d6bdd9 !important;
+  color: #2c3e50 !important;
+}
+
+/* Headings */
+h1, h2, h3 {
+  color: #2c3e50;
+  font-weight: bold;
+  padding: 0.3rem 0;
+}
+
+/* Section container */
+.section {
+  background-color: #f0f5f9;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+/* Result output box */
+.result-box {
+  background-color: #fff8dc;
+  padding: 12px;
+  border-radius: 8px;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+/* Sidebar tweaks */
+.sidebar .sidebar-content {
+  padding-top: 1rem;
+  background-color: #f6f7fb;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# ---------- Utility Functions ---------- #
 def analyze_food(ingredients, calories, fat, sugar, fiber, protein):
     ing_list = [i.strip().lower() for i in ingredients.split(",")]
-
     unhealthy_ingredients = ["sugar", "corn syrup", "hydrogenated oil", "trans fat", "artificial"]
     healthy_tags = []
     unhealthy_tags = []
@@ -15,7 +59,6 @@ def analyze_food(ingredients, calories, fat, sugar, fiber, protein):
         elif "whole" in ing or "vegetable" in ing or "fiber" in ing:
             healthy_tags.append(ing)
 
-    # Rule-based analysis
     if len(unhealthy_tags) > 2 or sugar > 15 or fat > 20:
         return "_**Unhealthy:** High sugar/fat content. May lead to weight gain, heart issues._"
     elif calories < 100 and fat < 5 and sugar < 5:
@@ -30,7 +73,6 @@ def suggest_fabric(skin_type, skin_tone, weather, work_level, season):
     preferred_fabrics = []
     color_suggestions = []
 
-    # Skin type rules
     if skin_type == "Sensitive":
         avoid_fabrics += ["Polyester", "Nylon"]
         preferred_fabrics += ["Cotton", "Bamboo"]
@@ -40,7 +82,6 @@ def suggest_fabric(skin_type, skin_tone, weather, work_level, season):
     else:
         preferred_fabrics += ["Cotton", "Linen"]
 
-    # Weather rules
     if weather == "Hot":
         avoid_fabrics += ["Wool"]
         preferred_fabrics += ["Cotton", "Linen"]
@@ -50,17 +91,14 @@ def suggest_fabric(skin_type, skin_tone, weather, work_level, season):
         avoid_fabrics += ["Polyester"]
         preferred_fabrics += ["Bamboo", "Cotton"]
 
-    # Work level
     if work_level == "High":
         preferred_fabrics += ["Moisture-wicking blends"]
 
-    # Season
     if season == "Winter":
         preferred_fabrics += ["Wool", "Fleece"]
     elif season == "Summer":
         preferred_fabrics += ["Cotton", "Linen"]
 
-    # Skin tone rules
     if skin_tone == "Fair":
         color_suggestions = ["Soft pastels", "Cool blues", "Lavender"]
     elif skin_tone == "Medium":
@@ -77,31 +115,27 @@ _**Recommended Fabrics:**_ {", ".join(preferred_fabrics)}
 _**Suggested Colors for You:**_ {", ".join(color_suggestions)}
 """
 
-# ---------------- MAIN APP ---------------- #
-
-st.set_page_config(page_title="selection assistant App", layout="centered")
-
-st.sidebar.markdown("## **selection assistant**")
+# ---------- App Layout ---------- #
+st.set_page_config(page_title="Selection Assistant", layout="centered")
+st.sidebar.markdown("## **Selection Assistant**")
 page = st.sidebar.radio("Go to", ["Home", "Food", "Electronics", "Fabric"])
 
-# ---------------- HOME PAGE ---------------- #
-
+# ---------- Pages ---------- #
 if page == "Home":
     st.markdown("## **Kraya**")
+    st.markdown('<div class="section">', unsafe_allow_html=True)
     st.write("""
-**Kraya** – your personal selection assistant for making smarter decisions before and after purchasing items in the categories of:
+Welcome to **Kraya**, your personal selection assistant for smarter decisions in:
 
-- **Food**: Check if your food is healthy or not  
-- **Electronics**: Get help for your electronic products  
-- **Fabric**: Know what fabrics suit your skin and weather
+- **Food**: Is it healthy?  
+- **Electronics**: Need troubleshooting tips?  
+- **Fabric**: Perfect match for your skin and weather  
     """)
-
-# ---------------- FOOD PAGE ---------------- #
+    st.markdown('</div>', unsafe_allow_html=True)
 
 elif page == "Food":
     st.markdown("## **Food Health Analyzer**")
-
-    st.markdown("### **Enter Food Information**")
+    st.markdown('<div class="section">', unsafe_allow_html=True)
 
     ingredients = st.text_area("Ingredients (comma-separated)", "sugar, salt, whole grain, vegetable oil")
     calories = st.number_input("Calories per serving", min_value=0)
@@ -112,12 +146,13 @@ elif page == "Food":
 
     if st.button("Analyze"):
         result = analyze_food(ingredients, calories, fat, sugar, fiber, protein)
-        st.markdown(result)
+        st.markdown(f'<div class="result-box">{result}</div>', unsafe_allow_html=True)
 
-# ---------------- ELECTRONICS PAGE ---------------- #
+    st.markdown('</div>', unsafe_allow_html=True)
 
 elif page == "Electronics":
-    st.markdown("## **Electronics AI troubleshooter**")
+    st.markdown("## **Electronics AI Troubleshooter**")
+    st.markdown('<div class="section">', unsafe_allow_html=True)
 
     device = st.selectbox("Select your device", ["Smartphone", "Laptop", "TV", "Washing Machine", "Refrigerator"])
     user_input = st.text_area("Describe your issue here")
@@ -140,14 +175,13 @@ elif page == "Electronics":
             else:
                 suggestion = "Please contact customer support for detailed troubleshooting."
 
-            st.markdown(f"_{suggestion}_")
+            st.markdown(f'<div class="result-box">{suggestion}</div>', unsafe_allow_html=True)
 
-# ---------------- FABRIC PAGE ---------------- #
+    st.markdown('</div>', unsafe_allow_html=True)
 
 elif page == "Fabric":
     st.markdown("## **Fabric Recommendation System**")
-
-    st.markdown("### **Enter Your Profile**")
+    st.markdown('<div class="section">', unsafe_allow_html=True)
 
     skin_type = st.selectbox("Skin Type", ["Dry", "Oily", "Sensitive", "Normal"])
     skin_tone = st.selectbox("Skin Tone", ["Fair", "Medium", "Dark"])
@@ -157,4 +191,6 @@ elif page == "Fabric":
 
     if st.button("Get Fabric Suggestions"):
         result = suggest_fabric(skin_type, skin_tone, weather, work_level, season)
-        st.markdown(result)
+        st.markdown(f'<div class="result-box">{result}</div>', unsafe_allow_html=True)
+
+    st.markdown('</div>', unsafe_allow_html=True)
