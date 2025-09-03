@@ -10,49 +10,91 @@ st.markdown("""
 
 /* Hover effect for buttons */
 .stButton>button:hover {
-  background-color: #d6bdd9 !important;
-  color: #2c3e50 !important;
+  background-color: #a291b9 !important; /* soft pastel purple */
+  color: #0f0f0f !important; /* dark text on hover */
 }
 
 /* Headings */
 h1, h2, h3 {
-  color: #2c3e50;
-  font-weight: bold;
+  color: #e0dede; /* light gray for headings */
+  font-weight: 700;
   padding: 0.3rem 0;
+  text-shadow: 0 0 5px rgba(0,0,0,0.5);
 }
 
 /* Section container */
 .section {
-  background-color: #f0f5f9;
+  background-color: #2c2c2c; /* dark gray container */
   padding: 15px;
   border-radius: 10px;
   margin-top: 20px;
+  color: #dcdcdc; /* lighter text inside containers */
 }
 
 /* Result output box */
 .result-box {
-  background-color: #fff8dc;
+  background-color: #3a3a3a; /* slightly lighter dark */
   padding: 12px;
   border-radius: 8px;
   font-style: italic;
   margin-top: 10px;
+  color: #cfcfcf;
+  border: 1px solid #6b6b6b;
 }
 
 /* Sidebar tweaks */
 .sidebar .sidebar-content {
   padding-top: 1rem;
   background-color: #f6f7fb;
+  color: #222222;
 }
 
 /* Main app background and text color */
 [data-testid="stAppViewContainer"] {
-  background-color: #0f0f0f !important;
-  color: #f0f0f0 !important;
+  background-color: #0b0b0b !important;
+  color: #e0e0e0 !important;
+  transition: background-color 0.5s ease, color 0.5s ease;
 }
 
-/* Make sure inner containers are transparent to show black background */
+/* Make inner containers transparent */
 section.main > div {
   background-color: transparent !important;
+}
+
+/* Input widgets text color */
+.css-1v3fvcr, .css-1r6slb0, .stTextArea textarea {
+  color: #e0e0e0 !important;
+  background-color: #222 !important;
+  border: 1px solid #555 !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Input widgets on focus */
+.css-1v3fvcr:focus, .css-1r6slb0:focus, .stTextArea textarea:focus {
+  background-color: #333 !important;
+  color: #fff !important;
+  border-color: #a291b9 !important;
+}
+
+/* Selectbox dropdown background */
+.stSelectbox div[role="combobox"] {
+  background-color: #222 !important;
+  color: #ddd !important;
+}
+
+/* Scrollbar for better dark mode */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #a291b9;
+  border-radius: 20px;
+  border: 2px solid #111;
 }
 </style>
 """, unsafe_allow_html=True)
