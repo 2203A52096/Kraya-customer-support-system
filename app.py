@@ -43,8 +43,20 @@ h1, h2, h3 {
   padding-top: 1rem;
   background-color: #f6f7fb;
 }
+
+/* Main app background and text color */
+[data-testid="stAppViewContainer"] {
+  background-color: #0f0f0f !important;
+  color: #f0f0f0 !important;
+}
+
+/* Make sure inner containers are transparent to show black background */
+section.main > div {
+  background-color: transparent !important;
+}
 </style>
 """, unsafe_allow_html=True)
+
 
 # ---------- Utility Functions ---------- #
 def analyze_food(ingredients, calories, fat, sugar, fiber, protein):
