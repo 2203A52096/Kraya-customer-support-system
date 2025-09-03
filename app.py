@@ -118,29 +118,34 @@ elif page == "Food":
 
 # ---------------- ELECTRONICS PAGE ---------------- #
 
+# ---------------- ELECTRONICS PAGE ---------------- #
+
 elif page == "Electronics":
     st.title(" Electronics Help Desk")
 
     devices = ["Smartphone", "Laptop", "TV", "Washing Machine", "Refrigerator"]
     device = st.selectbox("Select your device", devices)
 
-    if device:
-        st.markdown("###  How can I help you?")
-        user_input = st.text_area("Describe your issue here")
+    user_input = st.text_area("Describe your issue here")
 
-        if user_input:
-            st.markdown(" **Support Suggestion:**")
+    if st.button("Apply"):
+        if user_input.strip() == "":
+            st.warning("Please describe your issue before applying.")
+        else:
+            st.markdown("### **Support Suggestion:**")
             user_input_lower = user_input.lower()
+
             if "battery" in user_input_lower:
-                st.write(" Check if the battery is swollen or not holding charge. Try replacing it.")
+                st.write("Check if the battery is swollen or not holding charge. Try replacing it.")
             elif "screen" in user_input_lower:
-                st.write(" Screen issues may be due to physical damage or loose connectors.")
+                st.write("Screen issues may be due to physical damage or loose connectors.")
             elif "not turning on" in user_input_lower:
-                st.write(" Ensure the power cable is connected. Try a hard reset.")
+                st.write("Ensure the power cable is connected. Try a hard reset.")
             elif "noise" in user_input_lower:
-                st.write(" Unusual noise may indicate motor issues or loose parts.")
+                st.write("Unusual noise may indicate motor issues or loose parts.")
             else:
-                st.write(" Please contact customer support for detailed troubleshooting.")
+                st.write("Please contact customer support for detailed troubleshooting.")
+
 
 # ---------------- FABRIC PAGE ---------------- #
 
