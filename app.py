@@ -79,9 +79,9 @@ _**Suggested Colors for You:**_ {", ".join(color_suggestions)}
 
 # ---------------- MAIN APP ---------------- #
 
-st.set_page_config(page_title="Lifestyle Helper App", layout="centered")
+st.set_page_config(page_title="selection assistant App", layout="centered")
 
-st.sidebar.markdown("## **Lifestyle Helper**")
+st.sidebar.markdown("## **selection assistant**")
 page = st.sidebar.radio("Go to", ["Home", "Food", "Electronics", "Fabric"])
 
 # ---------------- HOME PAGE ---------------- #
@@ -89,7 +89,7 @@ page = st.sidebar.radio("Go to", ["Home", "Food", "Electronics", "Fabric"])
 if page == "Home":
     st.markdown("## **Kraya**")
     st.write("""
-Welcome to **Kraya** – your personal lifestyle assistant for making smarter decisions before and after purchasing items in the categories of:
+**Kraya** – your personal selection assistant for making smarter decisions before and after purchasing items in the categories of:
 
 - **Food**: Check if your food is healthy or not  
 - **Electronics**: Get help for your electronic products  
@@ -117,7 +117,7 @@ elif page == "Food":
 # ---------------- ELECTRONICS PAGE ---------------- #
 
 elif page == "Electronics":
-    st.markdown("## **Electronics Help Desk**")
+    st.markdown("## **Electronics AI troubleshooter**")
 
     device = st.selectbox("Select your device", ["Smartphone", "Laptop", "TV", "Washing Machine", "Refrigerator"])
     user_input = st.text_area("Describe your issue here")
