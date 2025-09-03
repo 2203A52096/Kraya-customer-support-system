@@ -184,4 +184,12 @@ elif page == "Fabric":
     skin_type = st.selectbox("Skin Type", ["Dry", "Oily", "Sensitive", "Normal"])
     skin_tone = st.selectbox("Skin Tone", ["Fair", "Medium", "Dark"])
     weather = st.selectbox("Weather Condition", ["Hot", "Cold", "Humid", "Dry"])
-    work_level = st.selectbox("
+    work_level = st.selectbox("Work Level", ["High", "Medium", "Low"])
+    season = st.selectbox("Season", ["Summer", "Winter", "Spring", "Autumn"])
+
+    if st.button("Get Fabric Suggestions"):
+        result = suggest_fabric(skin_type, skin_tone, weather, work_level, season)
+        st.markdown(result, unsafe_allow_html=True)
+
+    st.markdown('</div>', unsafe_allow_html=True)
+
