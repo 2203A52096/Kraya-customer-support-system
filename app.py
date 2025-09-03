@@ -25,7 +25,7 @@ def analyze_food(ingredients, calories, fat, sugar, fiber, protein):
     else:
         return "**Moderately healthy**. Watch out for specific ingredients."
 
-def suggest_fabric(skin_type, skin_tone, weather, activity_level, season):
+def suggest_fabric(skin_type, skin_tone, weather, work_level, season):
     avoid_fabrics = []
     preferred_fabrics = []
     color_suggestions = []
@@ -50,8 +50,8 @@ def suggest_fabric(skin_type, skin_tone, weather, activity_level, season):
         avoid_fabrics += ["Polyester"]
         preferred_fabrics += ["Bamboo", "Cotton"]
 
-    # Activity level
-    if activity_level == "High":
+    # work level
+    if work_level == "High":
         preferred_fabrics += ["Moisture-wicking blends"]
 
     # Season
@@ -152,9 +152,9 @@ elif page == "Fabric":
     skin_type = st.selectbox("Skin Type", ["Dry", "Oily", "Sensitive", "Normal"])
     skin_tone = st.selectbox("Skin Tone", ["Fair", "Medium", "Dark"])
     weather = st.selectbox("Weather Condition", ["Hot", "Cold", "Humid", "Dry"])
-    activity_level = st.selectbox("Activity Level", ["High", "Medium", "Low"])
+    work_level = st.selectbox("work Level", ["High", "Medium", "Low"])
     season = st.selectbox("Season", ["Summer", "Winter", "Spring", "Autumn"])
 
     if st.button("Get Fabric Suggestions"):
-        result = suggest_fabric(skin_type, skin_tone, weather, activity_level, season)
+        result = suggest_fabric(skin_type, skin_tone, weather, work_level, season)
         st.markdown(result)
