@@ -1,5 +1,48 @@
 import streamlit as st
 
+# Inject custom CSS to style sidebar and badges
+st.markdown(
+    """
+    <style>
+    /* Sidebar background pastel color */
+    [data-testid="stSidebar"] {
+        background-color: #F7E9E9;  /* pastel pink */
+        color: #5A3E36;
+    }
+    /* Sidebar title */
+    [data-testid="stSidebar"] > div:first-child {
+        font-size: 24px;
+        font-weight: 700;
+        color: #9A5F6F;
+    }
+    /* Sidebar radio button text with icon */
+    .sidebar .css-1r6slb0 {
+        color: #9A5F6F;
+        font-weight: 600;
+    }
+    /* Badge styles for keywords */
+    .badge {
+        display: inline-block;
+        padding: 0.25em 0.6em;
+        font-size: 0.75em;
+        font-weight: 700;
+        line-height: 1;
+        color: white;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 0.25rem;
+    }
+    .badge-food {background-color: #FF6F61;}
+    .badge-electronics {background-color: #6BAED6;}
+    .badge-fabric {background-color: #8BC34A;}
+    .badge-healthy {background-color: #4CAF50;}
+    .badge-unhealthy {background-color: #F44336;}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # ---------------- UTILITY FUNCTIONS ---------------- #
 
 def analyze_food(ingredients, calories, fat, sugar, fiber, protein):
@@ -15,26 +58,21 @@ def analyze_food(ingredients, calories, fat, sugar, fiber, protein):
         elif "whole" in ing or "vegetable" in ing or "fiber" in ing:
             healthy_tags.append(ing)
 
-    # Rule-based analysis
     if len(unhealthy_tags) > 2 or sugar > 15 or fat > 20:
         return """
-        <span style='color: red; font-weight: bold; font-size:18px;'>❌ Unhealthy:</span> 
-        High sugar/fat content. May lead to weight gain, heart issues.
+        <span class="badge badge-unhealthy">❌ Unhealthy</span>: High sugar/fat content. May lead to weight gain, heart issues.
         """
     elif calories < 100 and fat < 5 and sugar < 5:
         return """
-        <span style='color: green; font-weight: bold; font-size:18px;'>✅ Healthy</span> and suitable for 
-        <span style='color: blue; font-weight: bold;'>weight loss</span>.
+        <span class="badge badge-healthy">✅ Healthy</span> and suitable for <strong>weight loss</strong>.
         """
     elif calories > 300 and protein > 10:
         return """
-        <span style='color: green; font-weight: bold; font-size:18px;'>✅ Healthy</span> and suitable for 
-        <span style='color: blue; font-weight: bold;'>weight gain</span> (high protein/calories).
+        <span class="badge badge-healthy">✅ Healthy</span> and suitable for <strong>weight gain</strong> (high protein/calories).
         """
     else:
         return """
-        <span style='color: orange; font-weight: bold; font-size:18px;'>⚠️ Moderately healthy</span>. 
-        Watch out for specific ingredients.
+        <span style='color: #FFA500; font-weight:bold;'>⚠️ Moderately healthy</span>. Watch out for specific ingredients.
         """
 
 def suggest_fabric(skin_type, skin_tone, weather, work_level, season):
@@ -42,7 +80,6 @@ def suggest_fabric(skin_type, skin_tone, weather, work_level, season):
     preferred_fabrics = []
     color_suggestions = []
 
-    # Skin type rules
     if skin_type == "Sensitive":
         avoid_fabrics += ["Polyester", "Nylon"]
         preferred_fabrics += ["Cotton", "Bamboo"]
@@ -52,7 +89,6 @@ def suggest_fabric(skin_type, skin_tone, weather, work_level, season):
     else:
         preferred_fabrics += ["Cotton", "Linen"]
 
-    # Weather rules
     if weather == "Hot":
         avoid_fabrics += ["Wool"]
         preferred_fabrics += ["Cotton", "Linen"]
@@ -62,17 +98,14 @@ def suggest_fabric(skin_type, skin_tone, weather, work_level, season):
         avoid_fabrics += ["Polyester"]
         preferred_fabrics += ["Bamboo", "Cotton"]
 
-    # work level
     if work_level == "High":
         preferred_fabrics += ["Moisture-wicking blends"]
 
-    # Season
     if season == "Winter":
         preferred_fabrics += ["Wool", "Fleece"]
     elif season == "Summer":
         preferred_fabrics += ["Cotton", "Linen"]
 
-    # Skin tone rules
     if skin_tone == "Fair":
         color_suggestions = ["Soft pastels", "Cool blues", "Lavender"]
     elif skin_tone == "Medium":
@@ -95,29 +128,40 @@ def suggest_fabric(skin_type, skin_tone, weather, work_level, season):
 
 st.set_page_config(page_title="Lifestyle Helper App", layout="centered")
 
+# Sidebar with pastel background and icons
 st.sidebar.title("🛍️ Lifestyle Helper")
-page = st.sidebar.radio("Go to", ["Home", "Food", "Electronics", "Fabric"])
+page = st.sidebar.radio(
+    "Go to",
+    [
+        "🏠 Home",
+        "🍎 Food",
+        "📱 Electronics",
+        "🧵 Fabric",
+    ],
+)
 
-# ---------------- HOME PAGE ---------------- #
-
-if page == "Home":
+if page == "🏠 Home":
     st.title("🏠 Kraya")
-    st.markdown("""
-    The customer support system for making better choices before purchasing and after purchasing a product in food, electronics, and fabric categories.
+    st.markdown(
+        """
+        Welcome to **Kraya**, your customer support system for making better choices before and after purchasing products in the following categories:
 
-    -  **🍎 Food**: Check if your food is healthy or not.
-    -  **📱 Electronics**: Get help for your electronic products.
-    -  **🧵 Fabric**: Know what fabrics suit your skin and weather.
-    """)
+        - <span class="badge badge-food">🍎 Food</span>: Check if your food is healthy or not.
+        - <span class="badge badge-electronics">📱 Electronics</span>: Get help for your electronic products.
+        - <span class="badge badge-fabric">🧵 Fabric</span>: Know what fabrics suit your skin and weather.
+        """,
+        unsafe_allow_html=True,
+    )
 
-# ---------------- FOOD PAGE ---------------- #
-
-elif page == "Food":
+elif page == "🍎 Food":
     st.title("🍎 Food Health Analyzer")
 
     st.subheader("Enter Food Information")
 
-    ingredients = st.text_area("Ingredients (comma-separated)", "sugar, salt, whole grain, vegetable oil")
+    ingredients = st.text_area(
+        "Ingredients (comma-separated)",
+        "sugar, salt, whole grain, vegetable oil",
+    )
     calories = st.number_input("Calories per serving", min_value=0)
     fat = st.number_input("Total Fat (g)", min_value=0.0)
     sugar = st.number_input("Sugar (g)", min_value=0.0)
@@ -128,9 +172,7 @@ elif page == "Food":
         result = analyze_food(ingredients, calories, fat, sugar, fiber, protein)
         st.markdown(result, unsafe_allow_html=True)
 
-# ---------------- ELECTRONICS PAGE ---------------- #
-
-elif page == "Electronics":
+elif page == "📱 Electronics":
     st.title("📱 Electronics Help Desk")
 
     devices = ["Smartphone", "Laptop", "TV", "Washing Machine", "Refrigerator"]
@@ -156,9 +198,7 @@ elif page == "Electronics":
             else:
                 st.write("📞 Please contact customer support for detailed troubleshooting.")
 
-# ---------------- FABRIC PAGE ---------------- #
-
-elif page == "Fabric":
+elif page == "🧵 Fabric":
     st.title("🧵 Fabric Recommendation System")
 
     st.subheader("Enter your profile")
