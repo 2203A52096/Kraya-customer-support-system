@@ -8,6 +8,7 @@ st.markdown(
     [data-testid="stSidebar"] {
         background-color: #F7E9E9;  /* pastel pink */
         color: #5A3E36;
+        border-radius: 20px;
     }
     /* Sidebar title */
     [data-testid="stSidebar"] > div:first-child {
@@ -26,20 +27,31 @@ st.markdown(
         text-align: center;
         white-space: nowrap;
         vertical-align: baseline;
-        border-radius: 0.4rem;
+        border-radius: 0.8rem;
     }
     .badge-food {background-color: #FF6F61;}
     .badge-electronics {background-color: #6BAED6;}
     .badge-fabric {background-color: #8BC34A;}
     .badge-healthy {background-color: #4CAF50;}
     .badge-unhealthy {background-color: #F44336;}
+    
+    /* Banner with rounded cloud-like look */
     .banner {
         background-color: #FFF4E6;
         border-left: 6px solid #FF6F61;
-        padding: 10px;
+        padding: 12px;
         margin: 10px 0px;
-        border-radius: 8px;
+        border-radius: 25px;
         font-size: 16px;
+        box-shadow: 2px 4px 10px rgba(0,0,0,0.05);
+    }
+    /* Rounded box for results */
+    .result-box {
+        background: #ffffffdd;
+        border-radius: 25px;
+        padding: 15px 20px;
+        margin: 15px 0;
+        box-shadow: 0px 4px 15px rgba(0,0,0,0.08);
     }
     </style>
     """,
@@ -47,7 +59,6 @@ st.markdown(
 )
 
 # ---------------- UTILITY FUNCTIONS ---------------- #
-
 def analyze_food(ingredients, calories, fat, sugar, fiber, protein):
     ing_list = [i.strip().lower() for i in ingredients.split(",")]
 
@@ -62,19 +73,27 @@ def analyze_food(ingredients, calories, fat, sugar, fiber, protein):
 
     if len(unhealthy_tags) > 2 or sugar > 15 or fat > 20:
         return """
+        <div class="result-box">
         <span class="badge badge-unhealthy">❌ Unhealthy</span>: High sugar/fat content. May lead to <b>weight gain</b> and health risks.
+        </div>
         """
     elif calories < 100 and fat < 5 and sugar < 5:
         return """
+        <div class="result-box">
         <span class="badge badge-healthy">✅ Healthy</span>: Suitable for <b>weight loss</b>, low calories & fat.
+        </div>
         """
     elif calories > 300 and protein > 10:
         return """
+        <div class="result-box">
         <span class="badge badge-healthy">✅ Healthy</span>: Good for <b>weight gain</b> with high protein & energy.
+        </div>
         """
     else:
         return """
+        <div class="result-box">
         <span style='color: #FFA500; font-weight:bold;'>⚠️ Moderately healthy</span>. Balanced but watch certain ingredients.
+        </div>
         """
 
 def suggest_fabric(skin_type, skin_tone, weather, work_level, season):
@@ -117,7 +136,7 @@ def suggest_fabric(skin_type, skin_tone, weather, work_level, season):
     preferred_fabrics = list(set(preferred_fabrics))
 
     return f"""
-    <div style='font-size:16px;'>
+    <div class="result-box">
     <span style='color:#D9534F; font-weight:bold;'>❌ Avoid Fabrics:</span> {", ".join(avoid_fabrics)}<br><br>
     <span style='color:#5CB85C; font-weight:bold;'>✅ Recommended Fabrics:</span> {", ".join(preferred_fabrics)}<br><br>
     <span style='color:#0275D8; font-weight:bold;'>🎨 Suggested Colors:</span> {", ".join(color_suggestions)}
@@ -125,7 +144,6 @@ def suggest_fabric(skin_type, skin_tone, weather, work_level, season):
     """
 
 # ---------------- MAIN APP ---------------- #
-
 st.set_page_config(page_title="Lifestyle Helper App", layout="centered")
 
 st.sidebar.title("🛍️ Lifestyle Helper")
@@ -183,7 +201,8 @@ elif page == "📱 Electronics":
         if user_input.strip() == "":
             st.warning("⚠️ Please describe your issue before proceeding.")
         else:
-            st.markdown("### **🔧 Suggested Fix:**")
+            st.markdown('<div class="result-box">', unsafe_allow_html=True)
+            st.markdown("### **🔧 Suggested Fix:**", unsafe_allow_html=True)
             user_input_lower = user_input.lower()
             if "battery" in user_input_lower:
                 st.write("🔋 Battery not holding charge? Try replacing or checking for swelling.")
@@ -195,6 +214,7 @@ elif page == "📱 Electronics":
                 st.write("🔊 Strange noises often mean motor or loose part issues.")
             else:
                 st.write("📞 Contact official service for advanced troubleshooting.")
+            st.markdown('</div>', unsafe_allow_html=True)
 
 # FABRIC PAGE
 elif page == "🧵 Fabric":
