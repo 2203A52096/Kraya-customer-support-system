@@ -211,7 +211,7 @@ elif page == "🧵 Fabric":
 
     if st.button("🎯 Get Fabric Suggestions"):
         result = suggest_fabric(skin_type, skin_tone, weather, work_level, season)
-        st.markdown(result, unsafe_allow_html=True)import streamlit as st
+        st.markdown(result, unsafe_allow_html=True)
 
 # ---------------- UTILITY FUNCTIONS ---------------- #
 
