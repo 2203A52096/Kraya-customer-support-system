@@ -136,7 +136,7 @@ page = st.sidebar.radio(
 
 # HOME PAGE
 if page == "🏠 Home":
-    st.title("🏠 Welcome to Kraya")
+    st.title("🏠 Kraya")
     st.markdown('<div class="banner">✨ Smart Choices, Happy Living ✨</div>', unsafe_allow_html=True)
     st.markdown(
         """
