@@ -1,6 +1,6 @@
 import streamlit as st
 
-# Inject custom CSS to style sidebar and badges
+# ---------------- STYLING ---------------- #
 st.markdown(
     """
     <style>
@@ -15,29 +15,32 @@ st.markdown(
         font-weight: 700;
         color: #9A5F6F;
     }
-    /* Sidebar radio button text with icon */
-    .sidebar .css-1r6slb0 {
-        color: #9A5F6F;
-        font-weight: 600;
-    }
     /* Badge styles for keywords */
     .badge {
         display: inline-block;
-        padding: 0.25em 0.6em;
-        font-size: 0.75em;
+        padding: 0.3em 0.7em;
+        font-size: 0.8em;
         font-weight: 700;
         line-height: 1;
         color: white;
         text-align: center;
         white-space: nowrap;
         vertical-align: baseline;
-        border-radius: 0.25rem;
+        border-radius: 0.4rem;
     }
     .badge-food {background-color: #FF6F61;}
     .badge-electronics {background-color: #6BAED6;}
     .badge-fabric {background-color: #8BC34A;}
     .badge-healthy {background-color: #4CAF50;}
     .badge-unhealthy {background-color: #F44336;}
+    .banner {
+        background-color: #FFF4E6;
+        border-left: 6px solid #FF6F61;
+        padding: 10px;
+        margin: 10px 0px;
+        border-radius: 8px;
+        font-size: 16px;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -49,8 +52,7 @@ def analyze_food(ingredients, calories, fat, sugar, fiber, protein):
     ing_list = [i.strip().lower() for i in ingredients.split(",")]
 
     unhealthy_ingredients = ["sugar", "corn syrup", "hydrogenated oil", "trans fat", "artificial"]
-    healthy_tags = []
-    unhealthy_tags = []
+    healthy_tags, unhealthy_tags = [], []
 
     for ing in ing_list:
         if any(bad in ing for bad in unhealthy_ingredients):
@@ -60,25 +62,23 @@ def analyze_food(ingredients, calories, fat, sugar, fiber, protein):
 
     if len(unhealthy_tags) > 2 or sugar > 15 or fat > 20:
         return """
-        <span class="badge badge-unhealthy">❌ Unhealthy</span>: High sugar/fat content. May lead to weight gain, heart issues.
+        <span class="badge badge-unhealthy">❌ Unhealthy</span>: High sugar/fat content. May lead to <b>weight gain</b> and health risks.
         """
     elif calories < 100 and fat < 5 and sugar < 5:
         return """
-        <span class="badge badge-healthy">✅ Healthy</span> and suitable for <strong>weight loss</strong>.
+        <span class="badge badge-healthy">✅ Healthy</span>: Suitable for <b>weight loss</b>, low calories & fat.
         """
     elif calories > 300 and protein > 10:
         return """
-        <span class="badge badge-healthy">✅ Healthy</span> and suitable for <strong>weight gain</strong> (high protein/calories).
+        <span class="badge badge-healthy">✅ Healthy</span>: Good for <b>weight gain</b> with high protein & energy.
         """
     else:
         return """
-        <span style='color: #FFA500; font-weight:bold;'>⚠️ Moderately healthy</span>. Watch out for specific ingredients.
+        <span style='color: #FFA500; font-weight:bold;'>⚠️ Moderately healthy</span>. Balanced but watch certain ingredients.
         """
 
 def suggest_fabric(skin_type, skin_tone, weather, work_level, season):
-    avoid_fabrics = []
-    preferred_fabrics = []
-    color_suggestions = []
+    avoid_fabrics, preferred_fabrics, color_suggestions = [], [], []
 
     if skin_type == "Sensitive":
         avoid_fabrics += ["Polyester", "Nylon"]
@@ -120,7 +120,7 @@ def suggest_fabric(skin_type, skin_tone, weather, work_level, season):
     <div style='font-size:16px;'>
     <span style='color:#D9534F; font-weight:bold;'>❌ Avoid Fabrics:</span> {", ".join(avoid_fabrics)}<br><br>
     <span style='color:#5CB85C; font-weight:bold;'>✅ Recommended Fabrics:</span> {", ".join(preferred_fabrics)}<br><br>
-    <span style='color:#0275D8; font-weight:bold;'>🎨 Suggested Colors for You:</span> {", ".join(color_suggestions)}
+    <span style='color:#0275D8; font-weight:bold;'>🎨 Suggested Colors:</span> {", ".join(color_suggestions)}
     </div>
     """
 
@@ -128,88 +128,86 @@ def suggest_fabric(skin_type, skin_tone, weather, work_level, season):
 
 st.set_page_config(page_title="Lifestyle Helper App", layout="centered")
 
-# Sidebar with pastel background and icons
 st.sidebar.title("🛍️ Lifestyle Helper")
 page = st.sidebar.radio(
-    "Go to",
-    [
-        "🏠 Home",
-        "🍎 Food",
-        "📱 Electronics",
-        "🧵 Fabric",
-    ],
+    "Navigate",
+    ["🏠 Home", "🍎 Food", "📱 Electronics", "🧵 Fabric"],
 )
 
+# HOME PAGE
 if page == "🏠 Home":
-    st.title("🏠 Kraya")
+    st.title("🏠 Welcome to Kraya")
+    st.markdown('<div class="banner">✨ Smart Choices, Happy Living ✨</div>', unsafe_allow_html=True)
     st.markdown(
         """
-        Welcome to **Kraya**, your customer support system for making better choices before and after purchasing products in the following categories:
+        Kraya is your **personal customer support system** that makes shopping and usage easier:  
 
-        - <span class="badge badge-food">🍎 Food</span>: Check if your food is healthy or not.
-        - <span class="badge badge-electronics">📱 Electronics</span>: Get help for your electronic products.
-        - <span class="badge badge-fabric">🧵 Fabric</span>: Know what fabrics suit your skin and weather.
+        - <span class="badge badge-food">🍎 Food</span>: Check if food is **healthy**, for **weight loss/gain**.  
+        - <span class="badge badge-electronics">📱 Electronics</span>: Troubleshoot your **devices** quickly.  
+        - <span class="badge badge-fabric">🧵 Fabric</span>: Get fabric and **color suggestions** for your skin & season.  
+
+        💡 Our goal: Enhance **decision-making**, boost **convenience**, and improve **satisfaction**.  
         """,
         unsafe_allow_html=True,
     )
 
+# FOOD PAGE
 elif page == "🍎 Food":
     st.title("🍎 Food Health Analyzer")
+    st.markdown('<div class="banner">🥗 Eat Smart, Live Better</div>', unsafe_allow_html=True)
+    st.info("Enter your food details and find out if it’s suitable for **weight loss, weight gain, or balanced nutrition**.")
 
-    st.subheader("Enter Food Information")
-
-    ingredients = st.text_area(
-        "Ingredients (comma-separated)",
-        "sugar, salt, whole grain, vegetable oil",
-    )
-    calories = st.number_input("Calories per serving", min_value=0)
-    fat = st.number_input("Total Fat (g)", min_value=0.0)
-    sugar = st.number_input("Sugar (g)", min_value=0.0)
-    fiber = st.number_input("Dietary Fiber (g)", min_value=0.0)
-    protein = st.number_input("Protein (g)", min_value=0.0)
+    ingredients = st.text_area("🧾 Ingredients (comma-separated)", "sugar, salt, whole grain, vegetable oil")
+    calories = st.number_input("🔥 Calories per serving", min_value=0)
+    fat = st.number_input("🥓 Total Fat (g)", min_value=0.0)
+    sugar = st.number_input("🍬 Sugar (g)", min_value=0.0)
+    fiber = st.number_input("🌿 Dietary Fiber (g)", min_value=0.0)
+    protein = st.number_input("🍗 Protein (g)", min_value=0.0)
 
     if st.button("🔍 Analyze Food"):
         result = analyze_food(ingredients, calories, fat, sugar, fiber, protein)
         st.markdown(result, unsafe_allow_html=True)
 
+# ELECTRONICS PAGE
 elif page == "📱 Electronics":
     st.title("📱 Electronics Help Desk")
+    st.markdown('<div class="banner">⚡ Quick Fixes for Smarter Living ⚡</div>', unsafe_allow_html=True)
+    st.info("Describe your problem, and Kraya will give **troubleshooting tips** for your electronic devices.")
 
-    devices = ["Smartphone", "Laptop", "TV", "Washing Machine", "Refrigerator"]
-    device = st.selectbox("Select your device", devices)
+    devices = ["Smartphone 📱", "Laptop 💻", "TV 📺", "Washing Machine 🧺", "Refrigerator ❄️"]
+    device = st.selectbox("🔧 Select your device", devices)
 
-    user_input = st.text_area("Describe your issue here")
+    user_input = st.text_area("✍️ Describe your issue")
 
     if st.button("🛠️ Get Support"):
         if user_input.strip() == "":
-            st.warning("⚠️ Please describe your issue before applying.")
+            st.warning("⚠️ Please describe your issue before proceeding.")
         else:
-            st.markdown("### **🔧 Support Suggestion:**")
+            st.markdown("### **🔧 Suggested Fix:**")
             user_input_lower = user_input.lower()
-
             if "battery" in user_input_lower:
-                st.write("🔋 Check if the battery is swollen or not holding charge. Try replacing it.")
+                st.write("🔋 Battery not holding charge? Try replacing or checking for swelling.")
             elif "screen" in user_input_lower:
-                st.write("🖥️ Screen issues may be due to physical damage or loose connectors.")
+                st.write("🖥️ Screen flicker/cracks may mean loose connectors or damage.")
             elif "not turning on" in user_input_lower:
-                st.write("⚡ Ensure the power cable is connected. Try a hard reset.")
+                st.write("⚡ Ensure cables are connected. Try a hard reset.")
             elif "noise" in user_input_lower:
-                st.write("🔊 Unusual noise may indicate motor issues or loose parts.")
+                st.write("🔊 Strange noises often mean motor or loose part issues.")
             else:
-                st.write("📞 Please contact customer support for detailed troubleshooting.")
+                st.write("📞 Contact official service for advanced troubleshooting.")
 
+# FABRIC PAGE
 elif page == "🧵 Fabric":
     st.title("🧵 Fabric Recommendation System")
+    st.markdown('<div class="banner">👗 Dress Smart, Feel Confident</div>', unsafe_allow_html=True)
+    st.info("Get fabric and **color suggestions** tailored to your **skin, weather, work level, and season**.")
 
-    st.subheader("Enter your profile")
-
-    skin_type = st.selectbox("Skin Type", ["Dry", "Oily", "Sensitive", "Normal"])
-    skin_tone = st.selectbox("Skin Tone", ["Fair", "Medium", "Dark"])
-    weather = st.selectbox("Weather Condition", ["Hot", "Cold", "Humid", "Dry"])
-    work_level = st.selectbox("Work Level", ["High", "Medium", "Low"])
-    season = st.selectbox("Season", ["Summer", "Winter", "Spring", "Autumn"])
+    skin_type = st.selectbox("👩 Skin Type", ["Dry", "Oily", "Sensitive", "Normal"])
+    skin_tone = st.selectbox("🎨 Skin Tone", ["Fair", "Medium", "Dark"])
+    weather = st.selectbox("☀️ Weather Condition", ["Hot", "Cold", "Humid", "Dry"])
+    work_level = st.selectbox("💪 Work Level", ["High", "Medium", "Low"])
+    season = st.selectbox("🍂 Season", ["Summer", "Winter", "Spring", "Autumn"])
 
     if st.button("🎯 Get Fabric Suggestions"):
         result = suggest_fabric(skin_type, skin_tone, weather, work_level, season)
         st.markdown(result, unsafe_allow_html=True)
-
