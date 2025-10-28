@@ -1,0 +1,102 @@
+[
+  {
+    "device": "Smartphone",
+    "category": "Power and Charging Issues",
+    "problem": "Phone not charging",
+    "example_queries": [
+      "My phone is not charging even with a new charger.",
+      "Battery percentage stuck while charging."
+    ],
+    "solution": "Check the charging cable and adapter, clean the charging port, try a different power source, and restart the phone. If still not working, the charging port or battery may need service."
+  },
+  {
+    "device": "Smartphone",
+    "category": "Connectivity Issues",
+    "problem": "Mobile data not working",
+    "example_queries": [
+      "Internet not working on my phone.",
+      "4G/LTE is not connecting."
+    ],
+    "solution": "Turn airplane mode on/off, reset network settings, reinsert SIM card, and check with your service provider."
+  },
+  {
+    "device": "Laptop",
+    "category": "Performance Issues",
+    "problem": "Laptop running slow",
+    "example_queries": [
+      "My laptop is very slow while browsing.",
+      "System takes too long to boot."
+    ],
+    "solution": "Clear temporary files, uninstall unused apps, increase RAM if possible, and scan for malware."
+  },
+  {
+    "device": "Laptop",
+    "category": "Hardware Issues",
+    "problem": "Keyboard not working",
+    "example_queries": [
+      "Some laptop keys are not typing.",
+      "Keyboard stopped responding."
+    ],
+    "solution": "Restart the laptop, update keyboard drivers, try an external keyboard. If issue persists, the keyboard may need replacement."
+  },
+  {
+    "device": "TV",
+    "category": "Display Issues",
+    "problem": "No picture on screen",
+    "example_queries": [
+      "My TV turns on but shows no display.",
+      "There is sound but no picture on my TV."
+    ],
+    "solution": "Check HDMI/cable connections, restart the TV, try a different input source, and adjust brightness settings. If issue continues, the display panel may be faulty."
+  },
+  {
+    "device": "TV",
+    "category": "Connectivity Issues",
+    "problem": "Wi-Fi not connecting",
+    "example_queries": [
+      "My smart TV won't connect to Wi-Fi.",
+      "TV says no internet connection."
+    ],
+    "solution": "Restart the router and TV, re-enter Wi-Fi password, and update TV firmware. If still failing, reset network settings."
+  },
+  {
+    "device": "Washing Machine",
+    "category": "Operation Issues",
+    "problem": "Machine not spinning",
+    "example_queries": [
+      "Washing machine drum is not rotating.",
+      "Clothes come out wet after wash."
+    ],
+    "solution": "Check if the load is balanced, ensure lid/door is properly closed, and clean the filter. If still not spinning, motor or belt may need service."
+  },
+  {
+    "device": "Washing Machine",
+    "category": "Error Codes",
+    "problem": "Water not draining",
+    "example_queries": [
+      "Washing machine showing drain error.",
+      "Water stuck inside the drum."
+    ],
+    "solution": "Clean the drain pump filter, check the hose for blockages, and restart the machine."
+  },
+  {
+    "device": "Refrigerator",
+    "category": "Cooling Issues",
+    "problem": "Fridge not cooling properly",
+    "example_queries": [
+      "My refrigerator is running but not cooling.",
+      "Freezer works but fridge is warm."
+    ],
+    "solution": "Check temperature settings, clean condenser coils, and ensure doors are sealed. If issue persists, gas refill or compressor repair may be needed."
+  },
+  {
+    "device": "Refrigerator",
+    "category": "Power Issues",
+    "problem": "Fridge not turning on",
+    "example_queries": [
+      "Refrigerator stopped working suddenly.",
+      "Lights inside the fridge are off."
+    ],
+    "solution": "Check power supply, verify plug and socket, reset the circuit breaker, and test with another outlet."
+  }
+]
