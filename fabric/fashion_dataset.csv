@@ -1,0 +1,201 @@
+ID,Skin Tone,Weather Condition,Work Level,Season,Recommended Outfit,Fabric,Avoid Fabrics
+1,Medium,Hot,Home,Summer,Relaxed light blouse,Rayon,Wool
+2,Olive,Hot,Home,Spring,Relaxed light jacket,Cotton Blend,Fleece
+3,Light,Rainy,Fitness,Spring,Active pastel shirt,Denim,Velvet
+4,Fair,Windy,Outdoor,Summer,Casual shorts,Rayon,Wool
+5,Light,Hot,Home,Summer,Relaxed linen shirt,Cotton,Polyester
+6,Deep,Humid,Home,Monsoon,Relaxed waterproof jacket,Nylon,Cotton
+7,Medium,Hot,Fitness,Autumn,Active long-sleeve top,Twill,Linen
+8,Fair,Windy,Outdoor,Spring,Casual pastel shirt,Cotton Blend,Velvet
+9,Olive,Humid,Office,Winter,Formal hoodie,Wool,Linen
+10,Medium,Rainy,Office,Spring,Formal light jacket,Light Wool,Fleece
+11,Medium,Sunny,Fitness,Spring,Active cardigan,Light Wool,Fleece
+12,Tan,Rainy,Fitness,Winter,Active thermal jacket,Fleece,Linen
+13,Fair,Sunny,Home,Autumn,Relaxed scarf combo,Wool Blend,Linen
+14,Tan,Humid,Outdoor,Autumn,Casual trench coat,Corduroy,Linen
+15,Fair,Cold,Home,Autumn,Relaxed denim jacket,Corduroy,Linen
+16,Deep,Cold,Outdoor,Autumn,Casual scarf combo,Wool Blend,Linen
+17,Deep,Cloudy,Office,Autumn,Formal long-sleeve top,Twill,Linen
+18,Deep,Cloudy,Office,Monsoon,Formal dark jeans,Waterproof Fabric,Silk
+19,Medium,Windy,Home,Spring,Relaxed light jacket,Cotton Blend,Velvet
+20,Olive,Cloudy,Fitness,Winter,Active hoodie,Fleece,Silk
+21,Light,Sunny,Home,Winter,Relaxed thermal jacket,Fleece,Linen
+22,Fair,Hot,Office,Winter,Formal coat,Fleece,Linen
+23,Fair,Cloudy,Outdoor,Monsoon,Casual waterproof jacket,Waterproof Fabric,Cotton
+24,Olive,Humid,Outdoor,Monsoon,Casual raincoat,Nylon,Silk
+25,Olive,Cloudy,Home,Autumn,Relaxed trench coat,Twill,Linen
+26,Fair,Hot,Fitness,Spring,Active light jacket,Light Wool,Velvet
+27,Deep,Cold,Home,Winter,Relaxed thermal jacket,Cashmere,Linen
+28,Light,Windy,Home,Winter,Relaxed coat,Fleece,Silk
+29,Fair,Cloudy,Home,Monsoon,Relaxed raincoat,Polyester,Silk
+30,Olive,Humid,Home,Winter,Relaxed coat,Wool,Silk
+31,Medium,Humid,Fitness,Spring,Active cardigan,Cotton Blend,Fleece
+32,Fair,Rainy,Home,Winter,Relaxed coat,Cashmere,Linen
+33,Olive,Humid,Home,Winter,Relaxed wool sweater,Fleece,Linen
+34,Fair,Windy,Office,Autumn,Formal long-sleeve top,Wool Blend,Linen
+35,Fair,Sunny,Office,Winter,Formal hoodie,Fleece,Linen
+36,Fair,Cloudy,Office,Autumn,Formal trench coat,Corduroy,Linen
+37,Olive,Humid,Fitness,Summer,Active linen shirt,Rayon,Polyester
+38,Olive,Humid,Fitness,Winter,Active thermal jacket,Cashmere,Linen
+39,Olive,Hot,Home,Summer,Relaxed cotton t-shirt,Cotton,Wool
+40,Medium,Cold,Office,Autumn,Formal scarf combo,Twill,Silk
+41,Fair,Cold,Home,Autumn,Relaxed denim jacket,Wool Blend,Silk
+42,Tan,Windy,Home,Winter,Relaxed hoodie,Cashmere,Silk
+43,Deep,Cloudy,Office,Autumn,Formal long-sleeve top,Twill,Linen
+44,Deep,Cloudy,Fitness,Summer,Active light blouse,Linen,Wool
+45,Fair,Cold,Outdoor,Winter,Casual coat,Fleece,Silk
+46,Tan,Sunny,Fitness,Winter,Active wool sweater,Wool,Silk
+47,Medium,Cloudy,Outdoor,Winter,Casual coat,Wool,Linen
+48,Olive,Hot,Outdoor,Monsoon,Casual boots,Waterproof Fabric,Cotton
+49,Olive,Cold,Outdoor,Monsoon,Casual raincoat,Waterproof Fabric,Silk
+50,Medium,Cloudy,Office,Spring,Formal cardigan,Light Wool,Velvet
+51,Olive,Windy,Outdoor,Winter,Casual hoodie,Wool,Silk
+52,Tan,Windy,Fitness,Winter,Active hoodie,Cashmere,Linen
+53,Fair,Hot,Home,Summer,Relaxed light blouse,Rayon,Polyester
+54,Fair,Rainy,Fitness,Monsoon,Active waterproof jacket,Waterproof Fabric,Silk
+55,Deep,Sunny,Outdoor,Spring,Casual jeans,Light Wool,Fleece
+56,Fair,Sunny,Fitness,Winter,Active thermal jacket,Fleece,Linen
+57,Light,Humid,Office,Summer,Formal shorts,Rayon,Wool
+58,Fair,Rainy,Office,Winter,Formal thermal jacket,Wool,Silk
+59,Light,Cloudy,Outdoor,Monsoon,Casual boots,Nylon,Cotton
+60,Deep,Windy,Home,Winter,Relaxed hoodie,Cashmere,Linen
+61,Tan,Cloudy,Outdoor,Winter,Casual coat,Cashmere,Silk
+62,Deep,Humid,Outdoor,Monsoon,Casual raincoat,Polyester,Cotton
+63,Medium,Sunny,Home,Summer,Relaxed light blouse,Cotton,Polyester
+64,Olive,Windy,Outdoor,Summer,Casual shorts,Cotton,Polyester
+65,Olive,Cloudy,Home,Winter,Relaxed hoodie,Wool,Silk
+66,Light,Cloudy,Fitness,Summer,Active light blouse,Linen,Polyester
+67,Tan,Windy,Fitness,Summer,Active cotton t-shirt,Rayon,Wool
+68,Olive,Sunny,Home,Spring,Relaxed cardigan,Cotton Blend,Fleece
+69,Medium,Hot,Outdoor,Spring,Casual cardigan,Cotton Blend,Velvet
+70,Deep,Rainy,Fitness,Spring,Active pastel shirt,Light Wool,Velvet
+71,Deep,Windy,Fitness,Autumn,Active denim jacket,Wool Blend,Silk
+72,Olive,Hot,Office,Monsoon,Formal waterproof jacket,Waterproof Fabric,Cotton
+73,Olive,Rainy,Home,Autumn,Relaxed denim jacket,Twill,Silk
+74,Medium,Cloudy,Fitness,Autumn,Active denim jacket,Wool Blend,Linen
+75,Light,Rainy,Home,Autumn,Relaxed long-sleeve top,Corduroy,Linen
+76,Light,Hot,Fitness,Autumn,Active scarf combo,Wool Blend,Silk
+77,Olive,Windy,Fitness,Monsoon,Active raincoat,Waterproof Fabric,Silk
+78,Fair,Humid,Fitness,Monsoon,Active waterproof jacket,Nylon,Cotton
+79,Medium,Hot,Outdoor,Winter,Casual coat,Fleece,Silk
+80,Medium,Cold,Home,Autumn,Relaxed denim jacket,Wool Blend,Linen
+81,Deep,Humid,Home,Monsoon,Relaxed waterproof jacket,Nylon,Silk
+82,Olive,Sunny,Outdoor,Autumn,Casual denim jacket,Corduroy,Linen
+83,Tan,Cloudy,Office,Autumn,Formal scarf combo,Corduroy,Linen
+84,Fair,Sunny,Office,Spring,Formal cardigan,Cotton Blend,Velvet
+85,Medium,Sunny,Outdoor,Autumn,Casual long-sleeve top,Corduroy,Silk
+86,Olive,Cloudy,Office,Summer,Formal linen shirt,Rayon,Wool
+87,Medium,Cloudy,Home,Spring,Relaxed jeans,Denim,Fleece
+88,Fair,Hot,Office,Monsoon,Formal boots,Polyester,Silk
+89,Olive,Sunny,Office,Summer,Formal cotton t-shirt,Cotton,Wool
+90,Olive,Cold,Home,Spring,Relaxed pastel shirt,Denim,Fleece
+91,Light,Hot,Home,Summer,Relaxed linen shirt,Rayon,Polyester
+92,Fair,Humid,Outdoor,Winter,Casual thermal jacket,Fleece,Silk
+93,Medium,Sunny,Home,Winter,Relaxed hoodie,Cashmere,Silk
+94,Fair,Cloudy,Outdoor,Autumn,Casual scarf combo,Corduroy,Silk
+95,Tan,Windy,Fitness,Winter,Active wool sweater,Wool,Linen
+96,Tan,Sunny,Home,Monsoon,Relaxed dark jeans,Waterproof Fabric,Silk
+97,Deep,Cloudy,Outdoor,Summer,Casual linen shirt,Cotton,Polyester
+98,Fair,Hot,Office,Autumn,Formal scarf combo,Wool Blend,Silk
+99,Fair,Hot,Fitness,Autumn,Active trench coat,Wool Blend,Linen
+100,Medium,Cold,Outdoor,Summer,Casual light blouse,Cotton,Polyester
+101,Olive,Cloudy,Office,Autumn,Formal denim jacket,Wool Blend,Silk
+102,Light,Humid,Home,Autumn,Relaxed long-sleeve top,Corduroy,Linen
+103,Olive,Hot,Home,Spring,Relaxed jeans,Denim,Fleece
+104,Medium,Sunny,Office,Monsoon,Formal waterproof jacket,Waterproof Fabric,Silk
+105,Deep,Windy,Office,Summer,Formal linen shirt,Linen,Polyester
+106,Light,Humid,Home,Autumn,Relaxed long-sleeve top,Twill,Linen
+107,Deep,Cloudy,Home,Winter,Relaxed hoodie,Fleece,Silk
+108,Fair,Cloudy,Home,Monsoon,Relaxed boots,Waterproof Fabric,Cotton
+109,Fair,Humid,Fitness,Summer,Active linen shirt,Linen,Wool
+110,Deep,Hot,Office,Spring,Formal light jacket,Light Wool,Fleece
+111,Medium,Cloudy,Fitness,Monsoon,Active raincoat,Waterproof Fabric,Silk
+112,Medium,Cold,Outdoor,Monsoon,Casual raincoat,Nylon,Cotton
+113,Olive,Windy,Office,Spring,Formal pastel shirt,Light Wool,Velvet
+114,Medium,Rainy,Home,Monsoon,Relaxed raincoat,Nylon,Cotton
+115,Medium,Cloudy,Home,Monsoon,Relaxed raincoat,Polyester,Silk
+116,Light,Sunny,Office,Autumn,Formal denim jacket,Twill,Linen
+117,Fair,Cold,Home,Autumn,Relaxed denim jacket,Corduroy,Silk
+118,Tan,Sunny,Home,Autumn,Relaxed long-sleeve top,Twill,Linen
+119,Tan,Cold,Home,Summer,Relaxed light blouse,Cotton,Polyester
+120,Tan,Rainy,Outdoor,Spring,Casual cardigan,Cotton Blend,Velvet
+121,Tan,Hot,Office,Summer,Formal linen shirt,Rayon,Wool
+122,Medium,Hot,Office,Spring,Formal pastel shirt,Cotton Blend,Fleece
+123,Medium,Humid,Fitness,Monsoon,Active dark jeans,Nylon,Cotton
+124,Light,Windy,Office,Summer,Formal linen shirt,Cotton,Wool
+125,Fair,Cloudy,Home,Winter,Relaxed hoodie,Fleece,Silk
+126,Light,Cloudy,Fitness,Spring,Active cardigan,Cotton Blend,Fleece
+127,Fair,Windy,Outdoor,Spring,Casual jeans,Cotton Blend,Fleece
+128,Olive,Windy,Home,Autumn,Relaxed long-sleeve top,Twill,Linen
+129,Tan,Rainy,Office,Winter,Formal hoodie,Wool,Linen
+130,Medium,Cloudy,Office,Monsoon,Formal dark jeans,Waterproof Fabric,Cotton
+131,Medium,Rainy,Outdoor,Winter,Casual wool sweater,Cashmere,Linen
+132,Olive,Sunny,Outdoor,Monsoon,Casual raincoat,Nylon,Cotton
+133,Olive,Cloudy,Fitness,Monsoon,Active waterproof jacket,Waterproof Fabric,Cotton
+134,Medium,Humid,Home,Winter,Relaxed coat,Cashmere,Linen
+135,Medium,Cloudy,Home,Winter,Relaxed hoodie,Cashmere,Silk
+136,Tan,Rainy,Outdoor,Summer,Casual light blouse,Linen,Polyester
+137,Fair,Rainy,Fitness,Summer,Active linen shirt,Linen,Wool
+138,Light,Cloudy,Home,Summer,Relaxed light blouse,Linen,Polyester
+139,Fair,Humid,Home,Monsoon,Relaxed dark jeans,Waterproof Fabric,Silk
+140,Light,Sunny,Fitness,Monsoon,Active raincoat,Waterproof Fabric,Cotton
+141,Olive,Sunny,Office,Autumn,Formal long-sleeve top,Twill,Silk
+142,Medium,Hot,Home,Autumn,Relaxed scarf combo,Corduroy,Silk
+143,Deep,Rainy,Fitness,Autumn,Active scarf combo,Corduroy,Silk
+144,Medium,Cloudy,Fitness,Summer,Active cotton t-shirt,Cotton,Wool
+145,Tan,Windy,Office,Spring,Formal light jacket,Denim,Fleece
+146,Medium,Rainy,Fitness,Winter,Active wool sweater,Cashmere,Linen
+147,Olive,Windy,Home,Winter,Relaxed thermal jacket,Wool,Linen
+148,Light,Sunny,Home,Summer,Relaxed cotton t-shirt,Linen,Wool
+149,Fair,Cold,Office,Spring,Formal cardigan,Light Wool,Velvet
+150,Olive,Hot,Outdoor,Winter,Casual hoodie,Cashmere,Linen
+151,Medium,Humid,Office,Monsoon,Formal boots,Polyester,Cotton
+152,Fair,Rainy,Outdoor,Summer,Casual cotton t-shirt,Linen,Polyester
+153,Olive,Rainy,Outdoor,Autumn,Casual denim jacket,Corduroy,Silk
+154,Medium,Sunny,Home,Summer,Relaxed shorts,Rayon,Polyester
+155,Deep,Humid,Fitness,Spring,Active pastel shirt,Cotton Blend,Fleece
+156,Light,Sunny,Home,Winter,Relaxed wool sweater,Cashmere,Silk
+157,Olive,Humid,Outdoor,Autumn,Casual scarf combo,Twill,Linen
+158,Tan,Hot,Fitness,Spring,Active jeans,Light Wool,Velvet
+159,Olive,Cold,Office,Summer,Formal linen shirt,Rayon,Wool
+160,Light,Sunny,Fitness,Winter,Active thermal jacket,Wool,Silk
+161,Tan,Cold,Outdoor,Autumn,Casual long-sleeve top,Twill,Silk
+162,Tan,Cold,Outdoor,Monsoon,Casual waterproof jacket,Polyester,Silk
+163,Olive,Hot,Home,Winter,Relaxed thermal jacket,Fleece,Linen
+164,Fair,Cold,Outdoor,Spring,Casual jeans,Cotton Blend,Fleece
+165,Olive,Windy,Outdoor,Spring,Casual cardigan,Light Wool,Fleece
+166,Tan,Windy,Outdoor,Monsoon,Casual boots,Polyester,Silk
+167,Fair,Hot,Fitness,Monsoon,Active waterproof jacket,Waterproof Fabric,Cotton
+168,Light,Cold,Office,Winter,Formal coat,Cashmere,Silk
+169,Light,Hot,Outdoor,Winter,Casual coat,Fleece,Silk
+170,Light,Rainy,Outdoor,Winter,Casual coat,Fleece,Linen
+171,Deep,Hot,Office,Autumn,Formal denim jacket,Wool Blend,Linen
+172,Fair,Cloudy,Home,Spring,Relaxed jeans,Light Wool,Velvet
+173,Light,Rainy,Home,Spring,Relaxed cardigan,Denim,Velvet
+174,Olive,Sunny,Fitness,Autumn,Active scarf combo,Wool Blend,Silk
+175,Medium,Cold,Home,Summer,Relaxed linen shirt,Rayon,Wool
+176,Medium,Cold,Fitness,Monsoon,Active waterproof jacket,Polyester,Cotton
+177,Tan,Hot,Office,Autumn,Formal scarf combo,Corduroy,Linen
+178,Tan,Rainy,Outdoor,Monsoon,Casual waterproof jacket,Nylon,Cotton
+179,Fair,Sunny,Fitness,Monsoon,Active raincoat,Nylon,Silk
+180,Deep,Humid,Fitness,Spring,Active pastel shirt,Cotton Blend,Velvet
+181,Medium,Windy,Outdoor,Monsoon,Casual dark jeans,Nylon,Cotton
+182,Light,Sunny,Office,Winter,Formal hoodie,Wool,Linen
+183,Deep,Windy,Office,Summer,Formal light blouse,Cotton,Wool
+184,Tan,Windy,Home,Autumn,Relaxed long-sleeve top,Wool Blend,Silk
+185,Fair,Cloudy,Office,Spring,Formal pastel shirt,Light Wool,Fleece
+186,Light,Rainy,Office,Summer,Formal linen shirt,Rayon,Polyester
+187,Deep,Windy,Fitness,Summer,Active linen shirt,Rayon,Wool
+188,Deep,Hot,Office,Summer,Formal linen shirt,Cotton,Wool
+189,Medium,Windy,Outdoor,Autumn,Casual trench coat,Corduroy,Silk
+190,Tan,Hot,Outdoor,Monsoon,Casual waterproof jacket,Nylon,Cotton
+191,Deep,Cold,Fitness,Spring,Active cardigan,Denim,Velvet
+192,Light,Hot,Office,Monsoon,Formal boots,Polyester,Cotton
+193,Deep,Sunny,Office,Spring,Formal light jacket,Cotton Blend,Fleece
+194,Light,Rainy,Home,Summer,Relaxed light blouse,Rayon,Polyester
+195,Medium,Humid,Fitness,Winter,Active wool sweater,Cashmere,Linen
+196,Tan,Hot,Fitness,Monsoon,Active dark jeans,Nylon,Cotton
+197,Light,Humid,Home,Monsoon,Relaxed raincoat,Polyester,Silk
+198,Light,Cold,Outdoor,Spring,Casual cardigan,Denim,Fleece
+199,Light,Cold,Outdoor,Spring,Casual cardigan,Cotton Blend,Velvet
+200,Fair,Rainy,Office,Spring,Formal cardigan,Denim,Fleece
