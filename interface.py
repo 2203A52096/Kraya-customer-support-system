@@ -1,85 +1,101 @@
 import streamlit as st
+import random
+import pandas as pd
 
-def show_ui(predict_food, predict_fabric, get_electronic_response):
-    st.set_page_config(page_title="Smart Customer Support", page_icon="🛍️", layout="centered")
-    
-    st.markdown(
-        """
-        <style>
-        .main { background-color: #f7f9fc; }
-        .stButton>button {
-            background-color: #4CAF50;
-            color: white;
-            border-radius: 8px;
-            font-size: 16px;
-        }
-        h1, h2 { text-align: center; color: #2E4053; }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+# ---------------- ELECTRONICS MOCK FUNCTION ----------------
+def mimic_mistral_response(query, data):
+    """Simulate Mistral model using the electronics JSON data."""
+    if not data:
+        return "No electronics data found."
+    query_lower = query.lower()
+    for item in data:
+        for ex in item["example_queries"]:
+            if any(word in query_lower for word in ex.lower().split()):
+                return f"**Device:** {item['device']}\n**Issue:** {item['problem']}\n\n💡 **Suggested Fix:** {item['solution']}"
+    # Random fallback
+    item = random.choice(data)
+    return f"**Device:** {item['device']}\n**Issue:** {item['problem']}\n\n💡 **Suggested Fix:** {item['solution']}"
 
-    st.title("🛍️ Kraya Smart Customer Support System")
-    st.markdown("### Get recommendations and support for Food, Electronics, and Fabrics")
+# ---------------- FABRIC PREDICTION FUNCTION ----------------
+def predict_fabric(model, vectorizer, skin_tone, weather, work_level, season):
+    if not model or not vectorizer:
+        return "⚠️ Model not available.", "N/A", "N/A"
 
-    # Sidebar slider for section selection
-    section = st.sidebar.radio("Choose Category", ["🥗 Food", "⚡ Electronics", "👗 Fabric"])
+    text_input = f"{skin_tone} {weather} {work_level} {season}"
+    vec = vectorizer.transform([text_input])
+    outfit = model.predict(vec)[0]
 
-    # ================= FOOD =================
-    if section == "🥗 Food":
-        st.header("🍎 Food Recommendation System")
-        st.markdown("Enter the nutritional details below:")
+    # Add extra generated context
+    rec_fabric = random.choice(["Cotton", "Linen", "Silk", "Denim"])
+    avoid_fabric = random.choice(["Wool", "Polyester", "Leather"])
+    return outfit, rec_fabric, avoid_fabric
 
-        ingredients = st.text_input("Ingredients")
-        label = st.selectbox("Label", ["Weight Loss", "Weight Gain"])
-        calories = st.number_input("Calories", min_value=0)
-        protein = st.number_input("Protein (g)", min_value=0.0)
-        carbs = st.number_input("Carbs (g)", min_value=0.0)
-        fiber = st.number_input("Fiber (g)", min_value=0.0)
-        fat = st.number_input("Fat (g)", min_value=0.0)
-        sugar = st.number_input("Sugar (g)", min_value=0.0)
+# ---------------- FOOD PREDICTION FUNCTION ----------------
+def predict_food(model, vectorizer, ingredients, label, calories, protein, carbs, fiber, fat, sugar):
+    if not model or not vectorizer:
+        return "⚠️ Model not available."
 
-        if st.button("Predict Food Category"):
-            data = {
-                "ingredients": ingredients,
-                "label": label,
-                "calories": calories,
-                "protein": protein,
-                "carbs": carbs,
-                "fiber": fiber,
-                "fat": fat,
-                "sugar": sugar
-            }
-            st.success(predict_food(data))
+    text = f"{ingredients} {calories} {protein} {carbs} {fiber} {fat} {sugar}"
+    vec = vectorizer.transform([text])
+    pred_label = model.predict(vec)[0]
 
-    # ================= ELECTRONICS =================
-    elif section == "⚡ Electronics":
-        st.header("🔌 Electronics Support Assistant")
-        st.markdown("Describe your issue below:")
+    if pred_label.lower() == label.lower():
+        if pred_label.lower() == "weight loss":
+            return f"✅ The selected food product is suitable for **Weight Loss**."
+        else:
+            return f"✅ The selected food product is suitable for **Weight Gain**."
+    else:
+        return f"❌ The food might not match your target goal. Model predicted: **{pred_label}**"
 
-        query = st.text_area("Enter your electronic product query")
+# ---------------- MAIN UI FUNCTION ----------------
+def show_ui(food_model, food_vectorizer, fabric_model, fabric_vectorizer, electronics_data):
+    st.markdown("<h1 style='text-align:center;'>🤖 Smart Customer Support System</h1>", unsafe_allow_html=True)
+    st.write("### Select a category to get AI-powered support:")
 
-        if st.button("Get Support Response"):
-            response = get_electronic_response(query)
-            st.info(response)
+    section = st.sidebar.radio("Choose a Section", ["🍽️ Food", "💻 Electronics", "👗 Fabric"])
 
-    # ================= FABRIC =================
+    # ---------------- FOOD SECTION ----------------
+    if section == "🍽️ Food":
+        st.subheader("🥗 Food Recommendation System")
+        ingredients = st.text_area("Enter Ingredients:")
+        label = st.selectbox("Target Label", ["Weight Loss", "Weight Gain"])
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            calories = st.number_input("Calories", min_value=0)
+            protein = st.number_input("Protein (g)", min_value=0)
+        with col2:
+            carbs = st.number_input("Carbs (g)", min_value=0)
+            fiber = st.number_input("Fiber (g)", min_value=0)
+        with col3:
+            fat = st.number_input("Fat (g)", min_value=0)
+            sugar = st.number_input("Sugar (g)", min_value=0)
+
+        if st.button("Predict Food Suitability"):
+            result = predict_food(food_model, food_vectorizer, ingredients, label, calories, protein, carbs, fiber, fat, sugar)
+            st.success(result)
+
+    # ---------------- ELECTRONICS SECTION ----------------
+    elif section == "💻 Electronics":
+        st.subheader("🔌 Electronics Troubleshooter")
+        query = st.text_area("Describe your issue:")
+        if st.button("Get Solution"):
+            response = mimic_mistral_response(query, electronics_data)
+            st.markdown(response)
+
+    # ---------------- FABRIC SECTION ----------------
     elif section == "👗 Fabric":
-        st.header("🧵 Fabric Recommendation System")
+        st.subheader("🧵 Fabric Recommendation System")
+        skin_tone = st.selectbox("Skin Tone", ["Fair", "Medium", "Dark"])
+        weather = st.selectbox("Weather Condition", ["Sunny", "Rainy", "Cold", "Humid"])
+        work_level = st.selectbox("Work Level", ["Low", "Moderate", "High"])
+        season = st.selectbox("Season", ["Summer", "Winter", "Monsoon", "Autumn"])
 
-        skin = st.selectbox("Skin Tone", ["Fair", "Medium", "Dark"])
-        weather = st.selectbox("Weather Condition", ["Hot", "Cold", "Rainy"])
-        work = st.selectbox("Work Level", ["Low", "Medium", "High"])
-        season = st.selectbox("Season", ["Summer", "Winter", "Monsoon"])
+        if st.button("Recommend Outfit"):
+            outfit, rec, avoid = predict_fabric(fabric_model, fabric_vectorizer, skin_tone, weather, work_level, season)
+            st.markdown(f"### 👗 Recommended Outfit: **{outfit}**")
+            st.markdown(f"**✅ Recommended Fabric:** {rec}")
+            st.markdown(f"**🚫 Avoid Fabric:** {avoid}")
 
-        if st.button("Recommend Fabrics"):
-            inputs = {
-                "Skin Tone": skin,
-                "Weather Condition": weather,
-                "Work Level": work,
-                "Season": season
-            }
-            rec = predict_fabric(inputs)
-            st.success(f"Recommended Outfit: {rec['Recommended Outfit']}")
-            st.info(f"Recommended Fabric: {rec['Recommended Fabric']}")
-            st.warning(f"Avoid Fabrics: {rec['Avoid Fabrics']}")
+    # ---------------- FOOTER ----------------
+    st.markdown("---")
+    st.markdown("<p style='text-align:center;'>Built with ❤️ using Streamlit</p>", unsafe_allow_html=True)
