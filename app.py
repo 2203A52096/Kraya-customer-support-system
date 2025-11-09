@@ -11,7 +11,7 @@ def load_models():
     # Food
     with open("food/food_weight_model_final.pkl", "rb") as f:
         food_model = pickle.load(f)
-    with open("food/tfidf_vectorizer.pkl", "rb") as f:
+    with open("food/tfidf_vectorizer_final.pkl", "rb") as f:
         food_vectorizer = pickle.load(f)
     
     # Fabric
