@@ -69,7 +69,11 @@ def food_page(food_model, food_vectorizer):
 def fabric_page(fabric_model, fabric_vectorizer):
     st.title("🧵 Fabric Recommendation System")
     st.markdown('<div class="banner">👗 Dress Smart, Feel Confident</div>', unsafe_allow_html=True)
+    
+    # Quick tips above inputs
     st.info("Get fabric and **color suggestions** tailored to your **skin, weather, work level, and season**.")
+    st.info("💡 Tip: Choose 'Recommended Outfit' based on the occasion to get better fabric suggestions.")
+    st.info("💡 Note: Fabrics suggested are based on season, work intensity, and your skin tone.")
 
     # User inputs
     skin_type = st.selectbox("👩 Skin Type", ["Dry", "Oily", "Sensitive", "Normal"])
@@ -89,13 +93,37 @@ def fabric_page(fabric_model, fabric_vectorizer):
             # Predict fabric
             pred_fabric = fabric_model.predict(X)[0]
 
-            # Display result
+            # Display predicted fabric
             st.markdown(
                 f"""<div class="result-box">
                 <span style='color:#5CB85C; font-weight:bold;'>✅ Predicted Fabric:</span> {pred_fabric}
                 </div>""",
                 unsafe_allow_html=True,
             )
+
+            # Detailed notes below prediction
+            st.markdown("""
+            <div style='background-color:#FFF4E6; border-left:6px solid #FF6F61; padding:10px; border-radius:20px;'>
+            <h4>📝 Informative Notes:</h4>
+            <ul>
+            <li>The predicted fabric is based on your selected skin tone, weather, work level, and season.</li>
+            <li>For sensitive skin, avoid synthetic fabrics like polyester and nylon.</li>
+            <li>High work intensity? Prefer moisture-wicking or breathable fabrics.</li>
+            <li>Seasonal fabrics: wool/fleece for winter, cotton/linen for summer.</li>
+            <li>Recommended outfits help improve prediction relevance.</li>
+            </ul>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # Optional collapsible tips
+            with st.expander("💡 Fabric Guidelines and Tips"):
+                st.write("""
+                - Predicted fabrics are suitable for your skin type and season.
+                - Always consider personal comfort and style.
+                - Colors suggested are complementary to your skin tone.
+                - Re-check fabric recommendation if changing weather or outfit.
+                """)
+
         except ValueError:
             st.warning("⚠️ Input format does not match the trained model. Please check your selections.")
 
