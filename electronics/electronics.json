@@ -11,6 +11,16 @@
   },
   {
     "device": "Smartphone",
+    "category": "Battery Issues",
+    "problem": "Battery draining fast",
+    "example_queries": [
+      "My phone battery drains quickly even on light use.",
+      "Phone dies fast after full charge."
+    ],
+    "solution": "Check for battery-intensive apps, reduce screen brightness, disable background app refresh, and consider battery replacement if old."
+  },
+  {
+    "device": "Smartphone",
     "category": "Connectivity Issues",
     "problem": "Mobile data not working",
     "example_queries": [
@@ -20,14 +30,54 @@
     "solution": "Turn airplane mode on/off, reset network settings, reinsert SIM card, and check with your service provider."
   },
   {
+    "device": "Smartphone",
+    "category": "Connectivity Issues",
+    "problem": "Wi-Fi not connecting",
+    "example_queries": [
+      "My phone cannot connect to Wi-Fi.",
+      "Wi-Fi keeps disconnecting."
+    ],
+    "solution": "Restart router, forget and reconnect to network, reset network settings, and update phone software."
+  },
+  {
+    "device": "Smartphone",
+    "category": "Screen Issues",
+    "problem": "Screen not responding",
+    "example_queries": [
+      "Touch screen is unresponsive.",
+      "Phone freezes on home screen."
+    ],
+    "solution": "Restart the phone, remove screen protector, clean screen, update software, and if persistent, consider screen replacement."
+  },
+  {
+    "device": "Smartphone",
+    "category": "Camera Issues",
+    "problem": "Camera not working",
+    "example_queries": [
+      "My phone camera does not open.",
+      "Camera shows black screen or error."
+    ],
+    "solution": "Restart phone, clear camera cache, update software, and check for physical obstruction. If still failing, service may be needed."
+  },
+  {
     "device": "Laptop",
     "category": "Performance Issues",
     "problem": "Laptop running slow",
     "example_queries": [
-      "My laptop is very slow while browsing.",
+      "My laptop is slow when opening apps.",
       "System takes too long to boot."
     ],
-    "solution": "Clear temporary files, uninstall unused apps, increase RAM if possible, and scan for malware."
+    "solution": "Clear temporary files, uninstall unused apps, check for malware, upgrade RAM or SSD if needed."
+  },
+  {
+    "device": "Laptop",
+    "category": "Battery Issues",
+    "problem": "Laptop not charging",
+    "example_queries": [
+      "Laptop shows plugged in but not charging.",
+      "Battery percentage stuck."
+    ],
+    "solution": "Check power adapter and charging port, try different outlet, update battery drivers, and consider battery replacement."
   },
   {
     "device": "Laptop",
@@ -37,57 +87,77 @@
       "Some laptop keys are not typing.",
       "Keyboard stopped responding."
     ],
-    "solution": "Restart the laptop, update keyboard drivers, try an external keyboard. If issue persists, the keyboard may need replacement."
+    "solution": "Restart laptop, update keyboard drivers, try external keyboard. If issue persists, keyboard may need replacement."
+  },
+  {
+    "device": "Laptop",
+    "category": "Hardware Issues",
+    "problem": "Screen flickering",
+    "example_queries": [
+      "Laptop screen flickers intermittently.",
+      "Display keeps blinking."
+    ],
+    "solution": "Update graphics drivers, check display cable connection, reduce refresh rate. If persists, hardware repair may be needed."
+  },
+  {
+    "device": "Laptop",
+    "category": "Connectivity Issues",
+    "problem": "Wi-Fi not connecting",
+    "example_queries": [
+      "Laptop cannot connect to Wi-Fi.",
+      "Wi-Fi disconnects frequently."
+    ],
+    "solution": "Restart router, update Wi-Fi drivers, reset network settings, and check security settings."
   },
   {
     "device": "TV",
     "category": "Display Issues",
     "problem": "No picture on screen",
     "example_queries": [
-      "My TV turns on but shows no display.",
-      "There is sound but no picture on my TV."
+      "TV turns on but no display.",
+      "There is sound but no picture."
     ],
-    "solution": "Check HDMI/cable connections, restart the TV, try a different input source, and adjust brightness settings. If issue continues, the display panel may be faulty."
+    "solution": "Check HDMI/cable connections, restart TV, try different input source, adjust brightness. If problem persists, display may need service."
+  },
+  {
+    "device": "TV",
+    "category": "Audio Issues",
+    "problem": "No sound",
+    "example_queries": [
+      "TV picture works but no sound.",
+      "Volume is at max but cannot hear audio."
+    ],
+    "solution": "Check volume/mute, verify audio output, try external speakers, update firmware."
   },
   {
     "device": "TV",
     "category": "Connectivity Issues",
     "problem": "Wi-Fi not connecting",
     "example_queries": [
-      "My smart TV won't connect to Wi-Fi.",
+      "Smart TV won't connect to Wi-Fi.",
       "TV says no internet connection."
     ],
-    "solution": "Restart the router and TV, re-enter Wi-Fi password, and update TV firmware. If still failing, reset network settings."
+    "solution": "Restart router and TV, re-enter Wi-Fi password, update firmware, reset network settings."
   },
   {
-    "device": "Washing Machine",
-    "category": "Operation Issues",
-    "problem": "Machine not spinning",
+    "device": "TV",
+    "category": "Hardware Issues",
+    "problem": "Remote not working",
     "example_queries": [
-      "Washing machine drum is not rotating.",
-      "Clothes come out wet after wash."
+      "TV remote not responding.",
+      "Buttons on remote do not work."
     ],
-    "solution": "Check if the load is balanced, ensure lid/door is properly closed, and clean the filter. If still not spinning, motor or belt may need service."
-  },
-  {
-    "device": "Washing Machine",
-    "category": "Error Codes",
-    "problem": "Water not draining",
-    "example_queries": [
-      "Washing machine showing drain error.",
-      "Water stuck inside the drum."
-    ],
-    "solution": "Clean the drain pump filter, check the hose for blockages, and restart the machine."
+    "solution": "Replace batteries, ensure line-of-sight, reset remote, or pair again with TV."
   },
   {
     "device": "Refrigerator",
     "category": "Cooling Issues",
     "problem": "Fridge not cooling properly",
     "example_queries": [
-      "My refrigerator is running but not cooling.",
+      "Refrigerator running but not cooling.",
       "Freezer works but fridge is warm."
     ],
-    "solution": "Check temperature settings, clean condenser coils, and ensure doors are sealed. If issue persists, gas refill or compressor repair may be needed."
+    "solution": "Check temperature, clean condenser coils, ensure doors seal properly. Service compressor or gas refill if needed."
   },
   {
     "device": "Refrigerator",
@@ -95,8 +165,118 @@
     "problem": "Fridge not turning on",
     "example_queries": [
       "Refrigerator stopped working suddenly.",
-      "Lights inside the fridge are off."
+      "Lights inside fridge are off."
     ],
-    "solution": "Check power supply, verify plug and socket, reset the circuit breaker, and test with another outlet."
+    "solution": "Check power supply, verify plug and socket, reset circuit breaker, test with another outlet."
+  },
+  {
+    "device": "Refrigerator",
+    "category": "Door Issues",
+    "problem": "Door not sealing",
+    "example_queries": [
+      "Fridge door does not close properly.",
+      "Condensation inside fridge."
+    ],
+    "solution": "Check door gasket, clean it, adjust door alignment, replace gasket if damaged."
+  },
+  {
+    "device": "Washing Machine",
+    "category": "Operation Issues",
+    "problem": "Machine not spinning",
+    "example_queries": [
+      "Drum is not rotating.",
+      "Clothes come out wet."
+    ],
+    "solution": "Check load balance, lid/door closure, clean filter. Motor/belt may need service if persists."
+  },
+  {
+    "device": "Washing Machine",
+    "category": "Water Issues",
+    "problem": "Water not draining",
+    "example_queries": [
+      "Drain error displayed.",
+      "Water stuck inside drum."
+    ],
+    "solution": "Clean drain pump filter, check hose for blockages, restart machine."
+  },
+  {
+    "device": "Washing Machine",
+    "category": "Noise Issues",
+    "problem": "Excessive noise during wash",
+    "example_queries": [
+      "Machine is noisy when spinning.",
+      "Loud banging sound during cycles."
+    ],
+    "solution": "Check for foreign objects, balance load, place machine on even surface, service motor or bearings if needed."
+  },
+  {
+    "device": "Air Conditioner",
+    "category": "Cooling Issues",
+    "problem": "AC not cooling",
+    "example_queries": [
+      "Room AC blows warm air.",
+      "Air conditioner is running but not cooling."
+    ],
+    "solution": "Clean/replace filters, check refrigerant, ensure vents are open, service compressor if needed."
+  },
+  {
+    "device": "Air Conditioner",
+    "category": "Power Issues",
+    "problem": "AC not turning on",
+    "example_queries": [
+      "Air conditioner does not start.",
+      "Remote not working with AC."
+    ],
+    "solution": "Check power supply, reset breaker, replace batteries in remote, service unit if needed."
+  },
+  {
+    "device": "Microwave",
+    "category": "Heating Issues",
+    "problem": "Microwave not heating",
+    "example_queries": [
+      "Microwave turns on but food remains cold.",
+      "Heating stops midway."
+    ],
+    "solution": "Check door closure, test different power levels, ensure platter rotates, service magnetron if needed."
+  },
+  {
+    "device": "Microwave",
+    "category": "Power Issues",
+    "problem": "Microwave not turning on",
+    "example_queries": [
+      "Microwave completely dead.",
+      "No display or lights when buttons pressed."
+    ],
+    "solution": "Check power cord, test outlet, reset breaker, consider fuse replacement or professional service."
+  },
+  {
+    "device": "Smartwatch",
+    "category": "Connectivity Issues",
+    "problem": "Watch not syncing with phone",
+    "example_queries": [
+      "Smartwatch data not updating on phone.",
+      "Bluetooth not connecting."
+    ],
+    "solution": "Restart devices, re-pair via Bluetooth, update software, reset watch if necessary."
+  },
+  {
+    "device": "Smartwatch",
+    "category": "Battery Issues",
+    "problem": "Battery draining fast",
+    "example_queries": [
+      "Smartwatch dies quickly after full charge.",
+      "Battery drops fast."
+    ],
+    "solution": "Reduce screen brightness, disable always-on display, close unused apps, replace battery if old."
+  },
+  {
+    "device": "Smartwatch",
+    "category": "Screen Issues",
+    "problem": "Screen frozen or unresponsive",
+    "example_queries": [
+      "Watch touchscreen not responding.",
+      "Screen freezes frequently."
+    ],
+    "solution": "Restart watch, update software, factory reset if problem persists."
   }
 ]
