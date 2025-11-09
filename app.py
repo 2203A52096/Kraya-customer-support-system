@@ -1,3 +1,4 @@
+# app.py
 import pickle
 import json
 import streamlit as st
@@ -9,25 +10,25 @@ st.set_page_config(page_title="Customer Support Assistant", page_icon="🤖", la
 try:
     food_model = pickle.load(open("food/food_weight_model_final.pkl", "rb"))
     food_vectorizer = pickle.load(open("food/tfidf_vectorizer_final.pkl", "rb"))
-except Exception as e:
-    st.warning("⚠️ Food model not loaded properly. Check file paths.")
+except:
+    st.warning("⚠️ Food model not loaded properly.")
     food_model, food_vectorizer = None, None
 
 # ---------- Load Fabric Model ----------
 try:
     fabric_model = pickle.load(open("fabric/fashion_fabric_model.pkl", "rb"))
     fabric_vectorizer = pickle.load(open("fabric/fashion_vectorizer_best(1).pkl", "rb"))
-except Exception as e:
-    st.warning("⚠️ Fabric model not loaded properly. Check file paths.")
+except:
+    st.warning("⚠️ Fabric model not loaded properly.")
     fabric_model, fabric_vectorizer = None, None
 
-# ---------- Load Electronics Data ----------
+# ---------- Load Electronics JSON ----------
 try:
     with open("electronics/electronics.json", "r") as f:
         electronics_data = json.load(f)
-except Exception as e:
+except:
     st.warning("⚠️ Electronics JSON not found.")
     electronics_data = None
 
-# ---------- Run Main UI ----------
+# ---------- Run UI ----------
 show_ui(food_model, food_vectorizer, fabric_model, fabric_vectorizer, electronics_data)
