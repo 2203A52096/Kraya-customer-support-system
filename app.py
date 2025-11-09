@@ -20,17 +20,17 @@ st.markdown("""
 # ---------------- LOAD MODELS ---------------- #
 @st.cache_resource
 def load_food_model():
-    return pickle.load(open("food/food_model.pkl", "rb"))
+    return pickle.load(open("food/food_weight_model_final.pkl", "rb"))
 
 @st.cache_resource
 def load_fabric_model():
-    return pickle.load(open("fabric/fabric_model.pkl", "rb"))
+    return pickle.load(open("fabric/fashion_fabric_model.pkl", "rb"))
 
 food_model = load_food_model()
 fabric_model = load_fabric_model()
 
 # ---------------- LOAD ELECTRONICS KNOWLEDGE BASE ---------------- #
-with open("electronics/electronics_data.json", "r") as f:
+with open("electronics/electronics.json", "r") as f:
     electronics_data = json.load(f)
 
 # ---------------- MISTRAL API FUNCTION ---------------- #
