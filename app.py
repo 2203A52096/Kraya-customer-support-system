@@ -4,21 +4,21 @@ import random
 import pandas as pd
 
 # -------------------------
-# Load models and vectorizers
+# Load Models and Data
 # -------------------------
-# Food model
+# Food
 with open("food/food_weight_model_final.pkl", "rb") as f:
     food_model = pickle.load(f)
 with open("food/tfidf_vectorizer_final.pkl", "rb") as f:
     food_vectorizer = pickle.load(f)
 
-# Fabric model
+# Fabric
 with open("fabric/fashion_fabric_model.pkl", "rb") as f:
     fabric_model = pickle.load(f)
 with open("fabric/fashion_vectorizer_best(1).pkl", "rb") as f:
     fabric_vectorizer = pickle.load(f)
 
-# Electronics data
+# Electronics JSON
 with open("electronics/electronics.json", "r") as f:
     electronics_data = json.load(f)
 
@@ -31,7 +31,7 @@ def predict_food_label(ingredients, label, calories, protein, carbs, fiber, fat,
     vectorized = food_vectorizer.transform([text_input])
     predicted_label = food_model.predict(vectorized)[0]
 
-    if predicted_label == label.lower():
+    if predicted_label.lower() == label.lower():
         if label.lower() == "weight loss":
             return "✅ The taken food product is suitable for weight loss."
         else:
@@ -44,11 +44,10 @@ def predict_food_label(ingredients, label, calories, protein, carbs, fiber, fat,
 # Fabric Prediction Function
 # -------------------------
 def predict_fabric_recommendation(skin_tone, weather, work_level, season):
-    input_text = f"{skin_tone} {weather} {work_level} {season}"
-    vectorized = fabric_vectorizer.transform([input_text])
+    text_input = f"{skin_tone} {weather} {work_level} {season}"
+    vectorized = fabric_vectorizer.transform([text_input])
     outfit = fabric_model.predict(vectorized)[0]
 
-    # Add two extra outputs
     recommended_fabrics = random.choice(["Cotton", "Linen", "Silk", "Denim"])
     avoid_fabrics = random.choice(["Wool", "Polyester", "Nylon", "Velvet"])
 
@@ -63,10 +62,11 @@ def predict_fabric_recommendation(skin_tone, weather, work_level, season):
 # Electronics "Mistral-like" Function
 # -------------------------
 def mistral_like_response(user_query):
-    responses = [
-        "It seems you’re asking about a connectivity issue — please check the power cable and try again.",
-        "You might want to reset your device and update the firmware.",
-        "If the product isn’t responding, try restarting or checking for software updates.",
-        "Ensure your device is connected properly — sometimes the issue is with the adapter or port.",
+    canned_responses = [
+        "🔌 Please check the power connection and ensure the adapter is properly plugged in.",
+        "⚙️ Try restarting your device and updating its firmware.",
+        "💡 If your product is unresponsive, check for software updates or connectivity issues.",
+        "📶 Make sure the device is connected to a stable power or network source.",
+        "🧰 Try resetting to factory settings if the issue persists.",
     ]
-    return random.choice(responses)
+    return random.choice(canned_responses)
