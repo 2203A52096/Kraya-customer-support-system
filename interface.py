@@ -112,13 +112,21 @@ def electronics_page(electronics_data, embed_model):
         best_match = None
         max_score = -1
 
+        # Iterate over JSON entries
         for item in electronics_data:
-            desc_emb = embed_model.encode(item['issue'], convert_to_tensor=True)
-            score = util.pytorch_cos_sim(user_emb, desc_emb).item()
-            if score > max_score:
-                max_score = score
-                best_match = item
+            if item['device'] != device.split()[0]:  # match selected device
+                continue
 
+            # Use problem + example queries as embeddings
+            texts_to_compare = [item['problem']] + item.get('example_queries', [])
+            for text in texts_to_compare:
+                desc_emb = embed_model.encode(text, convert_to_tensor=True)
+                score = util.pytorch_cos_sim(user_emb, desc_emb).item()
+                if score > max_score:
+                    max_score = score
+                    best_match = item
+
+        # Show result if similarity is high enough
         if best_match and max_score > 0.6:
             st.markdown(f'<div class="result-box">{best_match["solution"]}</div>', unsafe_allow_html=True)
         else:
