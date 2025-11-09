@@ -133,4 +133,21 @@ elif category == "Fabric":
         work_level = st.selectbox("Work Level", ["Low", "Medium", "High"])
         season = st.selectbox("Season", ["Summer", "Winter", "Rainy"])
 
-    def predict_fabric_recommendation(skin_tone, weather, w_
+    def predict_fabric_recommendation(skin_tone, weather, work_level, season):
+        text_input = f"{skin_tone} {weather} {work_level} {season}"
+        vectorized = fabric_vectorizer.transform([text_input])
+        outfit = fabric_model.predict(vectorized)[0]
+
+        recommended_fabric = random.choice(["Cotton", "Linen", "Silk", "Denim"])
+        avoid_fabric = random.choice(["Wool", "Polyester", "Nylon", "Velvet"])
+
+        return outfit, recommended_fabric, avoid_fabric
+
+    if st.button("✨ Get Recommendation"):
+        outfit, rec_fabric, avoid_fabric = predict_fabric_recommendation(
+            skin_tone, weather, work_level, season
+        )
+        st.markdown("### 🧵 Recommendation Results")
+        st.write(f"👗 **Recommended Outfit:** {outfit}")
+        st.write(f"🌿 **Recommended Fabric:** {rec_fabric}")
+        st.write(f"🚫 **Avoid Fabrics:** {avoid_fabric}")
