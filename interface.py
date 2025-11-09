@@ -69,27 +69,36 @@ def food_page(food_model, food_vectorizer):
 def fabric_page(fabric_model, fabric_vectorizer):
     st.title("🧵 Fabric Recommendation System")
     st.markdown('<div class="banner">👗 Dress Smart, Feel Confident</div>', unsafe_allow_html=True)
-    st.info("Get fabric suggestions based on skin tone, weather, work level, and season.")
+    st.info("Get fabric and **color suggestions** tailored to your **skin, weather, work level, and season**.")
 
+    # User inputs
+    skin_type = st.selectbox("👩 Skin Type", ["Dry", "Oily", "Sensitive", "Normal"])
     skin_tone = st.selectbox("🎨 Skin Tone", ["Fair", "Medium", "Dark"])
     weather = st.selectbox("☀️ Weather Condition", ["Hot", "Cold", "Humid", "Dry"])
     work_level = st.selectbox("💪 Work Level", ["High", "Medium", "Low"])
     season = st.selectbox("🍂 Season", ["Summer", "Winter", "Spring", "Autumn"])
-    recommended_outfit = st.text_input("👗 Recommended Outfit", "Shirt, Pants, Dress etc.")
+    recommended_outfit = st.text_input("👗 Recommended Outfit", "Casual")
 
-    if st.button("🎯 Get Fabric Prediction"):
-        if not fabric_model or not fabric_vectorizer:
-            st.warning("⚠️ Fabric ML model not loaded.")
-            return
-
+    if st.button("🎯 Get Fabric Suggestions"):
+        # Combine all features as a single string
         feature_text = f"{skin_tone} {weather} {work_level} {season} {recommended_outfit}"
-        X = fabric_vectorizer.transform([feature_text])
-        pred_fabric = fabric_model.predict(X)[0]
 
-        st.markdown(
-            f'<div class="result-box"><span class="badge badge-fabric">🧵 Predicted Fabric:</span> {pred_fabric}</div>',
-            unsafe_allow_html=True
-        )
+        try:
+            # Transform using the trained vectorizer
+            X = fabric_vectorizer.transform([feature_text])
+            # Predict fabric
+            pred_fabric = fabric_model.predict(X)[0]
+
+            # Display result
+            st.markdown(
+                f"""<div class="result-box">
+                <span style='color:#5CB85C; font-weight:bold;'>✅ Predicted Fabric:</span> {pred_fabric}
+                </div>""",
+                unsafe_allow_html=True,
+            )
+        except ValueError:
+            st.warning("⚠️ Input format does not match the trained model. Please check your selections.")
+
 
 # ---------------- ELECTRONICS PAGE ---------------- #
 def electronics_page(electronics_data, embed_model):
