@@ -201,13 +201,11 @@ def fabric_page(fabric_model, fabric_vectorizer):
 
 # ---------------- ELECTRONICS PAGE ---------------- #
 
-
 def electronics_page(electronics_data, embed_model):
-    # PAGE TITLE
     st.title("📱 Electronics Help Desk")
 
-    # INTRO CARD STYLE (more padding for elegant feel)
-    intro_card_style = """
+    # SINGLE LARGE CARD STYLE
+    card_style = """
         padding:40px; 
         border-radius:20px; 
         background:linear-gradient(135deg, #e3f2f9, #c7e8f6); 
@@ -215,28 +213,24 @@ def electronics_page(electronics_data, embed_model):
         font-size:16px;
         line-height:1.8;
         color:#37474f;
+        margin-bottom:20px;
     """
 
-    # FUN & ENGAGING INTRO
-    st.markdown(
-        f'''
-        <div style="{intro_card_style}">
-            🎉 <b>Welcome to the Electronics Help Desk!</b> 🛠️<br><br>
-
-            Stressed out because your <b style="color:#0277bd;">gadget is acting up</b>? 
-            Don’t worry, you’re in <b style="color:#f57f17;">good hands</b> (or circuits 😎)!<br><br>
-
-            Here’s what I do:<br>
-            1️⃣ <b style="color:#00796b;">Step-by-step troubleshooting 🔧</b> – I break things down so even your grandma could fix it.<br>
-            2️⃣ <b style="color:#ff8f00;">Fun and quirky tips 😜</b> – Expect some tech humor along the way!<br>
-            3️⃣ <b style="color:#d32f2f;">Professional advice if needed 📞</b> – When it’s above our paygrade, I’ll tell you straight.<br><br>
-
-            Think of me as your <b style="color:#6a1b9a;">friendly, slightly sarcastic, tech-savvy buddy</b> 
-            who’s always ready to <b style="color:#fbc02d;">save the day ⚡</b>.<br>
-            So go ahead, spill the beans about your gadget drama – <b style="color:#00796b;">the weirder, the better 🤖💬!</b><br><br>
-        </div>
-        ''', unsafe_allow_html=True
-    )
+    # INTRO + HIGHLIGHTS
+    intro_html = f"""<div style="{card_style}">
+🎉 <b>Welcome to the Electronics Help Desk!</b> 🛠️<br><br>
+Stressed out because your <b style="color:#0277bd;">gadget is acting up</b>? 
+Don’t worry, you’re in <b style="color:#f57f17;">good hands</b> (or circuits 😎)!<br><br>
+Here’s what I do:<br>
+1️⃣ <b style="color:#00796b;">Step-by-step troubleshooting 🔧</b> – I break things down so even your grandma could fix it.<br>
+2️⃣ <b style="color:#ff8f00;">Fun and quirky tips 😜</b> – Expect some tech humor along the way!<br>
+3️⃣ <b style="color:#d32f2f;">Professional advice if needed 📞</b> – When it’s above our paygrade, I’ll tell you straight.<br><br>
+Think of me as your <b style="color:#6a1b9a;">friendly, slightly sarcastic, tech-savvy buddy</b> 
+who’s always ready to <b style="color:#fbc02d;">save the day ⚡</b>.<br>
+So go ahead, spill the beans about your gadget drama – <b style="color:#00796b;">the weirder, the better 🤖💬!</b><br><br>
+</div>"""
+    
+    st.markdown(intro_html, unsafe_allow_html=True)
 
     # DEVICE SELECTION
     devices = ["Smartphone 📱", "Laptop 💻", "TV 📺", "Washing Machine 🧺", "Refrigerator ❄️"]
@@ -278,19 +272,8 @@ def electronics_page(electronics_data, embed_model):
         funny_headers = ["😎 Tech Tip:", "🛠️ Pro Hack:", "💡 Quick Fix:", "🤔 Try this:"]
         fallback_headers = ["😬 Hmmm…", "🤖 Brainstorming…", "⚡ Device acting up…", "📞 Call the experts!"]
 
-        # SOLUTION CARD STYLE
-        solution_card_style = """
-            padding:25px; 
-            border-radius:15px; 
-            background:linear-gradient(135deg, #e3f2f9, #c7e8f6); 
-            box-shadow: 2px 2px 15px rgba(0,0,0,0.08);
-            font-size:16px;
-            line-height:1.6;
-            color:#37474f;
-        """
-
-        # ADD SOLUTION/ADVICE INSIDE SAME CARD
-        solution_html = ""
+        # ADD SOLUTION/ADVICE INTO SAME CARD
+        solution_html = f'<div style="{card_style}">'
         if best_match and max_score > 0.6:
             steps = best_match["solution"].split(", ")
             solution_html += f'<h3 style="color:#0277bd;">{random.choice(funny_headers)}</h3>'
@@ -308,11 +291,9 @@ def electronics_page(electronics_data, embed_model):
             solution_html += "<li>📞 Contact official support if all else fails</li>"
             solution_html += "</ul>"
 
-        # RENDER SOLUTION INSIDE CARD
-        st.markdown(
-            f'<div style="{solution_card_style}; margin-top:20px;">{solution_html}</div>',
-            unsafe_allow_html=True
-        )
+        solution_html += "</div>"
+
+        st.markdown(solution_html, unsafe_allow_html=True)
 
 # ---------------- MAIN UI ---------------- #
 def show_ui(food_model, food_vectorizer, fabric_model, fabric_vectorizer, electronics_data):
