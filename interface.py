@@ -201,30 +201,44 @@ def fabric_page(fabric_model, fabric_vectorizer):
 
 # ---------------- ELECTRONICS PAGE ---------------- #
 
+import random
+import streamlit as st
+from sentence_transformers import SentenceTransformer, util
+
 def electronics_page(electronics_data, embed_model):
-    # PAGE TITLE & BANNER
+    # PAGE TITLE
     st.title("📱 Electronics Help Desk")
+
+    # SINGLE PASTEL CARD
+    card_style = """
+    padding:25px; 
+    border-radius:15px; 
+    background:linear-gradient(135deg, #e3f2f9, #c7e8f6); 
+    box-shadow: 2px 2px 15px rgba(0,0,0,0.08);
+    font-size:16px;
+    line-height:1.6;
+    color:#37474f;
+    """
+
+    # FUN & ENGAGING INTRO
     st.markdown(
-        '<div style="padding:18px; border-radius:12px; background:#d7f0f7; text-align:center; font-size:18px;">'
-        '⚡ Smart Fixes for Your Gadgets – Elegant, Friendly & Fun ⚡</div>', 
-        unsafe_allow_html=True
-    )
+        f'''
+        <div style="{card_style}">
+            🎉 <b>Welcome to the Electronics Help Desk!</b> 🛠️<br><br>
 
-    # ELEGANT & FUN ABOUT PAGE
-    st.info(
-        """
-        🎉 Welcome to the **Electronics Help Desk**! 🛠️  
+            Stressed out because your <b style="color:#0277bd;">gadget is acting up</b>? 
+            Don’t worry, you’re in <b style="color:#f57f17;">good hands</b> (or circuits 😎)!<br><br>
 
-        Feeling frustrated because your gadget is misbehaving? Relax 😎 – I’ve got your back!  
+            Here’s what I do:<br>
+            1️⃣ <b style="color:#00796b;">Step-by-step troubleshooting 🔧</b> – I break things down so even your grandma could fix it.<br>
+            2️⃣ <b style="color:#ff8f00;">Fun and quirky tips 😜</b> – Expect some tech humor along the way!<br>
+            3️⃣ <b style="color:#d32f2f;">Professional advice if needed 📞</b> – When it’s above our paygrade, I’ll tell you straight.<br><br>
 
-        Here’s what I offer:  
-        1️⃣ **Step-by-step troubleshooting** 🔧 – Clear and simple, no tech jargon.  
-        2️⃣ **Fun and quirky tips** 😜 – A little humor to make tech less stressful.  
-        3️⃣ **Professional advice** 📞 – When things get tricky, I’ll tell you straight.  
-
-        Think of me as your **friendly, elegant, tech-savvy companion** who makes gadget fixes painless and fun 💡.  
-        So go ahead, describe your device drama – the weirder, the better 🤖✨!
-        """
+            Think of me as your <b style="color:#6a1b9a;">friendly, slightly sarcastic, tech-savvy buddy</b> 
+            who’s always ready to <b style="color:#fbc02d;">save the day ⚡</b>.<br>
+            So go ahead, spill the beans about your gadget drama – <b style="color:#00796b;">the weirder, the better 🤖💬!</b><br><br>
+        </div>
+        ''', unsafe_allow_html=True
     )
 
     # DEVICE SELECTION
@@ -236,9 +250,8 @@ def electronics_page(electronics_data, embed_model):
 
     # GET SUPPORT BUTTON
     if st.button("🛠️ Get Support"):
-        # HANDLE EMPTY INPUT
         if not user_input.strip():
-            st.warning("⚠️ Please describe your problem first! Your elegant tech buddy can’t guess 😅")
+            st.warning("⚠️ Please describe your problem first! Your tech buddy can’t guess 😅")
             return
 
         if not electronics_data:
@@ -264,52 +277,34 @@ def electronics_page(electronics_data, embed_model):
                     max_score = score
                     best_match = item
 
-        # FUN & INFORMATIVE RESPONSES
+        # HEADERS FOR SOLUTIONS
         funny_headers = ["😎 Tech Tip:", "🛠️ Pro Hack:", "💡 Quick Fix:", "🤔 Try this:"]
         fallback_headers = ["😬 Hmmm…", "🤖 Brainstorming…", "⚡ Device acting up…", "📞 Call the experts!"]
 
-        # MATCH FOUND
+        # ADD SOLUTION/ADVICE INSIDE SAME CARD
+        solution_html = ""
         if best_match and max_score > 0.6:
-            solution_text = best_match["solution"]
-            steps = solution_text.split(", ")  # simple split for steps
-
-            st.markdown(
-                f'<div style="padding:22px 25px; margin:12px 0; border-radius:15px; '
-                f'background:linear-gradient(135deg, #e3f2f9, #c7e8f6); '
-                f'box-shadow: 2px 2px 12px rgba(0,0,0,0.08);">'
-                f'<h3 style="color:#0277bd; font-weight:600;">{random.choice(funny_headers)}</h3></div>', 
-                unsafe_allow_html=True
-            )
-
-            # Display steps elegantly
+            steps = best_match["solution"].split(", ")
+            solution_html += f'<h3 style="color:#0277bd;">{random.choice(funny_headers)}</h3>'
             for i, step in enumerate(steps, start=1):
-                st.markdown(
-                    f'<div style="padding:10px 0; font-size:16px; color:#455a64;">'
-                    f'🔹 <b>Step {i}:</b> {step} ✅</div>', unsafe_allow_html=True
-                )
-
-            # Extra tips if available
+                solution_html += f'<p style="margin:5px 0;">🔹 <b>Step {i}:</b> {step} ✅</p>'
             if 'tips' in best_match:
-                st.markdown(
-                    f'<div style="padding:14px; margin-top:10px; background:#fff8e1; border-radius:12px; color:#f57f17;">'
-                    f'💡 <b>Extra Tips:</b> {best_match["tips"]}</div>', unsafe_allow_html=True
-                )
-
-        # NO MATCH OR LOW SIMILARITY
+                solution_html += f'<p style="margin-top:10px; padding:10px; background:#fff8e1; border-radius:10px;">💡 <b>Extra Tips:</b> {best_match["tips"]}</p>'
         else:
-            st.markdown(
-                f'<div style="padding:22px 25px; margin:12px 0; border-radius:15px; '
-                f'background:linear-gradient(135deg, #fff5f5, #ffecec); '
-                f'box-shadow: 2px 2px 12px rgba(0,0,0,0.08);">'
-                f'<h3 style="color:#d32f2f; font-weight:600;">{random.choice(fallback_headers)}</h3>'
-                f'<p style="color:#5d4037;">I couldn’t find an exact fix 😅, but you can try these:</p>'
-                f'<ul style="color:#5d4037;">'
-                f'<li>🔌 Double-check your cables and connections</li>'
-                f'<li>🔄 Restart your device</li>'
-                f'<li>💾 Update the software if possible</li>'
-                f'<li>📞 Contact official support if all else fails</li>'
-                f'</ul></div>', unsafe_allow_html=True
-            )
+            solution_html += f'<h3 style="color:#d32f2f;">{random.choice(fallback_headers)}</h3>'
+            solution_html += "<p>I couldn’t find an exact fix 😅, but you can try these:</p>"
+            solution_html += "<ul style='margin-left:20px;'>"
+            solution_html += "<li>🔌 Double-check your cables and connections</li>"
+            solution_html += "<li>🔄 Restart your device</li>"
+            solution_html += "<li>💾 Update the software if possible</li>"
+            solution_html += "<li>📞 Contact official support if all else fails</li>"
+            solution_html += "</ul>"
+
+        # RENDER SOLUTION INSIDE SINGLE CARD
+        st.markdown(
+            f'<div style="{card_style}; margin-top:15px;">{solution_html}</div>',
+            unsafe_allow_html=True
+        )
 
 # ---------------- MAIN UI ---------------- #
 def show_ui(food_model, food_vectorizer, fabric_model, fabric_vectorizer, electronics_data):
