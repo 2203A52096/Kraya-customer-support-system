@@ -89,14 +89,14 @@ def food_page(food_model, food_vectorizer):
     """, unsafe_allow_html=True)
 
     # ================== PAGE TITLE & BANNER ==================
-    st.title("🍎 Foody shopers buddy")
-    st.markdown('<div class="banner">🥗 Should You Buy It? Let\'s Find Out!</div>', unsafe_allow_html=True)
+    st.title("🍎 Food Mood-o-Meter 3000")
+    st.markdown("""<div class="banner">🥗 Should You Buy It? Let's Find Out!</div>""", unsafe_allow_html=True)
 
-    # ================== INFO CARD (Pastel Cyan) ==================
+    # ================== INFO CARD ==================
     st.markdown("""
     <div class="info-box">
-        🎉 Welcome to the **Food Mood-o-Meter**! 😋  
-        Enter your product details and your goal (Weight Loss, Gain, or Balanced).  
+        🎉 <b>Welcome to the Food Mood-o-Meter!</b> 😋<br><br>
+        Enter your product details and your goal (Weight Loss, Gain, or Balanced).<br>
         Our AI will give you a fun, quirky verdict so you can shop smart! 🛒💡
     </div>
     """, unsafe_allow_html=True)
@@ -110,7 +110,7 @@ def food_page(food_model, food_vectorizer):
     carbs = st.number_input("🥖 Carbs (g)", min_value=0.0)
     fiber = st.number_input("🌿 Fiber (g)", min_value=0.0)
     fat = st.number_input("🥓 Fat (g)", min_value=0.0)
-    sugar = st.number_input("🍬 Sugar (g)", min_value=0.0)
+    sugar_val = st.number_input("🍬 Sugar (g)", min_value=0.0)
 
     # ================== ANALYZE BUTTON ==================
     if st.button("🔮 Check If You Should Buy"):
@@ -123,18 +123,20 @@ def food_page(food_model, food_vectorizer):
             return
 
         # Prepare features and predict
-        feature_text = f"{ingredients} {calories} {protein} {carbs} {fiber} {fat} {sugar}"
+        feature_text = f"{ingredients} {calories} {protein} {carbs} {fiber} {fat} {sugar_val}"
         X = food_vectorizer.transform([feature_text])
         pred_label = food_model.predict(X)[0]
 
         # ================== RESULT CARD ==================
-        result_color = "#d4edda" if pred_label.lower() in label.lower() else "#f8d7da"
-        badge_class = "badge-healthy" if pred_label.lower() in label.lower() else "badge-unhealthy"
-        emoji = "✅" if pred_label.lower() in label.lower() else "❌"
-
         if pred_label.lower() in label.lower():
+            result_color = "#d4edda"
+            badge_class = "badge-healthy"
+            emoji = "✅"
             message = f"This product matches your <b>{label}</b> goal. Go ahead and buy it! 🛒😋"
         else:
+            result_color = "#f8d7da"
+            badge_class = "badge-unhealthy"
+            emoji = "❌"
             message = f"The AI predicts <b>{pred_label}</b>. Better skip this product if you want <b>{label}</b>. 🚫🥴"
 
         st.markdown(f"""
@@ -147,10 +149,10 @@ def food_page(food_model, food_vectorizer):
     st.markdown('<p class="section-header">💡 Pro Tips</p>', unsafe_allow_html=True)
     st.markdown("""
     <div class="info-box" style="background: linear-gradient(135deg, #fff8e1, #ffe0b2); border-left: 6px solid #ff9800;">
-        - Enter all ingredients and nutrients for best prediction. 🕵️‍♀️  
-        - Double-check calories and macros. AI is smart but not psychic. 🤖  
-        - Use this as guidance for shopping, not a replacement for your nutritionist. 🥼  
-        - If unsure, choose something green and leafy. 🥦💚  
+        - Enter all ingredients and nutrients for best prediction. 🕵️‍♀️<br>
+        - Double-check calories and macros. AI is smart but not psychic. 🤖<br>
+        - Use this as guidance for shopping, not a replacement for your nutritionist. 🥼<br>
+        - If unsure, choose something green and leafy. 🥦💚
     </div>
     """, unsafe_allow_html=True)
 
