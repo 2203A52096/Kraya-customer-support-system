@@ -200,12 +200,15 @@ def fabric_page(fabric_model, fabric_vectorizer):
             st.warning("⚠️ Input format does not match the trained model. Please check your selections.")
 
 # ---------------- ELECTRONICS PAGE ---------------- #
+import random
+import streamlit as st
+from sentence_transformers import SentenceTransformer, util
 
 def electronics_page(electronics_data, embed_model):
     st.title("📱 Electronics Help Desk")
 
-    # SINGLE LARGE CARD STYLE
-    card_style = """
+    # ================== INTRO CARD ==================
+    intro_card_style = """
         padding:40px; 
         border-radius:20px; 
         background:linear-gradient(135deg, #e3f2f9, #c7e8f6); 
@@ -216,8 +219,7 @@ def electronics_page(electronics_data, embed_model):
         margin-bottom:20px;
     """
 
-    # INTRO + HIGHLIGHTS
-    intro_html = f"""<div style="{card_style}">
+    intro_html = f"""<div style="{intro_card_style}">
 🎉 <b>Welcome to the Electronics Help Desk!</b> 🛠️<br><br>
 Stressed out because your <b style="color:#0277bd;">gadget is acting up</b>? 
 Don’t worry, you’re in <b style="color:#f57f17;">good hands</b> (or circuits 😎)!<br><br>
@@ -229,17 +231,17 @@ Think of me as your <b style="color:#6a1b9a;">friendly, slightly sarcastic, tech
 who’s always ready to <b style="color:#fbc02d;">save the day ⚡</b>.<br>
 So go ahead, spill the beans about your gadget drama – <b style="color:#00796b;">the weirder, the better 🤖💬!</b><br><br>
 </div>"""
-    
+
     st.markdown(intro_html, unsafe_allow_html=True)
 
-    # DEVICE SELECTION
+    # ================== DEVICE SELECTION ==================
     devices = ["Smartphone 📱", "Laptop 💻", "TV 📺", "Washing Machine 🧺", "Refrigerator ❄️"]
     device = st.selectbox("🔧 Choose your device", devices)
 
-    # USER INPUT
+    # ================== USER INPUT ==================
     user_input = st.text_area("✍️ Describe your issue (don’t hold back!)", height=120)
 
-    # GET SUPPORT BUTTON
+    # ================== GET SUPPORT ==================
     if st.button("🛠️ Get Support"):
         if not user_input.strip():
             st.warning("⚠️ Please describe your problem first! Your tech buddy can’t guess 😅")
@@ -268,12 +270,22 @@ So go ahead, spill the beans about your gadget drama – <b style="color:#00796b
                     max_score = score
                     best_match = item
 
-        # HEADERS FOR SOLUTIONS
+        # ================== SOLUTION CARD ==================
+        solution_card_style = """
+            padding:25px; 
+            border-radius:15px; 
+            background:linear-gradient(135deg, #f0f4c3, #e6ee9c); 
+            box-shadow: 2px 2px 15px rgba(0,0,0,0.08);
+            font-size:16px;
+            line-height:1.6;
+            color:#37474f;
+            margin-top:15px;
+        """
+
         funny_headers = ["😎 Tech Tip:", "🛠️ Pro Hack:", "💡 Quick Fix:", "🤔 Try this:"]
         fallback_headers = ["😬 Hmmm…", "🤖 Brainstorming…", "⚡ Device acting up…", "📞 Call the experts!"]
 
-        # ADD SOLUTION/ADVICE INTO SAME CARD
-        solution_html = f'<div style="{card_style}">'
+        solution_html = f'<div style="{solution_card_style}">'
         if best_match and max_score > 0.6:
             steps = best_match["solution"].split(", ")
             solution_html += f'<h3 style="color:#0277bd;">{random.choice(funny_headers)}</h3>'
@@ -294,6 +306,7 @@ So go ahead, spill the beans about your gadget drama – <b style="color:#00796b
         solution_html += "</div>"
 
         st.markdown(solution_html, unsafe_allow_html=True)
+
 
 # ---------------- MAIN UI ---------------- #
 def show_ui(food_model, food_vectorizer, fabric_model, fabric_vectorizer, electronics_data):
