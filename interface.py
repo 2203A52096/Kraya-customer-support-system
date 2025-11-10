@@ -72,18 +72,19 @@ def fabric_page(fabric_model, fabric_vectorizer):
     
     # Quick tips above inputs
     st.info("Get outfit recommendations tailored to your **skin, weather, work level, and season**.")
-    st.info("💡 Tip: Choose 'Recommended Outfit' based on the occasion to get more relevant suggestions.")
-    st.info("💡 Note: Recommendations are based on your selections and past patterns in the dataset.")
+    st.info("💡 Tip: Enter the outfit you are planning to wear to check if it’s suitable.")
+    st.info("💡 Note: Recommendations are based on patterns in the dataset and your selections.")
 
     # User inputs
     skin_tone = st.selectbox("🎨 Skin Tone", ["Fair", "Medium", "Dark"])
     weather = st.selectbox("☀️ Weather Condition", ["Hot", "Cold", "Humid", "Dry"])
     work_level = st.selectbox("💪 Work Level", ["High", "Medium", "Low"])
     season = st.selectbox("🍂 Season", ["Summer", "Winter", "Spring", "Autumn"])
+    recommended_outfit = st.text_input("👗 Enter Outfit You Plan to Wear", "Casual")
 
-    if st.button("🎯 Get Outfit Suggestions"):
+    if st.button("🎯 Check Outfit Suitability"):
         # Combine all features exactly like in training
-        feature_text = f"{skin_tone} {weather} {work_level} {season}"
+        feature_text = f"{skin_tone} {weather} {work_level} {season} {recommended_outfit}"
 
         try:
             # Transform using the trained vectorizer
@@ -94,20 +95,26 @@ def fabric_page(fabric_model, fabric_vectorizer):
             # Display predicted outfit
             st.markdown(
                 f"""<div class="result-box">
-                <span style='color:#5CB85C; font-weight:bold;'>✅ Recommended Outfit:</span> {pred_outfit}
+                <span style='color:#5CB85C; font-weight:bold;'>✅ Predicted Outfit:</span> {pred_outfit}
                 </div>""",
                 unsafe_allow_html=True,
             )
+
+            # Check if user input matches prediction
+            if recommended_outfit.strip().lower() == pred_outfit.strip().lower():
+                st.success(f"🎉 The outfit '{recommended_outfit}' is suitable to wear according to your selections!")
+            else:
+                st.warning(f"⚠️ The outfit '{recommended_outfit}' may not be the best match. Predicted recommendation: '{pred_outfit}'")
 
             # Detailed notes below prediction
             st.markdown("""
             <div style='background-color:#FFF4E6; border-left:6px solid #FF6F61; padding:10px; border-radius:20px;'>
             <h4>📝 Informative Notes:</h4>
             <ul>
-            <li>The recommended outfit is based on your selected skin tone, weather, work level, and season.</li>
-            <li>High work intensity? Choose breathable or moisture-wicking fabrics.</li>
+            <li>The recommendation considers your skin tone, weather, work level, and season.</li>
+            <li>High work intensity? Prefer breathable or moisture-wicking fabrics.</li>
             <li>Seasonal advice: cotton/linen for summer, wool/fleece for winter.</li>
-            <li>These recommendations are based on patterns in our dataset; consider your personal comfort and style.</li>
+            <li>These are guidelines based on dataset patterns; consider personal comfort and style.</li>
             </ul>
             </div>
             """, unsafe_allow_html=True)
@@ -122,7 +129,6 @@ def fabric_page(fabric_model, fabric_vectorizer):
 
         except ValueError:
             st.warning("⚠️ Input format does not match the trained model. Please check your selections.")
-
 
 # ---------------- ELECTRONICS PAGE ---------------- #
 def electronics_page(electronics_data, embed_model):
