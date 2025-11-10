@@ -200,7 +200,6 @@ def fabric_page(fabric_model, fabric_vectorizer):
             st.warning("⚠️ Input format does not match the trained model. Please check your selections.")
 
 # ---------------- ELECTRONICS PAGE ---------------- #
-
 import random
 import streamlit as st
 from sentence_transformers import SentenceTransformer, util
@@ -209,37 +208,34 @@ def electronics_page(electronics_data, embed_model):
     # PAGE TITLE
     st.title("📱 Electronics Help Desk")
 
-    # SINGLE PASTEL CARD
+    # CARD STYLE
     card_style = """
-    padding:25px; 
-    border-radius:15px; 
-    background:linear-gradient(135deg, #e3f2f9, #c7e8f6); 
-    box-shadow: 2px 2px 15px rgba(0,0,0,0.08);
-    font-size:16px;
-    line-height:1.6;
-    color:#37474f;
+        padding:25px; 
+        border-radius:15px; 
+        background:linear-gradient(135deg, #e3f2f9, #c7e8f6); 
+        box-shadow: 2px 2px 15px rgba(0,0,0,0.08);
+        font-size:16px;
+        line-height:1.6;
+        color:#37474f;
     """
 
-    # FUN & ENGAGING INTRO
-    st.markdown(
-        f'''
-        <div style="{card_style}">
-            🎉 <b>Welcome to the Electronics Help Desk!</b> 🛠️<br><br>
+    # INTRO + HIGHLIGHTS
+    intro_html = f"""
+    <div style="{card_style}">
+        🎉 <b>Welcome to the Electronics Help Desk!</b> 🛠️<br><br>
 
-            Stressed out because your <b style="color:#0277bd;">gadget is acting up</b>? 
-            Don’t worry, you’re in <b style="color:#f57f17;">good hands</b> (or circuits 😎)!<br><br>
+        Stressed out because your <b style="color:#0277bd;">gadget is acting up</b>? 
+        Don’t worry, you’re in <b style="color:#f57f17;">good hands</b> (or circuits 😎)!<br><br>
 
-            Here’s what I do:<br>
-            1️⃣ <b style="color:#00796b;">Step-by-step troubleshooting 🔧</b> – I break things down so even your grandma could fix it.<br>
-            2️⃣ <b style="color:#ff8f00;">Fun and quirky tips 😜</b> – Expect some tech humor along the way!<br>
-            3️⃣ <b style="color:#d32f2f;">Professional advice if needed 📞</b> – When it’s above our paygrade, I’ll tell you straight.<br><br>
+        Here’s what I do:<br>
+        1️⃣ <b style="color:#00796b;">Step-by-step troubleshooting 🔧</b> – I break things down so even your grandma could fix it.<br>
+        2️⃣ <b style="color:#ff8f00;">Fun and quirky tips 😜</b> – Expect some tech humor along the way!<br>
+        3️⃣ <b style="color:#d32f2f;">Professional advice if needed 📞</b> – When it’s above our paygrade, I’ll tell you straight.<br><br>
 
-            Think of me as your <b style="color:#6a1b9a;">friendly, slightly sarcastic, tech-savvy buddy</b> 
-            who’s always ready to <b style="color:#fbc02d;">save the day ⚡</b>.<br>
-            So go ahead, spill the beans about your gadget drama – <b style="color:#00796b;">the weirder, the better 🤖💬!</b><br><br>
-        </div>
-        ''', unsafe_allow_html=True
-    )
+        Think of me as your <b style="color:#6a1b9a;">friendly, slightly sarcastic, tech-savvy buddy</b> 
+        who’s always ready to <b style="color:#fbc02d;">save the day ⚡</b>.<br>
+        So go ahead, spill the beans about your gadget drama – <b style="color:#00796b;">the weirder, the better 🤖💬!</b><br><br>
+    """
 
     # DEVICE SELECTION
     devices = ["Smartphone 📱", "Laptop 💻", "TV 📺", "Washing Machine 🧺", "Refrigerator ❄️"]
@@ -250,6 +246,7 @@ def electronics_page(electronics_data, embed_model):
 
     # GET SUPPORT BUTTON
     if st.button("🛠️ Get Support"):
+        # HANDLE EMPTY INPUT
         if not user_input.strip():
             st.warning("⚠️ Please describe your problem first! Your tech buddy can’t guess 😅")
             return
@@ -300,11 +297,12 @@ def electronics_page(electronics_data, embed_model):
             solution_html += "<li>📞 Contact official support if all else fails</li>"
             solution_html += "</ul>"
 
-        # RENDER SOLUTION INSIDE SINGLE CARD
-        st.markdown(
-            f'<div style="{card_style}; margin-top:15px;">{solution_html}</div>',
-            unsafe_allow_html=True
-        )
+        # CLOSE THE CARD DIV
+        intro_html += solution_html + "</div>"
+
+        # RENDER SINGLE CARD
+        st.markdown(intro_html, unsafe_allow_html=True)
+
 
 # ---------------- MAIN UI ---------------- #
 def show_ui(food_model, food_vectorizer, fabric_model, fabric_vectorizer, electronics_data):
