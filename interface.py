@@ -137,67 +137,98 @@ def food_page(food_model, food_vectorizer):
 # ---------------- FABRIC PAGE ---------------- #
 def fabric_page(fabric_model, fabric_vectorizer):
     st.title("🧵 Fabric Recommendation System")
-    st.markdown('<div class="banner">👗 Dress Smart, Feel Confident</div>', unsafe_allow_html=True)
-    
-    # Quick tips above inputs
-    st.info("Get outfit recommendations tailored to your **skin, weather, work level, and season**.")
-    st.info("💡 Tip: Enter the outfit you are planning to wear to check if it’s suitable.")
-    st.info("💡 Note: Recommendations are based on patterns in the dataset and your selections.")
 
-    # User inputs
+    # ================== FUN BANNER ==================
+    st.markdown("""
+    <div style="
+        padding:20px; 
+        text-align:center; 
+        border-radius:15px; 
+        background: linear-gradient(135deg, #ffe0f0, #ffc1e3);
+        color:#d81b60;
+        font-size:20px;
+        font-weight:600;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        margin-bottom:20px;
+    ">
+    👗 Dress Smart, Feel Confident 🎉
+    </div>
+    """, unsafe_allow_html=True)
+
+    # ================== FUN INTRO CARD ==================
+    intro_style = """
+        padding:30px;
+        border-radius:20px;
+        background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+        box-shadow: 2px 2px 15px rgba(0,0,0,0.08);
+        font-size:16px;
+        line-height:1.6;
+        color:#4a148c;
+        margin-bottom:20px;
+    """
+    st.markdown(f"""
+    <div style="{intro_style}">
+    Hey fashionista! 💃 Want to know if your outfit is a hit or miss?  
+    Enter your details, and I’ll give you a **fun, quick, and stylish recommendation**! 😎  
+    Think of me as your **personal outfit guru**, with a pinch of sass and lots of style tips! 👗✨
+    </div>
+    """, unsafe_allow_html=True)
+
+    # ================== USER INPUTS ==================
     skin_tone = st.selectbox("🎨 Skin Tone", ["Fair", "Medium", "Dark"])
     weather = st.selectbox("☀️ Weather Condition", ["Hot", "Cold", "Humid", "Dry"])
     work_level = st.selectbox("💪 Work Level", ["High", "Medium", "Low"])
     season = st.selectbox("🍂 Season", ["Summer", "Winter", "Spring", "Autumn"])
-    recommended_outfit = st.text_input("👗 Enter Outfit You Plan to Wear", "Casual")
+    recommended_outfit = st.text_input("👗 Outfit You Plan to Wear", "Casual")
 
     if st.button("🎯 Check Outfit Suitability"):
-        # Combine all features exactly like in training
         feature_text = f"{skin_tone} {weather} {work_level} {season} {recommended_outfit}"
 
         try:
-            # Transform using the trained vectorizer
             X = fabric_vectorizer.transform([feature_text])
-            # Predict recommended outfit
             pred_outfit = fabric_model.predict(X)[0]
 
-            # Display predicted outfit
-            st.markdown(
-                f"""<div class="result-box">
-                <span style='color:#5CB85C; font-weight:bold;'>✅ Predicted Outfit:</span> {pred_outfit}
-                </div>""",
-                unsafe_allow_html=True,
-            )
+            # ================== RESULT CARD ==================
+            result_style = """
+                padding:25px;
+                border-radius:15px;
+                background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+                box-shadow: 2px 2px 15px rgba(0,0,0,0.08);
+                font-size:16px;
+                line-height:1.6;
+                color:#880e4f;
+                margin-top:15px;
+            """
+            st.markdown(f'<div style="{result_style}">', unsafe_allow_html=True)
 
-            # Check if user input matches prediction
             if recommended_outfit.strip().lower() == pred_outfit.strip().lower():
-                st.success(f"🎉 The outfit '{recommended_outfit}' is suitable to wear according to your selections!")
+                st.markdown(f"🎉 <b>Awesome!</b> Your outfit '<i>{recommended_outfit}</i>' looks perfect for your selection! ✅")
             else:
-                st.warning(f"⚠️ The outfit '{recommended_outfit}' may not be the best match. Predicted recommendation: '{pred_outfit}'")
+                st.markdown(f"⚠️ Hmm… your outfit '<i>{recommended_outfit}</i>' might not be the best match.  
+                             Recommended: '<i>{pred_outfit}</i>' 👗")
 
-            # Detailed notes below prediction
-            st.markdown("""
-            <div style='background-color:#FFF4E6; border-left:6px solid #FF6F61; padding:10px; border-radius:20px;'>
-            <h4>📝 Informative Notes:</h4>
-            <ul>
-            <li>The recommendation considers your skin tone, weather, work level, and season.</li>
-            <li>High work intensity? Prefer breathable or moisture-wicking fabrics.</li>
-            <li>Seasonal advice: cotton/linen for summer, wool/fleece for winter.</li>
-            <li>These are guidelines based on dataset patterns; consider personal comfort and style.</li>
-            </ul>
+            st.markdown("</div>", unsafe_allow_html=True)
+
+            # ================== QUICK TIPS ==================
+            tips_style = """
+                background-color:#fff3e0;
+                border-left:6px solid #ff6f61;
+                padding:15px;
+                border-radius:15px;
+                margin-top:10px;
+            """
+            st.markdown(f"""
+            <div style="{tips_style}">
+            💡 <b>Quick Fashion Tips:</b><br>
+            - Dress for your skin tone, weather, and activity level.<br>
+            - Prefer breathable fabrics for hot days, cozy ones for cold.<br>
+            - Always add your personal flair! 🌟
             </div>
             """, unsafe_allow_html=True)
 
-            # Optional collapsible tips
-            with st.expander("💡 Outfit Guidelines and Tips"):
-                st.write("""
-                - Outfits are suggested to match your skin tone, season, and activity level.
-                - You can adjust the outfit based on personal style and occasion.
-                - Re-check recommendations if your environment or activity changes.
-                """)
-
         except ValueError:
-            st.warning("⚠️ Input format does not match the trained model. Please check your selections.")
+            st.warning("⚠️ Something’s off with your input. Double-check your selections!")
+
 
 # ---------------- ELECTRONICS PAGE ---------------- #
 
