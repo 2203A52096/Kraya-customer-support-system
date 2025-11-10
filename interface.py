@@ -33,49 +33,54 @@ def add_styles():
 def food_page(food_model, food_vectorizer):
     import streamlit as st
 
-    # Custom CSS for styling
+    # ================== CUSTOM CSS ==================
     st.markdown("""
     <style>
         .banner {
-            background-color: #FFF3E0;
-            padding: 15px;
+            background: linear-gradient(135deg, #fff0f5, #ffe4e1);
+            padding: 20px;
             border-radius: 15px;
             text-align: center;
             font-size: 22px;
             font-weight: bold;
-            color: #FF6F00;
+            color: #d32f2f;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.08);
+            margin-bottom: 15px;
         }
         .info-box {
-            background-color: #E1F5FE;
-            padding: 12px;
+            background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+            padding: 18px;
             border-left: 6px solid #0288D1;
-            border-radius: 8px;
+            border-radius: 12px;
             font-style: italic;
+            margin-bottom: 15px;
         }
         .result-box {
-            padding: 15px;
-            border-radius: 12px;
+            padding: 20px;
+            border-radius: 15px;
             margin-top: 15px;
             font-size: 18px;
+            line-height:1.6;
+            box-shadow: 1px 1px 8px rgba(0,0,0,0.08);
         }
         .badge-healthy {
             color: #155724;
             background-color: #d4edda;
-            padding: 6px 12px;
-            border-radius: 8px;
+            padding: 8px 14px;
+            border-radius: 12px;
             font-weight: bold;
             font-size: 16px;
         }
         .badge-unhealthy {
             color: #721c24;
             background-color: #f8d7da;
-            padding: 6px 12px;
-            border-radius: 8px;
+            padding: 8px 14px;
+            border-radius: 12px;
             font-weight: bold;
             font-size: 16px;
         }
         .section-header {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             margin-top: 20px;
             color: #FF5722;
@@ -83,14 +88,20 @@ def food_page(food_model, food_vectorizer):
     </style>
     """, unsafe_allow_html=True)
 
-    # Page Title & Banner
+    # ================== PAGE TITLE & BANNER ==================
     st.title("🍎 Food Mood-o-Meter 3000")
     st.markdown('<div class="banner">🥗 Should You Buy It? Let\'s Find Out!</div>', unsafe_allow_html=True)
 
-    # Info section about the page
-    st.markdown('<div class="info-box">💡 Enter the details of the food product you want to buy. Choose your goal: weight loss, weight gain, or balanced. Our AI will help you decide if it\'s a match for your goal!</div>', unsafe_allow_html=True)
+    # ================== INFO CARD (Pastel Cyan) ==================
+    st.markdown("""
+    <div class="info-box">
+        🎉 Welcome to the **Food Mood-o-Meter**! 😋  
+        Enter your product details and your goal (Weight Loss, Gain, or Balanced).  
+        Our AI will give you a fun, quirky verdict so you can shop smart! 🛒💡
+    </div>
+    """, unsafe_allow_html=True)
 
-    # Food input section
+    # ================== USER INPUT ==================
     st.markdown('<p class="section-header">🕵️‍♂️ Product Details</p>', unsafe_allow_html=True)
     ingredients = st.text_area("📝 Ingredients (comma-separated)", "sugar, salt, whole grain, vegetable oil")
     label = st.selectbox("🎯 Your Goal", ["Weight Loss 🏃‍♀️", "Weight Gain 💪", "Balanced 😇"])
@@ -101,40 +112,48 @@ def food_page(food_model, food_vectorizer):
     fat = st.number_input("🥓 Fat (g)", min_value=0.0)
     sugar = st.number_input("🍬 Sugar (g)", min_value=0.0)
 
-    # Analyze button
+    # ================== ANALYZE BUTTON ==================
     if st.button("🔮 Check If You Should Buy"):
         if not food_model or not food_vectorizer:
             st.warning("⚠️ Food AI is sleeping. Please load the model!")
             return
 
-        # Prepare features for ML prediction
+        if not ingredients.strip():
+            st.warning("⚠️ Please enter the ingredients first! The AI can't guess 🤖")
+            return
+
+        # Prepare features and predict
         feature_text = f"{ingredients} {calories} {protein} {carbs} {fiber} {fat} {sugar}"
         X = food_vectorizer.transform([feature_text])
         pred_label = food_model.predict(X)[0]
 
-        # Determine suitability
-        if pred_label.lower() in label.lower():
-            st.markdown(
-                f'<div class="result-box"><span class="badge-healthy">✅ Suitable!</span> This product matches your <b>{label}</b> goal. Go ahead and buy it! 🛒😋</div>',
-                unsafe_allow_html=True
-            )
-        else:
-            st.markdown(
-                f'<div class="result-box"><span class="badge-unhealthy">❌ Not Suitable!</span> The AI predicts <b>{pred_label}</b>. Better skip this product if you want <b>{label}</b>. 🚫🥴</div>',
-                unsafe_allow_html=True
-            )
+        # ================== RESULT CARD ==================
+        result_color = "#d4edda" if pred_label.lower() in label.lower() else "#f8d7da"
+        badge_class = "badge-healthy" if pred_label.lower() in label.lower() else "badge-unhealthy"
+        emoji = "✅" if pred_label.lower() in label.lower() else "❌"
 
-    # Tips Section
+        if pred_label.lower() in label.lower():
+            message = f"This product matches your <b>{label}</b> goal. Go ahead and buy it! 🛒😋"
+        else:
+            message = f"The AI predicts <b>{pred_label}</b>. Better skip this product if you want <b>{label}</b>. 🚫🥴"
+
+        st.markdown(f"""
+        <div class="result-box" style="background:{result_color};">
+            <span class="{badge_class}">{emoji} Suitable!</span> {message}
+        </div>
+        """, unsafe_allow_html=True)
+
+    # ================== PRO TIPS CARD ==================
     st.markdown('<p class="section-header">💡 Pro Tips</p>', unsafe_allow_html=True)
     st.markdown("""
-    - Enter all ingredients and nutrients for best prediction. 🕵️‍♀️  
-    - Double-check calories and macros. AI is smart but not psychic. 🤖  
-    - Use this as guidance for shopping, not a replacement for your nutritionist. 🥼  
-    - If unsure, choose something green and leafy. 🥦💚  
-    """)
+    <div class="info-box" style="background: linear-gradient(135deg, #fff8e1, #ffe0b2); border-left: 6px solid #ff9800;">
+        - Enter all ingredients and nutrients for best prediction. 🕵️‍♀️  
+        - Double-check calories and macros. AI is smart but not psychic. 🤖  
+        - Use this as guidance for shopping, not a replacement for your nutritionist. 🥼  
+        - If unsure, choose something green and leafy. 🥦💚  
+    </div>
+    """, unsafe_allow_html=True)
 
-
-# ---------------- FABRIC PAGE ---------------- #
 # ---------------- FABRIC PAGE ---------------- #
 def fabric_page(fabric_model, fabric_vectorizer):
     import streamlit as st
