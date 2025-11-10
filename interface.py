@@ -135,11 +135,10 @@ def food_page(food_model, food_vectorizer):
 
 
 # ---------------- FABRIC PAGE ---------------- #
-# ---------------- FABRIC PAGE ---------------- #
 def fabric_page(fabric_model, fabric_vectorizer):
     st.title("🧵 Fabric Recommendation System")
 
-    # ================== FUN BANNER ==================
+    # ================== BANNER (Pastel Purple) ==================
     st.markdown("""
     <div style="
         padding:20px; 
@@ -156,7 +155,7 @@ def fabric_page(fabric_model, fabric_vectorizer):
     </div>
     """, unsafe_allow_html=True)
 
-    # ================== FUN INTRO CARD ==================
+    # ================== INTRO CARD (Pastel Blue) ==================
     intro_style = """
         padding:30px;
         border-radius:20px;
@@ -189,7 +188,7 @@ def fabric_page(fabric_model, fabric_vectorizer):
             X = fabric_vectorizer.transform([feature_text])
             pred_outfit = fabric_model.predict(X)[0]
 
-            # ================== RESULT CARD ==================
+            # ================== RESULT CARD (Pastel Pink) ==================
             result_style = """
                 padding:25px;
                 border-radius:15px;
@@ -205,8 +204,10 @@ def fabric_page(fabric_model, fabric_vectorizer):
             if recommended_outfit.strip().lower() == pred_outfit.strip().lower():
                 st.markdown(f"🎉 <b>Awesome!</b> Your outfit '<i>{recommended_outfit}</i>' looks perfect for your selection! ✅")
             else:
-                st.markdown(f"⚠️ Hmm… your outfit '<i>{recommended_outfit}</i>' might not be the best match.  
-                             Recommended: '<i>{pred_outfit}</i>' 👗")
+                st.markdown(
+                    f"⚠️ Hmm… your outfit '<i>{recommended_outfit}</i>' might not be the best match. "
+                    f"Recommended: '<i>{pred_outfit}</i>' 👗"
+                )
 
             st.markdown("</div>", unsafe_allow_html=True)
 
