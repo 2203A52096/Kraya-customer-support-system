@@ -205,21 +205,22 @@ def electronics_page(electronics_data, embed_model):
     st.title("📱 Electronics Help Desk")
 
     # ================== BANNER ==================
-    st.markdown("""
-    <div style="
-        padding:20px; 
-        text-align:center; 
-        border-radius:15px; 
-        background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
-        color:#00796b;
-        font-size:20px;
-        font-weight:600;
-        box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-        margin-bottom:20px;
-    ">
-    ⚡ Quick Fixes for Smarter Living ⚡
-    </div>
-    """, unsafe_allow_html=True)
+st.markdown("""
+<div style="
+    padding:20px; 
+    text-align:center; 
+    border-radius:15px; 
+    background: linear-gradient(135deg, #e1bee7, #ce93d8);
+    color:#6a1b9a;
+    font-size:20px;
+    font-weight:600;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+    margin-bottom:20px;
+">
+⚡ Quick Fixes for Smarter Living ⚡
+</div>
+""", unsafe_allow_html=True)
+
 
     # ================== INTRO CARD (PASTEL BLUE) ==================
     intro_card_style = """
