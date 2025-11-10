@@ -85,26 +85,26 @@ def food_page(food_model, food_vectorizer):
 
     # Page Title & Banner
     st.title("🍎 Food Mood-o-Meter 3000")
-    st.markdown('<div class="banner">🥗 Eat Smart, Live Hilariously</div>', unsafe_allow_html=True)
+    st.markdown('<div class="banner">🥗 Should You Buy It? Let\'s Find Out!</div>', unsafe_allow_html=True)
 
     # Info section about the page
-    st.markdown('<div class="info-box">💡 Feed me your food secrets below and I shall reveal if it loves you back… or not. Your goal: weight loss, gain, or just survive Mondays. 😎</div>', unsafe_allow_html=True)
+    st.markdown('<div class="info-box">💡 Enter the details of the food product you want to buy. Choose your goal: weight loss, weight gain, or balanced. Our AI will help you decide if it\'s a match for your goal!</div>', unsafe_allow_html=True)
 
     # Food input section
-    st.markdown('<p class="section-header">🕵️‍♂️ Spy on Your Ingredients</p>', unsafe_allow_html=True)
-    ingredients = st.text_area("📝 Spill the beans (ingredients, comma-separated)", "sugar, salt, whole grain, vegetable oil")
-    label = st.selectbox("🎯 Your goal (Pick your vibe)", ["Weight Loss 🏃‍♀️", "Weight Gain 💪", "Balanced 😇"])
-    calories = st.number_input("🔥 Calories per serving (don’t lie 😏)", min_value=0)
-    protein = st.number_input("🍗 Protein (muscle fuel in grams)", min_value=0.0)
-    carbs = st.number_input("🥖 Carbs (bread power in grams)", min_value=0.0)
-    fiber = st.number_input("🌿 Fiber (keep it moving grams)", min_value=0.0)
-    fat = st.number_input("🥓 Fat (the tasty but sneaky grams)", min_value=0.0)
-    sugar = st.number_input("🍬 Sugar (sweet enemy grams)", min_value=0.0)
+    st.markdown('<p class="section-header">🕵️‍♂️ Product Details</p>', unsafe_allow_html=True)
+    ingredients = st.text_area("📝 Ingredients (comma-separated)", "sugar, salt, whole grain, vegetable oil")
+    label = st.selectbox("🎯 Your Goal", ["Weight Loss 🏃‍♀️", "Weight Gain 💪", "Balanced 😇"])
+    calories = st.number_input("🔥 Calories per serving", min_value=0)
+    protein = st.number_input("🍗 Protein (g)", min_value=0.0)
+    carbs = st.number_input("🥖 Carbs (g)", min_value=0.0)
+    fiber = st.number_input("🌿 Fiber (g)", min_value=0.0)
+    fat = st.number_input("🥓 Fat (g)", min_value=0.0)
+    sugar = st.number_input("🍬 Sugar (g)", min_value=0.0)
 
     # Analyze button
-    if st.button("🔮 Reveal Food Fate"):
+    if st.button("🔮 Check If You Should Buy"):
         if not food_model or not food_vectorizer:
-            st.warning("⚠️ Food AI is sleeping. Please wake it up by loading the model!")
+            st.warning("⚠️ Food AI is sleeping. Please load the model!")
             return
 
         # Prepare features for ML prediction
@@ -112,24 +112,25 @@ def food_page(food_model, food_vectorizer):
         X = food_vectorizer.transform([feature_text])
         pred_label = food_model.predict(X)[0]
 
-        # Display results with fun badges
+        # Determine suitability
         if pred_label.lower() in label.lower():
             st.markdown(
-                f'<div class="result-box"><span class="badge-healthy">🎉 YUM!</span> Your food is totally vibing with <b>{label}</b>! Go ahead and nom nom 😋</div>',
+                f'<div class="result-box"><span class="badge-healthy">✅ Suitable!</span> This product matches your <b>{label}</b> goal. Go ahead and buy it! 🛒😋</div>',
                 unsafe_allow_html=True
             )
         else:
             st.markdown(
-                f'<div class="result-box"><span class="badge-unhealthy">😬 OOPS!</span> AI says it’s more like <b>{pred_label}</b>. Maybe rethink that bite? 😅</div>',
+                f'<div class="result-box"><span class="badge-unhealthy">❌ Not Suitable!</span> The AI predicts <b>{pred_label}</b>. Better skip this product if you want <b>{label}</b>. 🚫🥴</div>',
                 unsafe_allow_html=True
             )
 
     # Tips Section
-    st.markdown('<p class="section-header">💡 Fun Tips</p>', unsafe_allow_html=True)
+    st.markdown('<p class="section-header">💡 Pro Tips</p>', unsafe_allow_html=True)
     st.markdown("""
-    - More ingredients = more gossip for our AI. 🕵️‍♀️  
-    - Double-check calories, because AI isn’t perfect… yet. 🤖  
-    - Use this for fun and giggles. Nutritionist still knows best. 🥼  
+    - Enter all ingredients and nutrients for best prediction. 🕵️‍♀️  
+    - Double-check calories and macros. AI is smart but not psychic. 🤖  
+    - Use this as guidance for shopping, not a replacement for your nutritionist. 🥼  
+    - If unsure, choose something green and leafy. 🥦💚  
     """)
 
 
