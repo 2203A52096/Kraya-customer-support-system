@@ -89,7 +89,7 @@ def food_page(food_model, food_vectorizer):
     """, unsafe_allow_html=True)
 
     # ================== PAGE TITLE & BANNER ==================
-    st.title("🍎 Food Mood-o-Meter 3000")
+    st.title("🍎 Foody shopers buddy")
     st.markdown('<div class="banner">🥗 Should You Buy It? Let\'s Find Out!</div>', unsafe_allow_html=True)
 
     # ================== INFO CARD (Pastel Cyan) ==================
