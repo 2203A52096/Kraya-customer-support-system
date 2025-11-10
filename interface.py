@@ -135,87 +135,75 @@ def food_page(food_model, food_vectorizer):
 
 
 # ---------------- FABRIC PAGE ---------------- #
+# ---------------- FABRIC PAGE ---------------- #
 def fabric_page(fabric_model, fabric_vectorizer):
     import streamlit as st
 
     st.title("🧵 Fabric Recommendation System")
 
-    # ================== BANNER CARD (Pastel Purple) ==================
+    # ================== BANNER CARD (Pastel Mint) ==================
     st.markdown("""
     <div style="
         padding:20px;
         text-align:center;
         border-radius:15px;
-        background: linear-gradient(135deg, #f3e5f5, #e1bee7);
-        color:#6a1b9a;
+        background: linear-gradient(135deg, #d0f0c0, #a0e0a0);
+        color:#2e7d32;
         font-size:20px;
         font-weight:600;
         box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-        margin-bottom:20px;
+        margin-bottom:15px;
     ">
         👗 Dress Smart, Feel Confident 🎉
     </div>
     """, unsafe_allow_html=True)
 
-    # ================== INTRO CARD (Pastel Blue) ==================
-    intro_style = """
-        padding:30px;
-        border-radius:20px;
-        background: linear-gradient(135deg, #e1f5fe, #b3e5fc);
-        box-shadow: 2px 2px 15px rgba(0,0,0,0.08);
-        font-size:16px;
-        line-height:1.6;
-        color:#01579b;
-        margin-bottom:20px;
-    """
-    st.markdown(f"""
-    <div style="{intro_style}">
-        🎉 <b>Welcome to the Fabric Recommendation System!</b> 👗<br><br>
-        Stressed about picking the right outfit? 😎 Don’t worry – your friendly, slightly sarcastic fashion buddy is here!<br><br>
-        Here’s what I do:<br>
-        1️⃣ <b style="color:#0277bd;">Step-by-step suggestions</b> – Quick outfit checks.<br>
-        2️⃣ <b style="color:#ff8f00;">Fun and quirky tips</b> – Expect a bit of sass along the way!<br>
-        3️⃣ <b style="color:#d32f2f;">Professional advice if needed</b> – I’ll tell you straight if your choice is questionable.<br><br>
-        So go ahead, enter your details, and let’s see how stylish you are today! 🌟
-    </div>
-    """, unsafe_allow_html=True)
+    # ================== QUICK INFO / TIPS ==================
+    st.info("💡 Get outfit recommendations based on your **skin tone, weather, work level, season, and outfit choice**.")
+    st.info("💡 Enter the outfit you are planning to wear and see if it matches your context.")
+    st.info("💡 Recommendations are dataset-based but with a pinch of fun and sass 😎")
 
     # ================== USER INPUTS ==================
     skin_tone = st.selectbox("🎨 Skin Tone", ["Fair", "Medium", "Dark"])
     weather = st.selectbox("☀️ Weather Condition", ["Hot", "Cold", "Humid", "Dry"])
     work_level = st.selectbox("💪 Work Level", ["High", "Medium", "Low"])
     season = st.selectbox("🍂 Season", ["Summer", "Winter", "Spring", "Autumn"])
-    recommended_outfit = st.text_input("👗 Outfit You Plan to Wear", "Casual")
+    recommended_outfit = st.text_input("👗 Enter Outfit You Plan to Wear", "Casual")
 
     if st.button("🎯 Check Outfit Suitability"):
+        if not recommended_outfit.strip():
+            st.warning("⚠️ Please enter your outfit first! Your fashion buddy can't guess 😅")
+            return
+
         feature_text = f"{skin_tone} {weather} {work_level} {season} {recommended_outfit}"
 
         try:
+            # Transform and predict
             X = fabric_vectorizer.transform([feature_text])
             pred_outfit = fabric_model.predict(X)[0]
 
-            # ================== RESULT CARD (Pastel Pink) ==================
+            # ================== RESULT CARD (Pastel Peach) ==================
             result_style = """
                 padding:25px;
                 border-radius:15px;
-                background: linear-gradient(135deg, #fce4ec, #f8bbd0);
-                box-shadow: 2px 2px 15px rgba(0,0,0,0.08);
+                background: linear-gradient(135deg, #ffe0b2, #ffcc80);
+                box-shadow: 2px 2px 12px rgba(0,0,0,0.08);
                 font-size:16px;
                 line-height:1.6;
-                color:#880e4f;
+                color:#e65100;
                 margin-top:15px;
             """
             if recommended_outfit.strip().lower() == pred_outfit.strip().lower():
-                result_text = f"🎉 <b>Awesome!</b> Your outfit '<i>{recommended_outfit}</i>' looks perfect for your selection! ✅"
+                result_text = f"🎉 <b>Spot on!</b> Your outfit '<i>{recommended_outfit}</i>' is perfect for your selections! ✅"
             else:
-                result_text = f"⚠️ Hmm… your outfit '<i>{recommended_outfit}</i>' might not be the best match. Recommended: '<i>{pred_outfit}</i>' 👗"
+                result_text = f"⚠️ Hmm… your outfit '<i>{recommended_outfit}</i>' might not match well. Recommended: '<i>{pred_outfit}</i>' 👗"
 
             st.markdown(f'<div style="{result_style}">{result_text}</div>', unsafe_allow_html=True)
 
-            # ================== QUICK TIPS CARD ==================
+            # ================== QUICK TIPS / NOTES CARD (Pastel Lavender) ==================
             tips_style = """
-                background-color:#fff3e0;
-                border-left:6px solid #ff6f61;
+                background-color:#f3e5f5;
+                border-left:6px solid #ab47bc;
                 padding:15px;
                 border-radius:15px;
                 margin-top:10px;
@@ -223,14 +211,14 @@ def fabric_page(fabric_model, fabric_vectorizer):
             st.markdown(f"""
             <div style="{tips_style}">
                 💡 <b>Quick Fashion Tips:</b><br>
-                - Dress for your skin tone, weather, and activity level.<br>
-                - Prefer breathable fabrics for hot days, cozy ones for cold.<br>
-                - Always add your personal flair! 🌟
+                - Dress according to your skin tone, season, and activity level.<br>
+                - Prefer breathable fabrics for hot weather, warm fabrics for cold.<br>
+                - Add your personal flair – comfort and confidence matter! 🌟
             </div>
             """, unsafe_allow_html=True)
 
         except ValueError:
-            st.warning("⚠️ Something’s off with your input. Double-check your selections!")
+            st.warning("⚠️ Something went wrong with your input. Check your selections!")
 
 # ---------------- ELECTRONICS PAGE ---------------- #
 
