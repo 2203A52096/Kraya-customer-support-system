@@ -207,7 +207,7 @@ from sentence_transformers import SentenceTransformer, util
 def electronics_page(electronics_data, embed_model):
     st.title("📱 Electronics Help Desk")
 
-    # ================== INTRO CARD ==================
+    # ================== INTRO CARD (PASTEL BLUE) ==================
     intro_card_style = """
         padding:40px; 
         border-radius:20px; 
@@ -270,11 +270,11 @@ So go ahead, spill the beans about your gadget drama – <b style="color:#00796b
                     max_score = score
                     best_match = item
 
-        # ================== SOLUTION CARD ==================
+        # ================== SOLUTION CARD (PASTEL PINK) ==================
         solution_card_style = """
             padding:25px; 
             border-radius:15px; 
-            background:linear-gradient(135deg, #f0f4c3, #e6ee9c); 
+            background:linear-gradient(135deg, #fce4ec, #f8bbd0); 
             box-shadow: 2px 2px 15px rgba(0,0,0,0.08);
             font-size:16px;
             line-height:1.6;
@@ -288,11 +288,11 @@ So go ahead, spill the beans about your gadget drama – <b style="color:#00796b
         solution_html = f'<div style="{solution_card_style}">'
         if best_match and max_score > 0.6:
             steps = best_match["solution"].split(", ")
-            solution_html += f'<h3 style="color:#0277bd;">{random.choice(funny_headers)}</h3>'
+            solution_html += f'<h3 style="color:#d81b60;">{random.choice(funny_headers)}</h3>'
             for i, step in enumerate(steps, start=1):
                 solution_html += f'<p style="margin:5px 0;">🔹 <b>Step {i}:</b> {step} ✅</p>'
             if 'tips' in best_match:
-                solution_html += f'<p style="margin-top:10px; padding:10px; background:#fff8e1; border-radius:10px;">💡 <b>Extra Tips:</b> {best_match["tips"]}</p>'
+                solution_html += f'<p style="margin-top:10px; padding:10px; background:#fff3e0; border-radius:10px;">💡 <b>Extra Tips:</b> {best_match["tips"]}</p>'
         else:
             solution_html += f'<h3 style="color:#d32f2f;">{random.choice(fallback_headers)}</h3>'
             solution_html += "<p>I couldn’t find an exact fix 😅, but you can try these:</p>"
@@ -306,7 +306,6 @@ So go ahead, spill the beans about your gadget drama – <b style="color:#00796b
         solution_html += "</div>"
 
         st.markdown(solution_html, unsafe_allow_html=True)
-
 
 # ---------------- MAIN UI ---------------- #
 def show_ui(food_model, food_vectorizer, fabric_model, fabric_vectorizer, electronics_data):
