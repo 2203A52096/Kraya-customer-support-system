@@ -201,22 +201,22 @@ def fabric_page(fabric_model, fabric_vectorizer):
 
 # ---------------- ELECTRONICS PAGE ---------------- #
 
-
-
 def electronics_page(electronics_data, embed_model):
     # PAGE TITLE & BANNER
     st.title("📱 Electronics Help Desk")
     st.markdown(
-        '<div class="banner">⚡ Smart Fixes for Your Gadgets – Fast & Friendly ⚡</div>', 
+        '<div class="banner">⚡ Smart Fixes for Your Gadgets – Fast, Funny & Friendly ⚡</div>', 
         unsafe_allow_html=True
     )
 
     # ABOUT THE PAGE
     st.info(
         "Welcome to the **Electronics Help Desk**! 🛠️\n\n"
-        "Here, you can describe issues with your gadgets, and our AI-powered assistant "
-        "will suggest quick fixes, tips, and troubleshooting steps. Think of me as your "
-        "friendly tech sidekick 😎."
+        "Describe your gadget problem, and our AI assistant will provide:\n"
+        "1️⃣ Step-by-step troubleshooting 🔧\n"
+        "2️⃣ Fun and quirky tips 😎\n"
+        "3️⃣ Advice if you need professional service 📞\n\n"
+        "Think of me as your friendly tech buddy!"
     )
 
     # DEVICE SELECTION
@@ -224,9 +224,7 @@ def electronics_page(electronics_data, embed_model):
     device = st.selectbox("🔧 Choose your device", devices)
 
     # USER INPUT
-    user_input = st.text_area(
-        "✍️ Describe your problem in detail (don’t worry, no tech shame here!)"
-    )
+    user_input = st.text_area("✍️ Describe your issue (don’t hold back!)")
 
     # GET SUPPORT BUTTON
     if st.button("🛠️ Get Support"):
@@ -253,31 +251,36 @@ def electronics_page(electronics_data, embed_model):
                     max_score = score
                     best_match = item
 
-        # FUNNY + INFORMATIVE RESPONSES
-        funny_prefixes = [
+        # FUN & INFORMATIVE RESPONSES
+        funny_headers = [
             "😎 Tech Tip:", "🛠️ Pro Hack:", "💡 Quick Fix:", "🤔 Try this:"
         ]
-        fallback_responses = [
-            "📞 Contact official service for advanced troubleshooting. They’re the real pros!",
-            "😬 This one’s tricky. Maybe a technician can help?",
-            "🤖 Even I don’t know this… humans to the rescue!",
-            "⚡ Your device is being stubborn. Give support a ring!"
+        fallback_headers = [
+            "😬 Hmmm…", "🤖 Brainstorming…", "⚡ Device being stubborn…", "📞 Call the experts!"
         ]
 
-        # DISPLAY SOLUTION
         if best_match and max_score > 0.6:
-            st.markdown(
-                f'<div class="result-box">{random.choice(funny_prefixes)} {best_match["solution"]}</div>',
-                unsafe_allow_html=True
-            )
-            # ADDITIONAL INFO (OPTIONAL)
+            # Format solution into steps
+            solution_text = best_match["solution"]
+            steps = solution_text.split(", ")  # simple split for steps
+            st.markdown(f'<div class="result-box" style="padding:15px; border-radius:12px; background:#f0f8ff;">', unsafe_allow_html=True)
+            st.markdown(f"### {random.choice(funny_headers)}")
+            for i, step in enumerate(steps, start=1):
+                st.markdown(f"**{i}.** {step} ✅")
+            # Optional extra tips
             if 'tips' in best_match:
-                st.info(f"💡 Extra Tips: {best_match['tips']}")
+                st.markdown(f"💡 **Extra Tips:** {best_match['tips']}")
+            st.markdown("</div>", unsafe_allow_html=True)
         else:
-            st.markdown(
-                f'<div class="result-box">{random.choice(fallback_responses)}</div>',
-                unsafe_allow_html=True
-            )
+            st.markdown(f'<div class="result-box" style="padding:15px; border-radius:12px; background:#fff0f0;">', unsafe_allow_html=True)
+            st.markdown(f"### {random.choice(fallback_headers)}")
+            st.markdown("I couldn’t find an exact fix 😅, but here’s what you can do:")
+            st.markdown("1. Double-check your cables and connections 🔌")
+            st.markdown("2. Restart your device 🔄")
+            st.markdown("3. Update the software if possible 💾")
+            st.markdown("4. If still failing, contact official support 📞")
+            st.markdown("</div>", unsafe_allow_html=True)
+
 
 
 # ---------------- MAIN UI ---------------- #
