@@ -135,6 +135,7 @@ def food_page(food_model, food_vectorizer):
 
 
 # ---------------- FABRIC PAGE ---------------- #
+# ---------------- FABRIC PAGE ---------------- #
 def fabric_page(fabric_model, fabric_vectorizer):
     st.title("🧵 Fabric Recommendation System")
 
@@ -228,7 +229,6 @@ def fabric_page(fabric_model, fabric_vectorizer):
 
         except ValueError:
             st.warning("⚠️ Something’s off with your input. Double-check your selections!")
-
 
 # ---------------- ELECTRONICS PAGE ---------------- #
 
