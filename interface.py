@@ -368,7 +368,7 @@ def show_ui(food_model, food_vectorizer, fabric_model, fabric_vectorizer, electr
     import streamlit as st
     from sentence_transformers import SentenceTransformer
 
-    # Apply any global styles
+    # Apply global styles
     add_styles()
 
     # Sidebar navigation
@@ -380,48 +380,40 @@ def show_ui(food_model, food_vectorizer, fabric_model, fabric_vectorizer, electr
 
     # ---------------- HOME PAGE ---------------- #
     if page == "🏠 Home":
+        # Existing banner and intro content
         st.title("🏠 Welcome to Kraya")
+        st.markdown('<div class="banner">✨ Smart Choices, Happy Living ✨</div>', unsafe_allow_html=True)
+        st.markdown(
+            """
+            Kraya is your **personal customer support system**:
+            - <span class="badge badge-food">🍎 Food</span>: ML-powered food health analyzer.
+            - <span class="badge badge-electronics">📱 Electronics</span>: AI-powered troubleshooting.
+            - <span class="badge badge-fabric">🧵 Fabric</span>: Personalized fabric recommendations.
+            """,
+            unsafe_allow_html=True
+        )
+
+        # ---------------- NEW INFORMATIVE PASTEL CARD ---------------- #
         st.markdown("""
         <div style="
-            padding:25px;
+            padding:20px;
             border-radius:15px;
-            background: linear-gradient(135deg, #fce4ec, #f3e5f5);
-            color:#6a1b9a;
-            font-size:18px;
-            line-height:1.6;
-            box-shadow: 2px 2px 15px rgba(0,0,0,0.08);
-            margin-bottom:20px;
-        ">
-            ✨ <b>Smart Choices, Happy Living!</b> ✨<br><br>
-
-            Welcome to <b>Kraya</b>, your personal lifestyle assistant! Here’s what you can do:<br>
-            - <span style="color:#ff6f00;">🍎 Food</span>: ML-powered food health analyzer. Check if your snacks and meals match your goals!<br>
-            - <span style="color:#0288d1;">📱 Electronics</span>: AI-powered troubleshooting. Get quick fixes for your gadgets with a pinch of humor 😎.<br>
-            - <span style="color:#6a1b9a;">🧵 Fabric</span>: Personalized outfit recommendations based on skin, weather, season, and activity level.<br><br>
-
-            <b>Tips to get started:</b> 📝<br>
-            - Use the sidebar to navigate between pages.<br>
-            - Fill in all inputs on each page for the AI to give better recommendations.<br>
-            - Have fun! Kraya loves a little humor along the way 😜<br><br>
-
-            Think of Kraya as your friendly, slightly sarcastic, tech-savvy buddy who wants you to eat right, dress smart, and fix your gadgets without stress ⚡.
-        </div>
-        """, unsafe_allow_html=True)
-
-        st.markdown("""
-        <div style="
-            padding:15px;
-            border-radius:15px;
-            background: linear-gradient(135deg, #e1f5fe, #b3e5fc);
-            color:#0277bd;
+            background: linear-gradient(135deg, #f0f4c3, #e6ee9c);
+            color:#33691e;
             font-size:16px;
             line-height:1.6;
-            margin-bottom:15px;
+            box-shadow: 2px 2px 12px rgba(0,0,0,0.08);
+            margin-top:15px;
         ">
-            💡 <b>Quick Start:</b> Select a page from the sidebar and follow the instructions.<br>
-            🎯 Each page uses AI to provide tailored advice.<br>
-            🤖 Kraya learns from patterns in the data to give helpful suggestions.<br>
-            📌 Remember: AI guidance is fun and helpful, but your judgment comes first!
+            💡 <b>Pro Tips & FAQs:</b><br><br>
+            1️⃣ Navigate using the sidebar to quickly access Food, Electronics, or Fabric pages.<br>
+            2️⃣ Fill in all inputs for more accurate AI suggestions. Partial info may reduce prediction quality.<br>
+            3️⃣ For Food: enter ingredients, nutrients, and your goal for a quick recommendation.<br>
+            4️⃣ For Electronics: describe your gadget issue in detail to get step-by-step troubleshooting.<br>
+            5️⃣ For Fabric: provide skin tone, weather, season, and activity level to get outfit advice.<br>
+            6️⃣ Remember: AI provides guidance based on patterns in the dataset. Use your own judgment too!<br>
+            7️⃣ Have fun! Kraya loves a little humor 😎 while helping you make smart choices.<br><br>
+            📌 Keep checking back! The system is continuously learning to give better suggestions.
         </div>
         """, unsafe_allow_html=True)
 
