@@ -39,40 +39,43 @@ def food_page(food_model, food_vectorizer):
         .banner {
             background-color: #FFF3E0;
             padding: 15px;
-            border-radius: 10px;
+            border-radius: 15px;
             text-align: center;
-            font-size: 20px;
+            font-size: 22px;
             font-weight: bold;
             color: #FF6F00;
         }
         .info-box {
-            background-color: #E3F2FD;
-            padding: 10px;
-            border-left: 6px solid #2196F3;
-            border-radius: 5px;
+            background-color: #E1F5FE;
+            padding: 12px;
+            border-left: 6px solid #0288D1;
+            border-radius: 8px;
+            font-style: italic;
         }
         .result-box {
             padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
+            border-radius: 12px;
+            margin-top: 15px;
             font-size: 18px;
         }
         .badge-healthy {
             color: #155724;
             background-color: #d4edda;
-            padding: 5px 10px;
-            border-radius: 5px;
+            padding: 6px 12px;
+            border-radius: 8px;
             font-weight: bold;
+            font-size: 16px;
         }
         .badge-unhealthy {
             color: #721c24;
             background-color: #f8d7da;
-            padding: 5px 10px;
-            border-radius: 5px;
+            padding: 6px 12px;
+            border-radius: 8px;
             font-weight: bold;
+            font-size: 16px;
         }
         .section-header {
-            font-size: 22px;
+            font-size: 24px;
             font-weight: bold;
             margin-top: 20px;
             color: #FF5722;
@@ -81,27 +84,27 @@ def food_page(food_model, food_vectorizer):
     """, unsafe_allow_html=True)
 
     # Page Title & Banner
-    st.title("🍎 Food Health Analyzer")
-    st.markdown('<div class="banner">🥗 Eat Smart, Live Better</div>', unsafe_allow_html=True)
+    st.title("🍎 Food Mood-o-Meter 3000")
+    st.markdown('<div class="banner">🥗 Eat Smart, Live Hilariously</div>', unsafe_allow_html=True)
 
     # Info section about the page
-    st.markdown('<div class="info-box">💡 Enter your food details below. Our AI model will help determine if it’s suitable for your dietary goal: weight loss, weight gain, or balanced nutrition.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="info-box">💡 Feed me your food secrets below and I shall reveal if it loves you back… or not. Your goal: weight loss, gain, or just survive Mondays. 😎</div>', unsafe_allow_html=True)
 
     # Food input section
-    st.markdown('<p class="section-header">📝 Food Details</p>', unsafe_allow_html=True)
-    ingredients = st.text_area("🧾 Ingredients (comma-separated)", "sugar, salt, whole grain, vegetable oil")
-    label = st.selectbox("🍽️ Your Target", ["Weight Loss", "Weight Gain", "Balanced"])
-    calories = st.number_input("🔥 Calories per serving", min_value=0)
-    protein = st.number_input("🍗 Protein (g)", min_value=0.0)
-    carbs = st.number_input("🥖 Carbs (g)", min_value=0.0)
-    fiber = st.number_input("🌿 Fiber (g)", min_value=0.0)
-    fat = st.number_input("🥓 Fat (g)", min_value=0.0)
-    sugar = st.number_input("🍬 Sugar (g)", min_value=0.0)
+    st.markdown('<p class="section-header">🕵️‍♂️ Spy on Your Ingredients</p>', unsafe_allow_html=True)
+    ingredients = st.text_area("📝 Spill the beans (ingredients, comma-separated)", "sugar, salt, whole grain, vegetable oil")
+    label = st.selectbox("🎯 Your goal (Pick your vibe)", ["Weight Loss 🏃‍♀️", "Weight Gain 💪", "Balanced 😇"])
+    calories = st.number_input("🔥 Calories per serving (don’t lie 😏)", min_value=0)
+    protein = st.number_input("🍗 Protein (muscle fuel in grams)", min_value=0.0)
+    carbs = st.number_input("🥖 Carbs (bread power in grams)", min_value=0.0)
+    fiber = st.number_input("🌿 Fiber (keep it moving grams)", min_value=0.0)
+    fat = st.number_input("🥓 Fat (the tasty but sneaky grams)", min_value=0.0)
+    sugar = st.number_input("🍬 Sugar (sweet enemy grams)", min_value=0.0)
 
     # Analyze button
-    if st.button("🔍 Analyze Food"):
+    if st.button("🔮 Reveal Food Fate"):
         if not food_model or not food_vectorizer:
-            st.warning("⚠️ Food ML model not loaded.")
+            st.warning("⚠️ Food AI is sleeping. Please wake it up by loading the model!")
             return
 
         # Prepare features for ML prediction
@@ -109,25 +112,26 @@ def food_page(food_model, food_vectorizer):
         X = food_vectorizer.transform([feature_text])
         pred_label = food_model.predict(X)[0]
 
-        # Display results with badges
-        if pred_label.lower() == label.lower():
+        # Display results with fun badges
+        if pred_label.lower() in label.lower():
             st.markdown(
-                f'<div class="result-box"><span class="badge-healthy">✅ Suitable</span> Food is ideal for <b>{label}</b>. Enjoy your meal! 🍽️</div>',
+                f'<div class="result-box"><span class="badge-healthy">🎉 YUM!</span> Your food is totally vibing with <b>{label}</b>! Go ahead and nom nom 😋</div>',
                 unsafe_allow_html=True
             )
         else:
             st.markdown(
-                f'<div class="result-box"><span class="badge-unhealthy">❌ Not Suitable</span> Predicted as <b>{pred_label}</b>. This may not align with your <b>{label}</b> goal. ⚠️</div>',
+                f'<div class="result-box"><span class="badge-unhealthy">😬 OOPS!</span> AI says it’s more like <b>{pred_label}</b>. Maybe rethink that bite? 😅</div>',
                 unsafe_allow_html=True
             )
 
     # Tips Section
-    st.markdown('<p class="section-header">💡 Tips</p>', unsafe_allow_html=True)
+    st.markdown('<p class="section-header">💡 Fun Tips</p>', unsafe_allow_html=True)
     st.markdown("""
-    - Include as many ingredients as possible for accurate prediction.  
-    - Check calorie and nutrient values carefully.  
-    - Use this tool as guidance, consult a nutritionist for personalized diet plans.  
+    - More ingredients = more gossip for our AI. 🕵️‍♀️  
+    - Double-check calories, because AI isn’t perfect… yet. 🤖  
+    - Use this for fun and giggles. Nutritionist still knows best. 🥼  
     """)
+
 
 # ---------------- FABRIC PAGE ---------------- #
 def fabric_page(fabric_model, fabric_vectorizer):
