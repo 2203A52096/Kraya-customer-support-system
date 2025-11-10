@@ -31,12 +31,66 @@ def add_styles():
 
 # ---------------- FOOD PAGE ---------------- #
 def food_page(food_model, food_vectorizer):
+    import streamlit as st
+
+    # Custom CSS for styling
+    st.markdown("""
+    <style>
+        .banner {
+            background-color: #FFF3E0;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #FF6F00;
+        }
+        .info-box {
+            background-color: #E3F2FD;
+            padding: 10px;
+            border-left: 6px solid #2196F3;
+            border-radius: 5px;
+        }
+        .result-box {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-size: 18px;
+        }
+        .badge-healthy {
+            color: #155724;
+            background-color: #d4edda;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .badge-unhealthy {
+            color: #721c24;
+            background-color: #f8d7da;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .section-header {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #FF5722;
+        }
+    </style>
+    """, unsafe_allow_html=True)
+
+    # Page Title & Banner
     st.title("🍎 Food Health Analyzer")
     st.markdown('<div class="banner">🥗 Eat Smart, Live Better</div>', unsafe_allow_html=True)
-    st.info("Enter your food details and see if it’s suitable for weight loss or weight gain.")
 
+    # Info section about the page
+    st.markdown('<div class="info-box">💡 Enter your food details below. Our AI model will help determine if it’s suitable for your dietary goal: weight loss, weight gain, or balanced nutrition.</div>', unsafe_allow_html=True)
+
+    # Food input section
+    st.markdown('<p class="section-header">📝 Food Details</p>', unsafe_allow_html=True)
     ingredients = st.text_area("🧾 Ingredients (comma-separated)", "sugar, salt, whole grain, vegetable oil")
-    label = st.selectbox("🍽️ Actual Label", ["Weight Loss", "Weight Gain", "Balanced"])
+    label = st.selectbox("🍽️ Your Target", ["Weight Loss", "Weight Gain", "Balanced"])
     calories = st.number_input("🔥 Calories per serving", min_value=0)
     protein = st.number_input("🍗 Protein (g)", min_value=0.0)
     carbs = st.number_input("🥖 Carbs (g)", min_value=0.0)
@@ -44,6 +98,7 @@ def food_page(food_model, food_vectorizer):
     fat = st.number_input("🥓 Fat (g)", min_value=0.0)
     sugar = st.number_input("🍬 Sugar (g)", min_value=0.0)
 
+    # Analyze button
     if st.button("🔍 Analyze Food"):
         if not food_model or not food_vectorizer:
             st.warning("⚠️ Food ML model not loaded.")
@@ -54,16 +109,25 @@ def food_page(food_model, food_vectorizer):
         X = food_vectorizer.transform([feature_text])
         pred_label = food_model.predict(X)[0]
 
+        # Display results with badges
         if pred_label.lower() == label.lower():
             st.markdown(
-                f'<div class="result-box"><span class="badge badge-healthy">✅ Suitable</span>: Food is good for <b>{label}</b>. You can go ahead and buy it.</div>',
+                f'<div class="result-box"><span class="badge-healthy">✅ Suitable</span> Food is ideal for <b>{label}</b>. Enjoy your meal! 🍽️</div>',
                 unsafe_allow_html=True
             )
         else:
             st.markdown(
-                f'<div class="result-box"><span class="badge badge-unhealthy">❌ Not Suitable</span>: Predicted as <b>{pred_label}</b>. This may not be ideal for <b>{label}</b>.</div>',
+                f'<div class="result-box"><span class="badge-unhealthy">❌ Not Suitable</span> Predicted as <b>{pred_label}</b>. This may not align with your <b>{label}</b> goal. ⚠️</div>',
                 unsafe_allow_html=True
             )
+
+    # Tips Section
+    st.markdown('<p class="section-header">💡 Tips</p>', unsafe_allow_html=True)
+    st.markdown("""
+    - Include as many ingredients as possible for accurate prediction.  
+    - Check calorie and nutrient values carefully.  
+    - Use this tool as guidance, consult a nutritionist for personalized diet plans.  
+    """)
 
 # ---------------- FABRIC PAGE ---------------- #
 def fabric_page(fabric_model, fabric_vectorizer):
