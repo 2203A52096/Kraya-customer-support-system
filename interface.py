@@ -205,25 +205,25 @@ def electronics_page(electronics_data, embed_model):
     # PAGE TITLE & BANNER
     st.title("📱 Electronics Help Desk")
     st.markdown(
-        '<div class="banner" style="padding:15px; border-radius:12px; background:#e0f7fa; text-align:center;">'
-        '⚡ Smart Fixes for Your Gadgets – Fast, Funny & Friendly ⚡</div>', 
+        '<div style="padding:18px; border-radius:12px; background:#d7f0f7; text-align:center; font-size:18px;">'
+        '⚡ Smart Fixes for Your Gadgets – Elegant, Friendly & Fun ⚡</div>', 
         unsafe_allow_html=True
     )
 
-    # FUN & ENGAGING ABOUT PAGE
+    # ELEGANT & FUN ABOUT PAGE
     st.info(
         """
         🎉 Welcome to the **Electronics Help Desk**! 🛠️  
 
-        Stressed out because your gadget is acting up? Don’t worry, you’re in good hands (or circuits 😎)!  
+        Feeling frustrated because your gadget is misbehaving? Relax 😎 – I’ve got your back!  
 
-        Here’s what I do:  
-        1️⃣ **Step-by-step troubleshooting** 🔧 – I break things down so even your grandma could fix it.  
-        2️⃣ **Fun and quirky tips** 😜 – Expect some tech humor along the way!  
-        3️⃣ **Professional advice if needed** 📞 – When it’s above our paygrade, we tell you straight.  
+        Here’s what I offer:  
+        1️⃣ **Step-by-step troubleshooting** 🔧 – Clear and simple, no tech jargon.  
+        2️⃣ **Fun and quirky tips** 😜 – A little humor to make tech less stressful.  
+        3️⃣ **Professional advice** 📞 – When things get tricky, I’ll tell you straight.  
 
-        Think of me as your **friendly, slightly sarcastic, tech-savvy buddy** who’s always ready to save the day ⚡.  
-        So go ahead, spill the beans about your gadget drama – the weirder, the better 🤖💬!
+        Think of me as your **friendly, elegant, tech-savvy companion** who makes gadget fixes painless and fun 💡.  
+        So go ahead, describe your device drama – the weirder, the better 🤖✨!
         """
     )
 
@@ -232,13 +232,13 @@ def electronics_page(electronics_data, embed_model):
     device = st.selectbox("🔧 Choose your device", devices)
 
     # USER INPUT
-    user_input = st.text_area("✍️ Describe your issue (don’t hold back!)")
+    user_input = st.text_area("✍️ Describe your issue (don’t hold back!)", height=120)
 
     # GET SUPPORT BUTTON
     if st.button("🛠️ Get Support"):
-        # CHECK EMPTY INPUT
+        # HANDLE EMPTY INPUT
         if not user_input.strip():
-            st.warning("⚠️ Please describe your problem first! Your friendly tech buddy can’t guess 😅")
+            st.warning("⚠️ Please describe your problem first! Your elegant tech buddy can’t guess 😅")
             return
 
         if not electronics_data:
@@ -251,7 +251,7 @@ def electronics_page(electronics_data, embed_model):
         best_match = None
         max_score = -1
 
-        # ITERATE OVER DATA
+        # FIND BEST MATCH
         for item in electronics_data:
             if item['device'] != device.split()[0]:
                 continue
@@ -265,12 +265,8 @@ def electronics_page(electronics_data, embed_model):
                     best_match = item
 
         # FUN & INFORMATIVE RESPONSES
-        funny_headers = [
-            "😎 Tech Tip:", "🛠️ Pro Hack:", "💡 Quick Fix:", "🤔 Try this:"
-        ]
-        fallback_headers = [
-            "😬 Hmmm…", "🤖 Brainstorming…", "⚡ Device being stubborn…", "📞 Call the experts!"
-        ]
+        funny_headers = ["😎 Tech Tip:", "🛠️ Pro Hack:", "💡 Quick Fix:", "🤔 Try this:"]
+        fallback_headers = ["😬 Hmmm…", "🤖 Brainstorming…", "⚡ Device acting up…", "📞 Call the experts!"]
 
         # MATCH FOUND
         if best_match and max_score > 0.6:
@@ -278,33 +274,36 @@ def electronics_page(electronics_data, embed_model):
             steps = solution_text.split(", ")  # simple split for steps
 
             st.markdown(
-                f'<div style="padding:20px 25px; margin:10px 0; border-radius:15px; '
-                f'background:linear-gradient(120deg, #e0f7fa, #b2ebf2); box-shadow: 3px 3px 10px rgba(0,0,0,0.1);">'
-                f'<h3 style="color:#00796b;">{random.choice(funny_headers)}</h3></div>', unsafe_allow_html=True
+                f'<div style="padding:22px 25px; margin:12px 0; border-radius:15px; '
+                f'background:linear-gradient(135deg, #e3f2f9, #c7e8f6); '
+                f'box-shadow: 2px 2px 12px rgba(0,0,0,0.08);">'
+                f'<h3 style="color:#0277bd; font-weight:600;">{random.choice(funny_headers)}</h3></div>', 
+                unsafe_allow_html=True
             )
 
-            # Display steps with icons and spacing
+            # Display steps elegantly
             for i, step in enumerate(steps, start=1):
                 st.markdown(
-                    f'<div style="padding:8px 0; font-size:16px;">'
+                    f'<div style="padding:10px 0; font-size:16px; color:#455a64;">'
                     f'🔹 <b>Step {i}:</b> {step} ✅</div>', unsafe_allow_html=True
                 )
 
             # Extra tips if available
             if 'tips' in best_match:
                 st.markdown(
-                    f'<div style="padding:12px; margin-top:8px; background:#fff3e0; border-radius:12px;">'
+                    f'<div style="padding:14px; margin-top:10px; background:#fff8e1; border-radius:12px; color:#f57f17;">'
                     f'💡 <b>Extra Tips:</b> {best_match["tips"]}</div>', unsafe_allow_html=True
                 )
 
         # NO MATCH OR LOW SIMILARITY
         else:
             st.markdown(
-                f'<div style="padding:20px 25px; margin:10px 0; border-radius:15px; '
-                f'background:linear-gradient(120deg, #fff0f0, #ffebee); box-shadow: 3px 3px 10px rgba(0,0,0,0.1);">'
-                f'<h3 style="color:#c62828;">{random.choice(fallback_headers)}</h3>'
-                f'<p>I couldn’t find an exact fix 😅, but you can try these:</p>'
-                f'<ul>'
+                f'<div style="padding:22px 25px; margin:12px 0; border-radius:15px; '
+                f'background:linear-gradient(135deg, #fff5f5, #ffecec); '
+                f'box-shadow: 2px 2px 12px rgba(0,0,0,0.08);">'
+                f'<h3 style="color:#d32f2f; font-weight:600;">{random.choice(fallback_headers)}</h3>'
+                f'<p style="color:#5d4037;">I couldn’t find an exact fix 😅, but you can try these:</p>'
+                f'<ul style="color:#5d4037;">'
                 f'<li>🔌 Double-check your cables and connections</li>'
                 f'<li>🔄 Restart your device</li>'
                 f'<li>💾 Update the software if possible</li>'
