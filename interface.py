@@ -2,7 +2,7 @@
 import streamlit as st
 from sentence_transformers import SentenceTransformer, util
 import numpy as np
-
+import random
 # ---------------- STYLING ---------------- #
 def add_styles():
     st.markdown(
@@ -200,18 +200,20 @@ def fabric_page(fabric_model, fabric_vectorizer):
             st.warning("⚠️ Input format does not match the trained model. Please check your selections.")
 
 # ---------------- ELECTRONICS PAGE ---------------- #
+
+
 def electronics_page(electronics_data, embed_model):
     st.title("📱 Electronics Help Desk")
     st.markdown('<div class="banner">⚡ Quick Fixes for Smarter Living ⚡</div>', unsafe_allow_html=True)
-    st.info("Describe your problem, and get troubleshooting tips using AI-powered retrieval.")
+    st.info("Tell me what’s wrong, and I’ll try to fix it (or at least make it less painful 😂).")
 
     devices = ["Smartphone 📱", "Laptop 💻", "TV 📺", "Washing Machine 🧺", "Refrigerator ❄️"]
     device = st.selectbox("🔧 Select your device", devices)
-    user_input = st.text_area("✍️ Describe your issue")
+    user_input = st.text_area("✍️ Describe your issue. Don’t hold back!")
 
     if st.button("🛠️ Get Support"):
         if not electronics_data:
-            st.warning("⚠️ Electronics data not loaded.")
+            st.warning("⚠️ Oops! Electronics data is missing. Can’t help without it.")
             return
 
         # Embed the user query
@@ -225,7 +227,7 @@ def electronics_page(electronics_data, embed_model):
             if item['device'] != device.split()[0]:  # match selected device
                 continue
 
-            # Use problem + example queries as embeddings
+            # Compare problem + example queries as embeddings
             texts_to_compare = [item['problem']] + item.get('example_queries', [])
             for text in texts_to_compare:
                 desc_emb = embed_model.encode(text, convert_to_tensor=True)
@@ -234,11 +236,30 @@ def electronics_page(electronics_data, embed_model):
                     max_score = score
                     best_match = item
 
-        # Show result if similarity is high enough
+        # Funny responses
+        funny_prefixes = [
+            "😎 Here’s a hack for you:",
+            "🛠️ Pro tip:",
+            "🤔 I’d try this:",
+            "💡 Genius mode activated:"
+        ]
+        fallback_responses = [
+            "📞 Contact official service for advanced troubleshooting. They are the real heroes here.",
+            "😬 This one’s tricky. Maybe ask a human?",
+            "🤖 Even I don’t know this… call the experts!",
+            "⚡ Your device is acting like it wants attention. Give support a ring!"
+        ]
+
         if best_match and max_score > 0.6:
-            st.markdown(f'<div class="result-box">{best_match["solution"]}</div>', unsafe_allow_html=True)
+            st.markdown(
+                f'<div class="result-box">{random.choice(funny_prefixes)} {best_match["solution"]}</div>',
+                unsafe_allow_html=True
+            )
         else:
-            st.markdown('<div class="result-box">📞 Contact official service for advanced troubleshooting.</div>', unsafe_allow_html=True)
+            st.markdown(
+                f'<div class="result-box">{random.choice(fallback_responses)}</div>',
+                unsafe_allow_html=True
+            )
 
 # ---------------- MAIN UI ---------------- #
 def show_ui(food_model, food_vectorizer, fabric_model, fabric_vectorizer, electronics_data):
