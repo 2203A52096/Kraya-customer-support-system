@@ -136,22 +136,24 @@ def food_page(food_model, food_vectorizer):
 
 # ---------------- FABRIC PAGE ---------------- #
 def fabric_page(fabric_model, fabric_vectorizer):
+    import streamlit as st
+
     st.title("🧵 Fabric Recommendation System")
 
-    # ================== BANNER (Pastel Purple) ==================
+    # ================== BANNER CARD (Pastel Purple) ==================
     st.markdown("""
     <div style="
-        padding:20px; 
-        text-align:center; 
-        border-radius:15px; 
-        background: linear-gradient(135deg, #ffe0f0, #ffc1e3);
-        color:#d81b60;
+        padding:20px;
+        text-align:center;
+        border-radius:15px;
+        background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+        color:#6a1b9a;
         font-size:20px;
         font-weight:600;
         box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
         margin-bottom:20px;
     ">
-    👗 Dress Smart, Feel Confident 🎉
+        👗 Dress Smart, Feel Confident 🎉
     </div>
     """, unsafe_allow_html=True)
 
@@ -159,18 +161,22 @@ def fabric_page(fabric_model, fabric_vectorizer):
     intro_style = """
         padding:30px;
         border-radius:20px;
-        background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+        background: linear-gradient(135deg, #e1f5fe, #b3e5fc);
         box-shadow: 2px 2px 15px rgba(0,0,0,0.08);
         font-size:16px;
         line-height:1.6;
-        color:#4a148c;
+        color:#01579b;
         margin-bottom:20px;
     """
     st.markdown(f"""
     <div style="{intro_style}">
-    Hey fashionista! 💃 Want to know if your outfit is a hit or miss?  
-    Enter your details, and I’ll give you a **fun, quick, and stylish recommendation**! 😎  
-    Think of me as your **personal outfit guru**, with a pinch of sass and lots of style tips! 👗✨
+        🎉 <b>Welcome to the Fabric Recommendation System!</b> 👗<br><br>
+        Stressed about picking the right outfit? 😎 Don’t worry – your friendly, slightly sarcastic fashion buddy is here!<br><br>
+        Here’s what I do:<br>
+        1️⃣ <b style="color:#0277bd;">Step-by-step suggestions</b> – Quick outfit checks.<br>
+        2️⃣ <b style="color:#ff8f00;">Fun and quirky tips</b> – Expect a bit of sass along the way!<br>
+        3️⃣ <b style="color:#d32f2f;">Professional advice if needed</b> – I’ll tell you straight if your choice is questionable.<br><br>
+        So go ahead, enter your details, and let’s see how stylish you are today! 🌟
     </div>
     """, unsafe_allow_html=True)
 
@@ -199,19 +205,14 @@ def fabric_page(fabric_model, fabric_vectorizer):
                 color:#880e4f;
                 margin-top:15px;
             """
-            st.markdown(f'<div style="{result_style}">', unsafe_allow_html=True)
-
             if recommended_outfit.strip().lower() == pred_outfit.strip().lower():
-                st.markdown(f"🎉 <b>Awesome!</b> Your outfit '<i>{recommended_outfit}</i>' looks perfect for your selection! ✅")
+                result_text = f"🎉 <b>Awesome!</b> Your outfit '<i>{recommended_outfit}</i>' looks perfect for your selection! ✅"
             else:
-                st.markdown(
-                    f"⚠️ Hmm… your outfit '<i>{recommended_outfit}</i>' might not be the best match. "
-                    f"Recommended: '<i>{pred_outfit}</i>' 👗"
-                )
+                result_text = f"⚠️ Hmm… your outfit '<i>{recommended_outfit}</i>' might not be the best match. Recommended: '<i>{pred_outfit}</i>' 👗"
 
-            st.markdown("</div>", unsafe_allow_html=True)
+            st.markdown(f'<div style="{result_style}">{result_text}</div>', unsafe_allow_html=True)
 
-            # ================== QUICK TIPS ==================
+            # ================== QUICK TIPS CARD ==================
             tips_style = """
                 background-color:#fff3e0;
                 border-left:6px solid #ff6f61;
@@ -221,10 +222,10 @@ def fabric_page(fabric_model, fabric_vectorizer):
             """
             st.markdown(f"""
             <div style="{tips_style}">
-            💡 <b>Quick Fashion Tips:</b><br>
-            - Dress for your skin tone, weather, and activity level.<br>
-            - Prefer breathable fabrics for hot days, cozy ones for cold.<br>
-            - Always add your personal flair! 🌟
+                💡 <b>Quick Fashion Tips:</b><br>
+                - Dress for your skin tone, weather, and activity level.<br>
+                - Prefer breathable fabrics for hot days, cozy ones for cold.<br>
+                - Always add your personal flair! 🌟
             </div>
             """, unsafe_allow_html=True)
 
