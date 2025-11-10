@@ -202,32 +202,49 @@ def fabric_page(fabric_model, fabric_vectorizer):
 # ---------------- ELECTRONICS PAGE ---------------- #
 
 
+
 def electronics_page(electronics_data, embed_model):
+    # PAGE TITLE & BANNER
     st.title("📱 Electronics Help Desk")
-    st.markdown('<div class="banner">⚡ Quick Fixes for Smarter Living ⚡</div>', unsafe_allow_html=True)
-    st.info("Tell me what’s wrong, and I’ll try to fix it (or at least make it less painful 😂).")
+    st.markdown(
+        '<div class="banner">⚡ Smart Fixes for Your Gadgets – Fast & Friendly ⚡</div>', 
+        unsafe_allow_html=True
+    )
 
+    # ABOUT THE PAGE
+    st.info(
+        "Welcome to the **Electronics Help Desk**! 🛠️\n\n"
+        "Here, you can describe issues with your gadgets, and our AI-powered assistant "
+        "will suggest quick fixes, tips, and troubleshooting steps. Think of me as your "
+        "friendly tech sidekick 😎."
+    )
+
+    # DEVICE SELECTION
     devices = ["Smartphone 📱", "Laptop 💻", "TV 📺", "Washing Machine 🧺", "Refrigerator ❄️"]
-    device = st.selectbox("🔧 Select your device", devices)
-    user_input = st.text_area("✍️ Describe your issue. Don’t hold back!")
+    device = st.selectbox("🔧 Choose your device", devices)
 
+    # USER INPUT
+    user_input = st.text_area(
+        "✍️ Describe your problem in detail (don’t worry, no tech shame here!)"
+    )
+
+    # GET SUPPORT BUTTON
     if st.button("🛠️ Get Support"):
         if not electronics_data:
-            st.warning("⚠️ Oops! Electronics data is missing. Can’t help without it.")
+            st.warning("⚠️ Oops! Electronics data is missing. Can’t provide tips without it.")
             return
 
-        # Embed the user query
+        # EMBEDDING THE USER QUERY
         user_emb = embed_model.encode(user_input, convert_to_tensor=True)
 
         best_match = None
         max_score = -1
 
-        # Iterate over JSON entries
+        # ITERATE OVER DATA
         for item in electronics_data:
-            if item['device'] != device.split()[0]:  # match selected device
+            if item['device'] != device.split()[0]:
                 continue
 
-            # Compare problem + example queries as embeddings
             texts_to_compare = [item['problem']] + item.get('example_queries', [])
             for text in texts_to_compare:
                 desc_emb = embed_model.encode(text, convert_to_tensor=True)
@@ -236,30 +253,32 @@ def electronics_page(electronics_data, embed_model):
                     max_score = score
                     best_match = item
 
-        # Funny responses
+        # FUNNY + INFORMATIVE RESPONSES
         funny_prefixes = [
-            "😎 Here’s a hack for you:",
-            "🛠️ Pro tip:",
-            "🤔 I’d try this:",
-            "💡 Genius mode activated:"
+            "😎 Tech Tip:", "🛠️ Pro Hack:", "💡 Quick Fix:", "🤔 Try this:"
         ]
         fallback_responses = [
-            "📞 Contact official service for advanced troubleshooting. They are the real heroes here.",
-            "😬 This one’s tricky. Maybe ask a human?",
-            "🤖 Even I don’t know this… call the experts!",
-            "⚡ Your device is acting like it wants attention. Give support a ring!"
+            "📞 Contact official service for advanced troubleshooting. They’re the real pros!",
+            "😬 This one’s tricky. Maybe a technician can help?",
+            "🤖 Even I don’t know this… humans to the rescue!",
+            "⚡ Your device is being stubborn. Give support a ring!"
         ]
 
+        # DISPLAY SOLUTION
         if best_match and max_score > 0.6:
             st.markdown(
                 f'<div class="result-box">{random.choice(funny_prefixes)} {best_match["solution"]}</div>',
                 unsafe_allow_html=True
             )
+            # ADDITIONAL INFO (OPTIONAL)
+            if 'tips' in best_match:
+                st.info(f"💡 Extra Tips: {best_match['tips']}")
         else:
             st.markdown(
                 f'<div class="result-box">{random.choice(fallback_responses)}</div>',
                 unsafe_allow_html=True
             )
+
 
 # ---------------- MAIN UI ---------------- #
 def show_ui(food_model, food_vectorizer, fabric_model, fabric_vectorizer, electronics_data):
