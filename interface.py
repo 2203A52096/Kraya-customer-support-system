@@ -398,8 +398,8 @@ def show_ui(food_model, food_vectorizer, fabric_model, fabric_vectorizer, electr
         <div style="
             padding:20px;
             border-radius:15px;
-            background: linear-gradient(135deg, #f0f4c3, #e6ee9c);
-            color:#33691e;
+            background: linear-gradient(135deg, #e1f5fe, #b3e5fc); /* soft pastel blue */
+            color:#0d47a1;
             font-size:16px;
             line-height:1.6;
             box-shadow: 2px 2px 12px rgba(0,0,0,0.08);
