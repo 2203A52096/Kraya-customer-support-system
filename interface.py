@@ -71,32 +71,30 @@ def fabric_page(fabric_model, fabric_vectorizer):
     st.markdown('<div class="banner">👗 Dress Smart, Feel Confident</div>', unsafe_allow_html=True)
     
     # Quick tips above inputs
-    st.info("Get fabric and **color suggestions** tailored to your **skin, weather, work level, and season**.")
-    st.info("💡 Tip: Choose 'Recommended Outfit' based on the occasion to get better fabric suggestions.")
-    st.info("💡 Note: Fabrics suggested are based on season, work intensity, and your skin tone.")
+    st.info("Get outfit recommendations tailored to your **skin, weather, work level, and season**.")
+    st.info("💡 Tip: Choose 'Recommended Outfit' based on the occasion to get more relevant suggestions.")
+    st.info("💡 Note: Recommendations are based on your selections and past patterns in the dataset.")
 
     # User inputs
-    skin_type = st.selectbox("👩 Skin Type", ["Dry", "Oily", "Sensitive", "Normal"])
     skin_tone = st.selectbox("🎨 Skin Tone", ["Fair", "Medium", "Dark"])
     weather = st.selectbox("☀️ Weather Condition", ["Hot", "Cold", "Humid", "Dry"])
     work_level = st.selectbox("💪 Work Level", ["High", "Medium", "Low"])
     season = st.selectbox("🍂 Season", ["Summer", "Winter", "Spring", "Autumn"])
-    recommended_outfit = st.text_input("👗 Recommended Outfit", "Casual")
 
-    if st.button("🎯 Get Fabric Suggestions"):
-        # Combine all features as a single string
-        feature_text = f"{skin_tone} {weather} {work_level} {season} {recommended_outfit}"
+    if st.button("🎯 Get Outfit Suggestions"):
+        # Combine all features exactly like in training
+        feature_text = f"{skin_tone} {weather} {work_level} {season}"
 
         try:
             # Transform using the trained vectorizer
             X = fabric_vectorizer.transform([feature_text])
-            # Predict fabric
-            pred_fabric = fabric_model.predict(X)[0]
+            # Predict recommended outfit
+            pred_outfit = fabric_model.predict(X)[0]
 
-            # Display predicted fabric
+            # Display predicted outfit
             st.markdown(
                 f"""<div class="result-box">
-                <span style='color:#5CB85C; font-weight:bold;'>✅ Predicted Fabric:</span> {pred_fabric}
+                <span style='color:#5CB85C; font-weight:bold;'>✅ Recommended Outfit:</span> {pred_outfit}
                 </div>""",
                 unsafe_allow_html=True,
             )
@@ -106,22 +104,20 @@ def fabric_page(fabric_model, fabric_vectorizer):
             <div style='background-color:#FFF4E6; border-left:6px solid #FF6F61; padding:10px; border-radius:20px;'>
             <h4>📝 Informative Notes:</h4>
             <ul>
-            <li>The predicted fabric is based on your selected skin tone, weather, work level, and season.</li>
-            <li>For sensitive skin, avoid synthetic fabrics like polyester and nylon.</li>
-            <li>High work intensity? Prefer moisture-wicking or breathable fabrics.</li>
-            <li>Seasonal fabrics: wool/fleece for winter, cotton/linen for summer.</li>
-            <li>Recommended outfits help improve prediction relevance.</li>
+            <li>The recommended outfit is based on your selected skin tone, weather, work level, and season.</li>
+            <li>High work intensity? Choose breathable or moisture-wicking fabrics.</li>
+            <li>Seasonal advice: cotton/linen for summer, wool/fleece for winter.</li>
+            <li>These recommendations are based on patterns in our dataset; consider your personal comfort and style.</li>
             </ul>
             </div>
             """, unsafe_allow_html=True)
 
             # Optional collapsible tips
-            with st.expander("💡 Fabric Guidelines and Tips"):
+            with st.expander("💡 Outfit Guidelines and Tips"):
                 st.write("""
-                - Predicted fabrics are suitable for your skin type and season.
-                - Always consider personal comfort and style.
-                - Colors suggested are complementary to your skin tone.
-                - Re-check fabric recommendation if changing weather or outfit.
+                - Outfits are suggested to match your skin tone, season, and activity level.
+                - You can adjust the outfit based on personal style and occasion.
+                - Re-check recommendations if your environment or activity changes.
                 """)
 
         except ValueError:
