@@ -204,25 +204,24 @@ def fabric_page(fabric_model, fabric_vectorizer):
 def electronics_page(electronics_data, embed_model):
     st.title("📱 Electronics Help Desk")
 
-    # ================== BANNER ==================
-st.markdown("""
-<div style="
-    padding:20px; 
-    text-align:center; 
-    border-radius:15px; 
-    background: linear-gradient(135deg, #e1bee7, #ce93d8);
-    color:#6a1b9a;
-    font-size:20px;
-    font-weight:600;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-    margin-bottom:20px;
-">
-⚡ Quick Fixes for Smarter Living ⚡
-</div>
-""", unsafe_allow_html=True)
+    # ================== BANNER (Pastel Purple Gradient) ==================
+    st.markdown("""
+    <div style="
+        padding:20px; 
+        text-align:center; 
+        border-radius:15px; 
+        background: linear-gradient(135deg, #e1bee7, #ce93d8);
+        color:#6a1b9a;
+        font-size:20px;
+        font-weight:600;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        margin-bottom:20px;
+    ">
+    ⚡ Quick Fixes for Smarter Living ⚡
+    </div>
+    """, unsafe_allow_html=True)
 
-
-    # ================== INTRO CARD (PASTEL BLUE) ==================
+    # ================== INTRO CARD (Pastel Blue) ==================
     intro_card_style = """
         padding:40px; 
         border-radius:20px; 
@@ -321,7 +320,6 @@ So go ahead, spill the beans about your gadget drama – <b style="color:#00796b
         solution_html += "</div>"
 
         st.markdown(solution_html, unsafe_allow_html=True)
-
 
 # ---------------- MAIN UI ---------------- #
 def show_ui(food_model, food_vectorizer, fabric_model, fabric_vectorizer, electronics_data):
