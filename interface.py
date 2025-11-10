@@ -201,11 +201,16 @@ def fabric_page(fabric_model, fabric_vectorizer):
 
 # ---------------- ELECTRONICS PAGE ---------------- #
 
+import random
+import streamlit as st
+from sentence_transformers import SentenceTransformer, util
+
 def electronics_page(electronics_data, embed_model):
     # PAGE TITLE & BANNER
     st.title("📱 Electronics Help Desk")
     st.markdown(
-        '<div class="banner">⚡ Smart Fixes for Your Gadgets – Fast, Funny & Friendly ⚡</div>', 
+        '<div class="banner" style="padding:10px; border-radius:10px; background:#e0f7fa; text-align:center;">'
+        '⚡ Smart Fixes for Your Gadgets – Fast, Funny & Friendly ⚡</div>', 
         unsafe_allow_html=True
     )
 
@@ -228,6 +233,11 @@ def electronics_page(electronics_data, embed_model):
 
     # GET SUPPORT BUTTON
     if st.button("🛠️ Get Support"):
+        # CHECK EMPTY INPUT
+        if not user_input.strip():
+            st.warning("⚠️ Please describe your problem first! I’m ready to help 😎")
+            return
+
         if not electronics_data:
             st.warning("⚠️ Oops! Electronics data is missing. Can’t provide tips without it.")
             return
@@ -259,28 +269,45 @@ def electronics_page(electronics_data, embed_model):
             "😬 Hmmm…", "🤖 Brainstorming…", "⚡ Device being stubborn…", "📞 Call the experts!"
         ]
 
+        # MATCH FOUND
         if best_match and max_score > 0.6:
-            # Format solution into steps
             solution_text = best_match["solution"]
             steps = solution_text.split(", ")  # simple split for steps
-            st.markdown(f'<div class="result-box" style="padding:15px; border-radius:12px; background:#f0f8ff;">', unsafe_allow_html=True)
-            st.markdown(f"### {random.choice(funny_headers)}")
-            for i, step in enumerate(steps, start=1):
-                st.markdown(f"**{i}.** {step} ✅")
-            # Optional extra tips
-            if 'tips' in best_match:
-                st.markdown(f"💡 **Extra Tips:** {best_match['tips']}")
-            st.markdown("</div>", unsafe_allow_html=True)
-        else:
-            st.markdown(f'<div class="result-box" style="padding:15px; border-radius:12px; background:#fff0f0;">', unsafe_allow_html=True)
-            st.markdown(f"### {random.choice(fallback_headers)}")
-            st.markdown("I couldn’t find an exact fix 😅, but here’s what you can do:")
-            st.markdown("1. Double-check your cables and connections 🔌")
-            st.markdown("2. Restart your device 🔄")
-            st.markdown("3. Update the software if possible 💾")
-            st.markdown("4. If still failing, contact official support 📞")
-            st.markdown("</div>", unsafe_allow_html=True)
 
+            st.markdown(
+                f'<div class="result-box" style="padding:20px 25px; margin:10px 0; border-radius:15px; '
+                f'background:linear-gradient(120deg, #e0f7fa, #b2ebf2); box-shadow: 3px 3px 10px rgba(0,0,0,0.1);">'
+                f'<h3 style="color:#00796b;">{random.choice(funny_headers)}</h3></div>', unsafe_allow_html=True
+            )
+
+            # Display steps with icons and spacing
+            for i, step in enumerate(steps, start=1):
+                st.markdown(
+                    f'<div style="padding:8px 0; font-size:16px;">'
+                    f'🔹 <b>Step {i}:</b> {step} ✅</div>', unsafe_allow_html=True
+                )
+
+            # Extra tips if available
+            if 'tips' in best_match:
+                st.markdown(
+                    f'<div style="padding:10px; margin-top:8px; background:#fff3e0; border-radius:10px;">'
+                    f'💡 <b>Extra Tips:</b> {best_match["tips"]}</div>', unsafe_allow_html=True
+                )
+
+        # NO MATCH OR LOW SIMILARITY
+        else:
+            st.markdown(
+                f'<div class="result-box" style="padding:20px 25px; margin:10px 0; border-radius:15px; '
+                f'background:linear-gradient(120deg, #fff0f0, #ffebee); box-shadow: 3px 3px 10px rgba(0,0,0,0.1);">'
+                f'<h3 style="color:#c62828;">{random.choice(fallback_headers)}</h3>'
+                f'<p>I couldn’t find an exact fix 😅, but you can try these:</p>'
+                f'<ul>'
+                f'<li>🔌 Double-check your cables and connections</li>'
+                f'<li>🔄 Restart your device</li>'
+                f'<li>💾 Update the software if possible</li>'
+                f'<li>📞 Contact official support if all else fails</li>'
+                f'</ul></div>', unsafe_allow_html=True
+            )
 
 
 # ---------------- MAIN UI ---------------- #
