@@ -89,7 +89,7 @@ def food_page(food_model, food_vectorizer):
     """, unsafe_allow_html=True)
 
     # ================== PAGE TITLE & BANNER ==================
-    st.title("🍎 Food Mood-o-Meter 3000")
+    st.title("🍎 Foody shoping buddy")
     st.markdown("""<div class="banner">🥗 Should You Buy It? Let's Find Out!</div>""", unsafe_allow_html=True)
 
     # ================== INFO CARD ==================
@@ -160,7 +160,7 @@ def food_page(food_model, food_vectorizer):
 def fabric_page(fabric_model, fabric_vectorizer):
     import streamlit as st
 
-    st.title("🧵 Fabric Recommendation System")
+    st.title("🧵Styling buddy")
 
     # ================== BANNER CARD (Pastel Mint) ==================
     st.markdown("""
@@ -244,7 +244,7 @@ def fabric_page(fabric_model, fabric_vectorizer):
 # ---------------- ELECTRONICS PAGE ---------------- #
 
 def electronics_page(electronics_data, embed_model):
-    st.title("📱 Electronics Help Desk")
+    st.title("📱 Electronics fixing buddy")
 
     # ================== BANNER (Pastel Purple Gradient) ==================
     st.markdown("""
@@ -365,31 +365,75 @@ So go ahead, spill the beans about your gadget drama – <b style="color:#00796b
 
 # ---------------- MAIN UI ---------------- #
 def show_ui(food_model, food_vectorizer, fabric_model, fabric_vectorizer, electronics_data):
+    import streamlit as st
+    from sentence_transformers import SentenceTransformer
+
+    # Apply any global styles
     add_styles()
+
+    # Sidebar navigation
     st.sidebar.title("🛍️ Lifestyle Helper")
     page = st.sidebar.radio(
         "Navigate",
         ["🏠 Home", "🍎 Food", "📱 Electronics", "🧵 Fabric"]
     )
 
-    # HOME PAGE
+    # ---------------- HOME PAGE ---------------- #
     if page == "🏠 Home":
         st.title("🏠 Welcome to Kraya")
-        st.markdown('<div class="banner">✨ Smart Choices, Happy Living ✨</div>', unsafe_allow_html=True)
-        st.markdown(
-            """
-            Kraya is your **personal customer support system**:
-            - <span class="badge badge-food">🍎 Food</span>: ML-powered food health analyzer.
-            - <span class="badge badge-electronics">📱 Electronics</span>: AI-powered troubleshooting.
-            - <span class="badge badge-fabric">🧵 Fabric</span>: Personalized fabric recommendations.
-            """,
-            unsafe_allow_html=True
-        )
+        st.markdown("""
+        <div style="
+            padding:25px;
+            border-radius:15px;
+            background: linear-gradient(135deg, #fce4ec, #f3e5f5);
+            color:#6a1b9a;
+            font-size:18px;
+            line-height:1.6;
+            box-shadow: 2px 2px 15px rgba(0,0,0,0.08);
+            margin-bottom:20px;
+        ">
+            ✨ <b>Smart Choices, Happy Living!</b> ✨<br><br>
 
+            Welcome to <b>Kraya</b>, your personal lifestyle assistant! Here’s what you can do:<br>
+            - <span style="color:#ff6f00;">🍎 Food</span>: ML-powered food health analyzer. Check if your snacks and meals match your goals!<br>
+            - <span style="color:#0288d1;">📱 Electronics</span>: AI-powered troubleshooting. Get quick fixes for your gadgets with a pinch of humor 😎.<br>
+            - <span style="color:#6a1b9a;">🧵 Fabric</span>: Personalized outfit recommendations based on skin, weather, season, and activity level.<br><br>
+
+            <b>Tips to get started:</b> 📝<br>
+            - Use the sidebar to navigate between pages.<br>
+            - Fill in all inputs on each page for the AI to give better recommendations.<br>
+            - Have fun! Kraya loves a little humor along the way 😜<br><br>
+
+            Think of Kraya as your friendly, slightly sarcastic, tech-savvy buddy who wants you to eat right, dress smart, and fix your gadgets without stress ⚡.
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("""
+        <div style="
+            padding:15px;
+            border-radius:15px;
+            background: linear-gradient(135deg, #e1f5fe, #b3e5fc);
+            color:#0277bd;
+            font-size:16px;
+            line-height:1.6;
+            margin-bottom:15px;
+        ">
+            💡 <b>Quick Start:</b> Select a page from the sidebar and follow the instructions.<br>
+            🎯 Each page uses AI to provide tailored advice.<br>
+            🤖 Kraya learns from patterns in the data to give helpful suggestions.<br>
+            📌 Remember: AI guidance is fun and helpful, but your judgment comes first!
+        </div>
+        """, unsafe_allow_html=True)
+
+    # ---------------- FOOD PAGE ---------------- #
     elif page == "🍎 Food":
         food_page(food_model, food_vectorizer)
+
+    # ---------------- FABRIC PAGE ---------------- #
     elif page == "🧵 Fabric":
         fabric_page(fabric_model, fabric_vectorizer)
+
+    # ---------------- ELECTRONICS PAGE ---------------- #
     elif page == "📱 Electronics":
         embed_model = SentenceTransformer('all-MiniLM-L6-v2')
         electronics_page(electronics_data, embed_model)
