@@ -1,0 +1,255 @@
+ID,Skin Tone,Weather Condition,Work Level,Season,Fabric,,Avoid Fabrics,Gender
+1,Medium,Hot,Home,Summer,Cotton,,Wool,Male
+2,Olive,Hot,Home,Spring,Linen,,Fleece,Male
+3,Light,Rainy,Fitness,Spring,Silk,,Velvet,Male
+4,Fair,Windy,Outdoor,Summer,Wool,,Wool,Male
+5,Light,Hot,Home,Summer,Cashmere,,Polyester,Male
+6,Deep,Humid,Home,Monsoon,Fleece,,Cotton,Male
+7,Medium,Hot,Fitness,Autumn,Flannel,,Linen,Male
+8,Fair,Windy,Outdoor,Spring,Velvet,,Velvet,Male
+9,Olive,Humid,Office,Winter,Corduroy,,Linen,Male
+10,Medium,Rainy,Office,Spring,Tweed,,Fleece,Male
+11,Medium,Sunny,Fitness,Spring,Polyester,,Fleece,Male
+12,Tan,Rainy,Fitness,Winter,Nylon,,Linen,Male
+13,Fair,Sunny,Home,Autumn,Rayon,,Linen,Male
+14,Tan,Humid,Outdoor,Autumn,Modal,,Linen,Male
+15,Fair,Cold,Home,Autumn,Bamboo Fabric,,Linen,Male
+16,Deep,Cold,Outdoor,Autumn,Jersey,,Linen,Male
+17,Deep,Cloudy,Office,Autumn,Voile,,Linen,Male
+18,Deep,Cloudy,Office,Monsoon,Poplin,,Silk,Male
+19,Medium,Windy,Home,Spring,Seersucker,,Velvet,Male
+20,Olive,Cloudy,Fitness,Winter,Muslin,,Silk,Male
+21,Light,Sunny,Home,Winter,Tencel,,Linen,Male
+22,Fair,Hot,Office,Winter,Georgette,,Linen,Male
+23,Fair,Cloudy,Outdoor,Monsoon,Chiffon,,Cotton,Male
+24,Olive,Humid,Outdoor,Monsoon,Crepe,,Silk,Male
+25,Olive,Cloudy,Home,Autumn,Hemp Fabric,,Linen,Male
+26,Fair,Hot,Fitness,Spring,Satin,,Velvet,Male
+27,Deep,Cold,Home,Winter,Organza,,Linen,Male
+28,Light,Windy,Home,Winter,Acrylic,,Silk,Male
+29,Fair,Cloudy,Home,Monsoon,Polyester Fleece,,Silk,Male
+30,Olive,Humid,Home,Winter,Knitted Fabric,,Silk,Male
+31,Medium,Humid,Fitness,Spring,Sherpa,,Fleece,Male
+32,Fair,Rainy,Home,Winter,Plush,,Linen,Male
+33,Olive,Humid,Home,Winter,Heavy Denim,,Linen,Male
+34,Fair,Windy,Office,Autumn,Pashmina,,Linen,Male
+35,Fair,Sunny,Office,Winter,Wool Crepe,,Linen,Male
+36,Fair,Cloudy,Office,Autumn,Wool Gabardine,,Linen,Male
+37,Olive,Humid,Fitness,Summer,PVC,,Polyester,Female
+38,Olive,Humid,Fitness,Winter,PU Leather,,Linen,Female
+39,Olive,Hot,Home,Summer,Gore-Tex,,Wool,Female
+40,Medium,Cold,Office,Autumn,Microfiber,,Silk,Female
+41,Fair,Cold,Home,Autumn,Ripstop Nylon,,Silk,Female
+42,Tan,Windy,Home,Winter,Taffeta,,Silk,Female
+43,Deep,Cloudy,Office,Autumn,Oilcloth,,Linen,Female
+44,Deep,Cloudy,Fitness,Summer,Waxed Cotton,,Wool,Female
+45,Fair,Cold,Outdoor,Winter,Waterproof Canvas,,Silk,Female
+46,Tan,Sunny,Fitness,Winter,Showerproof Polyester,,Silk,Female
+47,Medium,Cloudy,Outdoor,Winter,Polyurethane Coated Fabric,,Linen,Female
+48,Olive,Hot,Outdoor,Monsoon,Laminated Fabric,,Cotton,Female
+49,Olive,Cold,Outdoor,Monsoon,Polyamide,,Silk,Female
+50,Medium,Cloudy,Office,Spring,Quick-Dry Polyester,,Velvet,Female
+51,Olive,Windy,Outdoor,Winter,Water-Repellent Nylon,,Silk,Female
+52,Tan,Windy,Fitness,Winter,Denim,,Linen,Female
+53,Fair,Hot,Home,Summer,Cotton-Polyester Blend,,Polyester,Female
+54,Fair,Rainy,Fitness,Monsoon,Spandex,,Silk,Female
+55,Deep,Sunny,Outdoor,Spring,Lycra,,Fleece,Female
+56,Fair,Sunny,Fitness,Winter,Stretch Cotton,,Linen,Female
+57,Light,Humid,Office,Summer,Interlock Knit,,Wool,Female
+58,Fair,Rainy,Office,Winter,Rib Knit,,Silk,Male
+59,Light,Cloudy,Outdoor,Monsoon,Terry Cloth,,Cotton,Male
+60,Deep,Windy,Home,Winter,Sweatshirt Fleece,,Linen,Male
+61,Tan,Cloudy,Outdoor,Winter,Ponte Knit,,Silk,Male
+62,Deep,Humid,Outdoor,Monsoon,Canvas,,Cotton,Male
+63,Medium,Sunny,Home,Summer,Twill,,Polyester,Male
+64,Olive,Windy,Outdoor,Summer,Satin (Medium),,Polyester,Male
+65,Olive,Cloudy,Home,Winter,Crepe (Medium),,Silk,Male
+66,Light,Cloudy,Fitness,Summer,Poplin (Medium),,Polyester,Male
+67,Tan,Windy,Fitness,Summer,Chambray (Medium),,Wool,Male
+68,Olive,Sunny,Home,Spring,Wool Blend Suiting,,Fleece,Male
+69,Medium,Hot,Outdoor,Spring,Linen-Cotton Blend,,Velvet,Male
+70,Deep,Rainy,Fitness,Spring,Silk Blend,,Velvet,Female
+71,Deep,Windy,Fitness,Autumn,Viscose,,Silk,Female
+72,Olive,Hot,Office,Monsoon,Cupro,,Cotton,Female
+73,Olive,Rainy,Home,Autumn,Lycra Blend,,Silk,Female
+74,Medium,Cloudy,Fitness,Autumn,Nylon Mesh,,Linen,Female
+75,Light,Rainy,Home,Autumn,Polyester Mesh,,Linen,Female
+76,Light,Hot,Fitness,Autumn,Velvet Stretch,,Silk,Female
+77,Olive,Windy,Fitness,Monsoon,Faux Fur,,Silk,Female
+78,Fair,Humid,Fitness,Monsoon,Real Fur,,Cotton,Female
+79,Medium,Hot,Outdoor,Winter,Tulle,,Silk,Female
+80,Medium,Cold,Home,Autumn,Net Fabric,,Linen,Female
+81,Deep,Humid,Home,Monsoon,Lace,,Silk,Female
+82,Olive,Sunny,Outdoor,Autumn,Crochet Fabric,,Linen,Female
+83,Tan,Cloudy,Office,Autumn,Knitted Lace,,Linen,Female
+84,Fair,Sunny,Office,Spring,Eyelet Fabric,,Velvet,Female
+85,Medium,Sunny,Outdoor,Autumn,Brocade,,Silk,Male
+86,Olive,Cloudy,Office,Summer,Jacquard,,Wool,Male
+87,Medium,Cloudy,Home,Spring,Damask,,Fleece,Male
+88,Fair,Hot,Office,Monsoon,Satin Back Crepe,,Silk,Male
+89,Olive,Sunny,Office,Summer,Twill Weave,,Wool,Male
+90,Olive,Cold,Home,Spring,Herringbone,,Fleece,Male
+91,Light,Hot,Home,Summer,Houndstooth,,Polyester,Male
+92,Fair,Humid,Outdoor,Winter,Matelassé,,Silk,Male
+93,Medium,Sunny,Home,Winter,Batik Fabric,,Silk,Male
+94,Fair,Cloudy,Outdoor,Autumn,Ikat Fabric,,Silk,Male
+95,Tan,Windy,Fitness,Winter,Tie-Dye Cotton,,Linen,Male
+96,Tan,Sunny,Home,Monsoon,Chambray Linen,,Silk,Male
+97,Deep,Cloudy,Outdoor,Summer,Linen Voile,,Polyester,Male
+98,Fair,Hot,Office,Autumn,Chambray Cotton,,Silk,Male
+99,Fair,Hot,Fitness,Autumn,Stretch Denim,,Linen,Male
+100,Medium,Cold,Outdoor,Summer,Raw Silk,,Polyester,Male
+101,Olive,Cloudy,Office,Autumn,Dupioni Silk,,Silk,Male
+102,Light,Humid,Home,Autumn,Habutai Silk,,Linen,Male
+103,Olive,Hot,Home,Spring,Charmeuse Silk,,Fleece,Male
+104,Medium,Sunny,Office,Monsoon,Taffeta Silk,,Silk,Male
+105,Deep,Windy,Office,Summer,Crêpe de Chine,,Polyester,Male
+106,Light,Humid,Home,Autumn,Wool Flannel,,Linen,Male
+107,Deep,Cloudy,Home,Winter,Heavy Wool,,Silk,Male
+108,Fair,Cloudy,Home,Monsoon,Lightweight Wool,,Cotton,Male
+109,Fair,Humid,Fitness,Summer,Cashmere Blend,,Wool,Male
+110,Deep,Hot,Office,Spring,Wool Knit,,Fleece,Male
+111,Medium,Cloudy,Fitness,Monsoon,Wool Jersey,,Silk,Male
+112,Medium,Cold,Outdoor,Monsoon,Wool Pique,,Cotton,Male
+113,Olive,Windy,Office,Spring,Wool Fleece,,Velvet,Male
+114,Medium,Rainy,Home,Monsoon,Alpaca Wool,,Cotton,Male
+115,Medium,Cloudy,Home,Monsoon,Merino Wool,,Silk,Male
+116,Light,Sunny,Office,Autumn,Angora,,Linen,Male
+117,Fair,Cold,Home,Autumn,Mohair,,Silk,Male
+118,Tan,Sunny,Home,Autumn,Shetland Wool,,Linen,Male
+119,Tan,Cold,Home,Summer,Wool Blend Tweed,,Polyester,Male
+120,Tan,Rainy,Outdoor,Spring,Polycotton,,Velvet,Male
+121,Tan,Hot,Office,Summer,Stretch Polycotton,,Wool,Male
+122,Medium,Hot,Office,Spring,Lycra Jersey,,Fleece,Female
+123,Medium,Humid,Fitness,Monsoon,Viscose Jersey,,Cotton,Female
+124,Light,Windy,Office,Summer,Bamboo Jersey,,Wool,Female
+125,Fair,Cloudy,Home,Winter,Cotton Jersey,,Silk,Female
+126,Light,Cloudy,Fitness,Spring,Rayon Jersey,,Fleece,Female
+127,Fair,Windy,Outdoor,Spring,Modal Jersey,,Fleece,Female
+128,Olive,Windy,Home,Autumn,Lycra Spandex,,Linen,Female
+129,Tan,Rainy,Office,Winter,Nylon Spandex,,Linen,Female
+130,Medium,Cloudy,Office,Monsoon,Polyester Spandex,,Cotton,Female
+131,Medium,Rainy,Outdoor,Winter,Cotton Spandex,,Linen,Female
+132,Olive,Sunny,Outdoor,Monsoon,Stretch Crepe,,Cotton,Female
+133,Olive,Cloudy,Fitness,Monsoon,Stretch Satin,,Cotton,Female
+134,Medium,Humid,Home,Winter,Stretch Velvet,,Linen,Female
+135,Medium,Cloudy,Home,Winter,Satin Jersey,,Silk,Female
+136,Tan,Rainy,Outdoor,Summer,Silk Satin,,Polyester,Female
+137,Fair,Rainy,Fitness,Summer,Polyester Satin,,Wool,Female
+138,Light,Cloudy,Home,Summer,Satin Crepe,,Polyester,Female
+139,Fair,Humid,Home,Monsoon,Chiffon Silk,,Silk,Female
+140,Light,Sunny,Fitness,Monsoon,Chiffon Polyester,,Cotton,Female
+141,Olive,Sunny,Office,Autumn,Georgette Silk,,Silk,Female
+142,Medium,Hot,Home,Autumn,Georgette Polyester,,Silk,Female
+143,Deep,Rainy,Fitness,Autumn,Tulle Net,,Silk,Male
+144,Medium,Cloudy,Fitness,Summer,Tulle Stretch,,Wool,Male
+145,Tan,Windy,Office,Spring,Organza Silk,,Fleece,Male
+146,Medium,Rainy,Fitness,Winter,Organza Polyester,,Linen,Male
+147,Olive,Windy,Home,Winter,Brocade Silk,,Linen,Male
+148,Light,Sunny,Home,Summer,Brocade Polyester,,Wool,Male
+149,Fair,Cold,Office,Spring,Jacquard Silk,,Velvet,Male
+150,Olive,Hot,Outdoor,Winter,Jacquard Polyester,,Linen,Male
+151,Medium,Humid,Office,Monsoon,Velvet Silk,,Cotton,Male
+152,Fair,Rainy,Outdoor,Summer,Velvet Polyester,,Polyester,Male
+153,Olive,Rainy,Outdoor,Autumn,Velvet Rayon,,Silk,Male
+154,Medium,Sunny,Home,Summer,Velvet Cotton,,Polyester,Male
+155,Deep,Humid,Fitness,Spring,Fleece Polyester,,Fleece,Female
+156,Light,Sunny,Home,Winter,Fleece Cotton,,Silk,Female
+157,Olive,Humid,Outdoor,Autumn,Flannel Cotton,,Linen,Female
+158,Tan,Hot,Fitness,Spring,Flannel Wool,,Velvet,Female
+159,Olive,Cold,Office,Summer,Flannel Polyester,,Wool,Female
+160,Light,Sunny,Fitness,Winter,Corduroy Cotton,,Silk,Female
+161,Tan,Cold,Outdoor,Autumn,Corduroy Polyester,,Silk,Female
+162,Tan,Cold,Outdoor,Monsoon,Corduroy Wool,,Silk,Female
+163,Olive,Hot,Home,Winter,Denim Cotton,,Linen,Female
+164,Fair,Cold,Outdoor,Spring,Denim Stretch,,Fleece,Female
+165,Olive,Windy,Outdoor,Spring,Denim Lycra,,Fleece,Female
+166,Tan,Windy,Outdoor,Monsoon,Canvas Cotton,,Silk,Female
+167,Fair,Hot,Fitness,Monsoon,Canvas Polyester,,Cotton,Female
+168,Light,Cold,Office,Winter,Twill Cotton,,Silk,Female
+169,Light,Hot,Outdoor,Winter,Twill Polyester,,Silk,Female
+170,Light,Rainy,Outdoor,Winter,Poplin Cotton,,Linen,Gender
+171,Deep,Hot,Office,Autumn,Poplin Polyester,,Linen,Male
+172,Fair,Cloudy,Home,Spring,Chambray Cotton,,Velvet,Male
+173,Light,Rainy,Home,Spring,Chambray Linen,,Velvet,Male
+174,Olive,Sunny,Fitness,Autumn,Muslin Cotton,,Silk,Male
+175,Medium,Cold,Home,Summer,Voile Cotton,,Wool,Male
+176,Medium,Cold,Fitness,Monsoon,Tencel Cotton,,Cotton,Male
+177,Tan,Hot,Office,Autumn,Hemp Cotton,,Linen,Male
+178,Tan,Rainy,Outdoor,Monsoon,Silk Wool Blend,,Cotton,Male
+179,Fair,Sunny,Fitness,Monsoon,Linen Wool Blend,,Silk,Male
+180,Deep,Humid,Fitness,Spring,Cashmere Wool Blend,,Velvet,Male
+181,Medium,Windy,Outdoor,Monsoon,Nylon Polyester Blend,,Cotton,Male
+182,Light,Sunny,Office,Winter,Polyester Rayon Blend,,Linen,Male
+183,Deep,Windy,Office,Summer,Cotton Rayon Blend,,Wool,Male
+184,Tan,Windy,Home,Autumn,Modal Cotton Blend,,Silk,Male
+185,Fair,Cloudy,Office,Spring,Cotton Spandex Blend,,Fleece,Male
+186,Light,Rainy,Office,Summer,Jersey Cotton Blend,,Polyester,Male
+187,Deep,Windy,Fitness,Summer,Stretch Cotton Blend,,Wool,Male
+188,Deep,Hot,Office,Summer,Lycra Cotton Blend,,Wool,Male
+189,Medium,Windy,Outdoor,Autumn,Nylon Cotton Blend,,Silk,Male
+190,Tan,Hot,Outdoor,Monsoon,Polyester Spandex Blend,,Cotton,Male
+191,Deep,Cold,Fitness,Spring,Cotton Linen Blend,,Velvet,Male
+192,Light,Hot,Office,Monsoon,Cotton Silk Blend,,Cotton,Male
+193,Deep,Sunny,Office,Spring,Linen Silk Blend,,Fleece,Male
+194,Light,Rainy,Home,Summer,Wool Silk Blend,,Polyester,Male
+195,Medium,Humid,Fitness,Winter,Wool Polyester Blend,,Linen,Male
+196,Tan,Hot,Fitness,Monsoon,Fleece Cotton Blend,,Cotton,Male
+197,Light,Humid,Home,Monsoon,Stretch Twill,,Silk,Male
+198,Light,Cold,Outdoor,Spring,Stretch Poplin,,Fleece,Male
+199,Light,Cold,Outdoor,Spring,Stretch Denim,,Velvet,Male
+200,Fair,Rainy,Office,Spring,Waterproof Nylon,,Fleece,Male
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
