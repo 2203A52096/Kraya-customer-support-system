@@ -16,7 +16,7 @@ except:
 
 # ---------- Load Fabric Model ----------
 try:
-    fabric_model = pickle.load(open("fabric/fashion_fabric_model.pkl", "rb"))
+    fabric_model = pickle.load(open("fabric/fashion_fabric_model (6).pkl", "rb"))
     fabric_vectorizer = pickle.load(open("fabric/fashion_vectorizer_best.pkl", "rb"))
 except:
     st.warning("⚠️ Fabric model not loaded properly.")
