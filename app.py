@@ -14,20 +14,27 @@ st.set_page_config(
 # Load Food Model + Vectorizer
 # -----------------------------------------
 try:
-    food_model = pickle.load(open("food/food_weight_model_final.pkl", "rb"))
-    food_vectorizer = pickle.load(open("food/tfidf_vectorizer_final.pkl", "rb"))
-except:
-    st.warning("⚠️ Food model or vectorizer not loaded properly.")
+    with open("food/food_weight_model_final.pkl", "rb") as f:
+        food_model = pickle.load(f)
+    with open("food/tfidf_vectorizer_final.pkl", "rb") as f:
+        food_vectorizer = pickle.load(f)
+
+except Exception as e:
+    st.warning(f"⚠️ Food model/vectorizer not loaded properly: {e}")
     food_model, food_vectorizer = None, None
 
+
 # -----------------------------------------
-# Load Fabric Model
+# Load Fabric Model  (NO VECTORIZER)
 # -----------------------------------------
 try:
-    fabric_model = pickle.load(open("fabric/fashion_fabric_model.pkl", "rb"))
-except:
-    st.warning("⚠️ Fabric model not loaded properly.")
+    with open("fabric/fashion_fabric_model.pkl", "rb") as f:
+        fabric_model = pickle.load(f)
+
+except Exception as e:
+    st.warning(f"⚠️ Fabric model not loaded properly: {e}")
     fabric_model = None
+
 
 # -----------------------------------------
 # Load Electronics JSON
@@ -35,11 +42,13 @@ except:
 try:
     with open("electronics/electronics.json", "r") as f:
         electronics_data = json.load(f)
-except:
-    st.warning("⚠️ Electronics JSON not found.")
+
+except Exception as e:
+    st.warning(f"⚠️ Electronics JSON not found: {e}")
     electronics_data = None
 
+
 # -----------------------------------------
-# Run UI 
+# Run UI
 # -----------------------------------------
 show_ui(food_model, food_vectorizer, fabric_model, electronics_data)
