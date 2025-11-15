@@ -240,7 +240,7 @@ def fabric_page(fabric_model,fabric_vectorizer):
 
         except ValueError:
             st.warning("⚠️ Something went wrong with your input. Check your selections!")
-fix this accordingly
+
 # ---------------- ELECTRONICS PAGE ---------------- #
 
 def electronics_page(electronics_data, embed_model):
