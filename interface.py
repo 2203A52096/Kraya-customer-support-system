@@ -156,90 +156,89 @@ def food_page(food_model, food_vectorizer):
     </div>
     """, unsafe_allow_html=True)
 
-# ---------------- FABRIC PAGE ---------------- #
-def fabric_page(fabric_model,fabric_vectorizer):
-    import streamlit as st
+import streamlit as st
+import pickle
+import pandas as pd
+import numpy as np
 
-    st.title("🧵Styling buddy")
+# ======================================================
+# LOAD FABRIC MODEL (model + ohe + label stored in 1 file)
+# ======================================================
+@st.cache_resource
+def load_fabric_model():
+    try:
+        with open("fabric_model.pkl", "rb") as f:
+            data = pickle.load(f)
+        return data["model"], data["encoder"], data["label"]
+    except Exception as e:
+        st.error(f"⚠️ Fabric model not loaded: {e}")
+        return None, None, None
 
-    # ================== BANNER CARD (Pastel Mint) ==================
-    st.markdown("""
-    <div style="
-        padding:20px;
-        text-align:center;
-        border-radius:15px;
-        background: linear-gradient(135deg, #d0f0c0, #a0e0a0);
-        color:#2e7d32;
-        font-size:20px;
-        font-weight:600;
-        box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-        margin-bottom:15px;
-    ">
-        👗 Dress Smart, Feel Confident 🎉
-    </div>
-    """, unsafe_allow_html=True)
 
-    # ================== QUICK INFO / TIPS ==================
-    st.info("💡 Get outfit recommendations based on your **skin tone, weather, work level, season, and outfit choice**.")
-    st.info("💡 Enter the outfit you are planning to wear and see if it matches your context.")
-    st.info("💡 Recommendations are dataset-based but with a pinch of fun and sass 😎")
+# ======================================================
+# PREDICTION FUNCTION
+# ======================================================
+def predict_fabric(model, ohe, label_encoder, season, skintone, weather, worklevel):
 
-    # ================== USER INPUTS ==================
-    skin_tone = st.selectbox("🎨 Skin Tone", ["Fair", "Medium", "Dark"])
-    weather = st.selectbox("☀️ Weather Condition", ["Hot", "Cold", "Humid", "Dry"])
-    work_level = st.selectbox("💪 Work Level", ["High", "Medium", "Low"])
-    season = st.selectbox("🍂 Season", ["Summer", "Winter", "Spring", "Autumn"])
-    recommended_outfit = st.text_input("👗 Enter Outfit You Plan to Wear", "Casual")
+    # Convert user input into dataframe
+    input_df = pd.DataFrame([{
+        "Season": season,
+        "SkinTone": skintone,
+        "Weather": weather,
+        "WorkLevel": worklevel
+    }])
 
-    if st.button("🎯 Check Outfit Suitability"):
-        if not recommended_outfit.strip():
-            st.warning("⚠️ Please enter your outfit first! Your fashion buddy can't guess 😅")
-            return
+    # Transform using the SAME OneHotEncoder
+    X_encoded = ohe.transform(input_df)
 
-        feature_text = f"{skin_tone} {weather} {work_level} {season} {recommended_outfit}"
+    # Predict
+    pred = model.predict(X_encoded)[0]
+    predicted_label = label_encoder.inverse_transform([pred])[0]
 
-        try:
-            # Transform and predict
-            X = fabric_vectorizer.transform([feature_text])
-            pred_outfit = fabric_model.predict(X)[0]
+    return predicted_label
 
-            # ================== RESULT CARD (Pastel Peach) ==================
-            result_style = """
-                padding:25px;
-                border-radius:15px;
-                background: linear-gradient(135deg, #ffe0b2, #ffcc80);
-                box-shadow: 2px 2px 12px rgba(0,0,0,0.08);
-                font-size:16px;
-                line-height:1.6;
-                color:#e65100;
-                margin-top:15px;
-            """
-            if recommended_outfit.strip().lower() == pred_outfit.strip().lower():
-                result_text = f"🎉 <b>Spot on!</b> Your outfit '<i>{recommended_outfit}</i>' is perfect for your selections! ✅"
-            else:
-                result_text = f"⚠️ Hmm… your outfit '<i>{recommended_outfit}</i>' might not match well. Recommended: '<i>{pred_outfit}</i>' 👗"
 
-            st.markdown(f'<div style="{result_style}">{result_text}</div>', unsafe_allow_html=True)
+# ======================================================
+# STREAMLIT PAGE
+# ======================================================
+def fabric_page():
+    st.markdown("<h2 style='text-align:center;'>🧵 Fabric Recommendation System</h2>", unsafe_allow_html=True)
+    st.write("Select your preferences and get the best suitable fabric group.")
 
-            # ================== QUICK TIPS / NOTES CARD (Pastel Lavender) ==================
-            tips_style = """
-                background-color:#f3e5f5;
-                border-left:6px solid #ab47bc;
-                padding:15px;
-                border-radius:15px;
-                margin-top:10px;
-            """
-            st.markdown(f"""
-            <div style="{tips_style}">
-                💡 <b>Quick Fashion Tips:</b><br>
-                - Dress according to your skin tone, season, and activity level.<br>
-                - Prefer breathable fabrics for hot weather, warm fabrics for cold.<br>
-                - Add your personal flair – comfort and confidence matter! 🌟
-            </div>
-            """, unsafe_allow_html=True)
+    # Load model
+    model, ohe, label_encoder = load_fabric_model()
+    if model is None:
+        return
 
-        except ValueError:
-            st.warning("⚠️ Something went wrong with your input. Check your selections!")
+    # UI Inputs
+    col1, col2 = st.columns(2)
+
+    with col1:
+        season = st.selectbox("Season", ["Summer", "Winter", "Rainy", "Autumn"])
+        skintone = st.selectbox("Skin Tone", ["Fair", "Medium", "Dark"])
+
+    with col2:
+        weather = st.selectbox("Weather", ["Hot", "Cold", "Humid", "Dry"])
+        worklevel = st.selectbox("Work Level", ["Low", "Medium", "High"])
+
+    if st.button("Recommend Fabric"):
+        prediction = predict_fabric(model, ohe, label_encoder,
+                                    season, skintone, weather, worklevel)
+
+        st.success(f"### ✅ Recommended Fabric Group: **{prediction}**")
+
+        # Friendly messages
+        messages = {
+            "Breathable": "🪶 Best for hot climates. Soft, cool and lightweight!",
+            "Synthetic": "⚙️ Durable and strong. Good for rough use.",
+            "Warm": "🔥 Perfect for cold weather and winter season.",
+            "LightSoft": "🌸 Soft, elegant and lightweight. Great for casual & party wear.",
+            "Denim": "👖 Stylish and strong. Suitable for casual & street style."
+        }
+
+        if prediction in messages:
+            st.info(messages[prediction])
+
 
 # ---------------- ELECTRONICS PAGE ---------------- #
 
@@ -365,9 +364,7 @@ So go ahead, spill the beans about your gadget drama – <b style="color:#00796b
         st.markdown(solution_html, unsafe_allow_html=True)
 
 # ---------------- MAIN UI ---------------- #
-def show_ui(food_model, food_vectorizer, fabric_model, fabric_vectorizer, electronics_data):
-    import streamlit as st
-    from sentence_transformers import SentenceTransformer
+def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
 
     # Apply global styles
     add_styles()
@@ -424,7 +421,7 @@ def show_ui(food_model, food_vectorizer, fabric_model, fabric_vectorizer, electr
 
     # ---------------- FABRIC PAGE ---------------- #
     elif page == "🧵 Fabric":
-        fabric_page(fabric_model,fabric_vectorizer)
+        fabric_page(fabric_model)
 
     # ---------------- ELECTRONICS PAGE ---------------- #
     elif page == "📱 Electronics":
