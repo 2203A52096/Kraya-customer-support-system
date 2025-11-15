@@ -157,25 +157,12 @@ def food_page(food_model, food_vectorizer):
     """, unsafe_allow_html=True)
 
 # ---------------- FABRIC PAGE ---------------- #
-def fabric_page(fabric_model_path):
+def fabric_page(fabric_model_dict):
     import streamlit as st
-    import pickle
-    import pandas as pd
 
     st.title("🧵Styling Buddy")
 
-    # ================== LOAD MODEL ==================
-    try:
-        with open(fabric_model_path, "rb") as f:
-            data = pickle.load(f)
-        model = data["model"]
-        encoder = data["encoder"]
-        label_encoder = data["label"]
-    except Exception as e:
-        st.error(f"⚠️ Could not load fabric model: {e}")
-        return
-
-    # ================== BANNER CARD ==================
+    # ================== BANNER CARD (Pastel Mint) ==================
     st.markdown("""
     <div style="
         padding:20px;
@@ -192,35 +179,53 @@ def fabric_page(fabric_model_path):
     </div>
     """, unsafe_allow_html=True)
 
+    # ================== QUICK INFO ==================
+    st.info("💡 Get outfit recommendations based on your **skin tone, weather, work level, season, and outfit choice**.")
+    st.info("💡 Enter the outfit you are planning to wear and see if it matches your context.")
+    st.info("💡 Recommendations are dataset-based but with a pinch of fun and sass 😎")
+
     # ================== USER INPUTS ==================
     skin_tone = st.selectbox("🎨 Skin Tone", ["Fair", "Medium", "Dark"])
     weather = st.selectbox("☀️ Weather Condition", ["Hot", "Cold", "Humid", "Dry"])
     work_level = st.selectbox("💪 Work Level", ["High", "Medium", "Low"])
     season = st.selectbox("🍂 Season", ["Summer", "Winter", "Spring", "Autumn"])
-    outfit_choice = st.text_input("👗 Enter Outfit You Plan to Wear", "Casual")
+    recommended_outfit = st.text_input("👗 Enter Outfit You Plan to Wear", "Casual")
+
+    # Manual encodings (only for column order mapping)
+    encode_skin = {"Fair": "Fair", "Medium": "Medium", "Dark": "Dark"}
+    encode_weather = {"Hot": "Hot", "Cold": "Cold", "Humid": "Humid", "Dry": "Dry"}
+    encode_work = {"High": "High", "Medium": "Medium", "Low": "Low"}
+    encode_season = {"Summer": "Summer", "Winter": "Winter", "Spring": "Spring", "Autumn": "Autumn"}
 
     if st.button("🎯 Check Outfit Suitability"):
-        if not outfit_choice.strip():
-            st.warning("⚠️ Please enter your outfit first! 😅")
+        if not recommended_outfit.strip():
+            st.warning("⚠️ Please enter your outfit first! Your fashion buddy can't guess 😅")
             return
 
-        # ================== PREPARE INPUT ==================
-        user_input = pd.DataFrame([{
-            "Season": season,
-            "SkinTone": skin_tone,
-            "Weather": weather,
-            "WorkLevel": work_level
-        }])
+        if fabric_model_dict is None:
+            st.error("⚠️ Fabric model not loaded.")
+            return
 
         try:
-            # One-hot encode features using saved encoder
-            X_encoded = encoder.transform(user_input)
+            # Prepare user input as DataFrame (required for OneHotEncoder)
+            import pandas as pd
+            X_input = pd.DataFrame([[
+                encode_season[season],
+                encode_skin[skin_tone],
+                encode_weather[weather],
+                encode_work[work_level]
+            ]], columns=["Season", "SkinTone", "Weather", "WorkLevel"])
 
-            # Predict fabric group
-            pred_encoded = model.predict(X_encoded)
-            pred_fabric_group = label_encoder.inverse_transform(pred_encoded)[0]
+            # Transform using saved OneHotEncoder
+            X_encoded = fabric_model_dict["encoder"].transform(X_input)
 
-            # ================== RESULT ==================
+            # Predict numeric label
+            pred_encoded = fabric_model_dict["model"].predict(X_encoded)[0]
+
+            # Convert back to original FabricGroup
+            pred_outfit = fabric_model_dict["label"].inverse_transform([pred_encoded])[0]
+
+            # ================== RESULT CARD ==================
             result_style = """
                 padding:25px;
                 border-radius:15px;
@@ -232,14 +237,20 @@ def fabric_page(fabric_model_path):
                 margin-top:15px;
             """
 
-            if outfit_choice.strip().lower() == pred_fabric_group.strip().lower():
-                result_text = f"🎉 Spot on! Your outfit '<i>{outfit_choice}</i>' fits perfectly! ✅"
+            if recommended_outfit.strip().lower() == pred_outfit.strip().lower():
+                result_text = (
+                    f"🎉 <b>Spot on!</b> Your outfit '<i>{recommended_outfit}</i>' "
+                    f"is perfect for your selections! ✅"
+                )
             else:
-                result_text = f"⚠️ Hmm… your outfit '<i>{outfit_choice}</i>' might not match well. Recommended: '<i>{pred_fabric_group}</i>' 👗"
+                result_text = (
+                    f"⚠️ Hmm… your outfit '<i>{recommended_outfit}</i>' might not match well. "
+                    f"Recommended: '<i>{pred_outfit}</i>' 👗"
+                )
 
             st.markdown(f'<div style="{result_style}">{result_text}</div>', unsafe_allow_html=True)
 
-            # ================== TIPS ==================
+            # ================== TIPS CARD ==================
             tips_style = """
                 background-color:#f3e5f5;
                 border-left:6px solid #ab47bc;
