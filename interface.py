@@ -157,7 +157,7 @@ def food_page(food_model, food_vectorizer):
     """, unsafe_allow_html=True)
 
 # ---------------- FABRIC PAGE ---------------- #
-def fabric_page(fabric_model, fabric_vectorizer):
+def fabric_page(fabric_model,fabric_vectorizer):
     import streamlit as st
 
     st.title("🧵Styling buddy")
