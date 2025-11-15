@@ -157,7 +157,7 @@ def food_page(food_model, food_vectorizer):
     """, unsafe_allow_html=True)
 
 # ---------------- FABRIC PAGE ---------------- #
-def fabric_page(fabric_model, fabric_vectorizer):
+def fabric_page(fabric_model):
     import streamlit as st
 
     st.title("🧵Styling buddy")
@@ -364,7 +364,7 @@ So go ahead, spill the beans about your gadget drama – <b style="color:#00796b
         st.markdown(solution_html, unsafe_allow_html=True)
 
 # ---------------- MAIN UI ---------------- #
-def show_ui(food_model, food_vectorizer, fabric_model, fabric_vectorizer, electronics_data):
+def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
     import streamlit as st
     from sentence_transformers import SentenceTransformer
 
@@ -423,7 +423,7 @@ def show_ui(food_model, food_vectorizer, fabric_model, fabric_vectorizer, electr
 
     # ---------------- FABRIC PAGE ---------------- #
     elif page == "🧵 Fabric":
-        fabric_page(fabric_model, fabric_vectorizer)
+        fabric_page(fabric_model)
 
     # ---------------- ELECTRONICS PAGE ---------------- #
     elif page == "📱 Electronics":
