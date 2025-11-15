@@ -157,10 +157,22 @@ def food_page(food_model, food_vectorizer):
     """, unsafe_allow_html=True)
 
 # ---------------- FABRIC PAGE ---------------- #
-def fabric_page(fabric_model):
+def fabric_page(fabric_model_file="fabric_model.pkl"):
     import streamlit as st
+    import pickle
 
     st.title("🧵Styling buddy")
+
+    # ================== LOAD MODEL ==================
+    try:
+        with open(fabric_model_file, "rb") as f:
+            fabric_data = pickle.load(f)
+        model = fabric_data["model"]
+        encoder = fabric_data["encoder"]
+        label_encoder = fabric_data["label"]
+    except Exception as e:
+        st.error(f"⚠️ Could not load fabric model: {e}")
+        return
 
     # ================== BANNER CARD (Pastel Mint) ==================
     st.markdown("""
@@ -191,31 +203,17 @@ def fabric_page(fabric_model):
     season = st.selectbox("🍂 Season", ["Summer", "Winter", "Spring", "Autumn"])
     recommended_outfit = st.text_input("👗 Enter Outfit You Plan to Wear", "Casual")
 
-    # Manual encodings (must match your training)
-    encode_skin = {"Fair": 0, "Medium": 1, "Dark": 2}
-    encode_weather = {"Hot": 0, "Cold": 1, "Humid": 2, "Dry": 3}
-    encode_work = {"High": 0, "Medium": 1, "Low": 2}
-    encode_season = {"Summer": 0, "Winter": 1, "Spring": 2, "Autumn": 3}
-
     if st.button("🎯 Check Outfit Suitability"):
         if not recommended_outfit.strip():
             st.warning("⚠️ Please enter your outfit first! Your fashion buddy can't guess 😅")
             return
 
-        if fabric_model is None:
-            st.error("⚠️ Fabric model not loaded.")
-            return
-
-        # Convert user choices into model features
-        X = [[
-            encode_skin[skin_tone],
-            encode_weather[weather],
-            encode_work[work_level],
-            encode_season[season]
-        ]]
-
+        # Convert user choices into features using the encoder
+        feature_text = [[season, skin_tone, weather, work_level]]
         try:
-            pred_outfit = fabric_model.predict(X)[0]
+            X_encoded = encoder.transform(feature_text)
+            pred_encoded = model.predict(X_encoded)
+            pred_outfit = label_encoder.inverse_transform(pred_encoded)[0]
 
             # ================== RESULT CARD ==================
             result_style = """
@@ -228,7 +226,6 @@ def fabric_page(fabric_model):
                 color:#e65100;
                 margin-top:15px;
             """
-
             if recommended_outfit.strip().lower() == pred_outfit.strip().lower():
                 result_text = (
                     f"🎉 <b>Spot on!</b> Your outfit '<i>{recommended_outfit}</i>' "
@@ -239,7 +236,6 @@ def fabric_page(fabric_model):
                     f"⚠️ Hmm… your outfit '<i>{recommended_outfit}</i>' might not match well. "
                     f"Recommended: '<i>{pred_outfit}</i>' 👗"
                 )
-
             st.markdown(f'<div style="{result_style}">{result_text}</div>', unsafe_allow_html=True)
 
             # ================== TIPS CARD ==================
@@ -260,7 +256,8 @@ def fabric_page(fabric_model):
             """, unsafe_allow_html=True)
 
         except Exception as e:
-            st.error("⚠️ Error during prediction. Check your model input format.")
+            st.error(f"⚠️ Error during prediction. Check your model input format: {e}")
+
 
 
 # ---------------- ELECTRONICS PAGE ---------------- #
