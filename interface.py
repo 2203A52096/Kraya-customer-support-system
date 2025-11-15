@@ -423,7 +423,7 @@ def show_ui(food_model, food_vectorizer, fabric_model, fabric_vectorizer, electr
 
     # ---------------- FABRIC PAGE ---------------- #
     elif page == "🧵 Fabric":
-        fabric_page(fabric_model)
+        fabric_page(fabric_model,fabric_vectorizer)
 
     # ---------------- ELECTRONICS PAGE ---------------- #
     elif page == "📱 Electronics":
