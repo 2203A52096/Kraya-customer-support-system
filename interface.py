@@ -156,88 +156,111 @@ def food_page(food_model, food_vectorizer):
     </div>
     """, unsafe_allow_html=True)
 
-import streamlit as st
-import pickle
-import pandas as pd
-import numpy as np
+# ---------------- FABRIC PAGE ---------------- #
+def fabric_page(fabric_model):
+    import streamlit as st
 
-# ======================================================
-# LOAD FABRIC MODEL (model + ohe + label stored in 1 file)
-# ======================================================
-@st.cache_resource
-def load_fabric_model():
-    try:
-        with open("fabric_model.pkl", "rb") as f:
-            data = pickle.load(f)
-        return data["model"], data["encoder"], data["label"]
-    except Exception as e:
-        st.error(f"⚠️ Fabric model not loaded: {e}")
-        return None, None, None
+    st.title("🧵Styling buddy")
 
+    # ================== BANNER CARD (Pastel Mint) ==================
+    st.markdown("""
+    <div style="
+        padding:20px;
+        text-align:center;
+        border-radius:15px;
+        background: linear-gradient(135deg, #d0f0c0, #a0e0a0);
+        color:#2e7d32;
+        font-size:20px;
+        font-weight:600;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        margin-bottom:15px;
+    ">
+        👗 Dress Smart, Feel Confident 🎉
+    </div>
+    """, unsafe_allow_html=True)
 
-# ======================================================
-# PREDICTION FUNCTION
-# ======================================================
-def predict_fabric(model, ohe, label_encoder, season, skintone, weather, worklevel):
+    # ================== QUICK INFO ==================
+    st.info("💡 Get outfit recommendations based on your **skin tone, weather, work level, season, and outfit choice**.")
+    st.info("💡 Enter the outfit you are planning to wear and see if it matches your context.")
+    st.info("💡 Recommendations are dataset-based but with a pinch of fun and sass 😎")
 
-    # Convert user input into dataframe
-    input_df = pd.DataFrame([{
-        "Season": season,
-        "SkinTone": skintone,
-        "Weather": weather,
-        "WorkLevel": worklevel
-    }])
+    # ================== USER INPUTS ==================
+    skin_tone = st.selectbox("🎨 Skin Tone", ["Fair", "Medium", "Dark"])
+    weather = st.selectbox("☀️ Weather Condition", ["Hot", "Cold", "Humid", "Dry"])
+    work_level = st.selectbox("💪 Work Level", ["High", "Medium", "Low"])
+    season = st.selectbox("🍂 Season", ["Summer", "Winter", "Spring", "Autumn"])
+    recommended_outfit = st.text_input("👗 Enter Outfit You Plan to Wear", "Casual")
 
-    # Transform using the SAME OneHotEncoder
-    X_encoded = ohe.transform(input_df)
+    # Manual encodings (must match your training)
+    encode_skin = {"Fair": 0, "Medium": 1, "Dark": 2}
+    encode_weather = {"Hot": 0, "Cold": 1, "Humid": 2, "Dry": 3}
+    encode_work = {"High": 0, "Medium": 1, "Low": 2}
+    encode_season = {"Summer": 0, "Winter": 1, "Spring": 2, "Autumn": 3}
 
-    # Predict
-    pred = model.predict(X_encoded)[0]
-    predicted_label = label_encoder.inverse_transform([pred])[0]
+    if st.button("🎯 Check Outfit Suitability"):
+        if not recommended_outfit.strip():
+            st.warning("⚠️ Please enter your outfit first! Your fashion buddy can't guess 😅")
+            return
 
-    return predicted_label
+        if fabric_model is None:
+            st.error("⚠️ Fabric model not loaded.")
+            return
 
+        # Convert user choices into model features
+        X = [[
+            encode_skin[skin_tone],
+            encode_weather[weather],
+            encode_work[work_level],
+            encode_season[season]
+        ]]
 
-# ======================================================
-# STREAMLIT PAGE
-# ======================================================
-def fabric_page():
-    st.markdown("<h2 style='text-align:center;'>🧵 Fabric Recommendation System</h2>", unsafe_allow_html=True)
-    st.write("Select your preferences and get the best suitable fabric group.")
+        try:
+            pred_outfit = fabric_model.predict(X)[0]
 
-    # Load model
-    model, ohe, label_encoder = load_fabric_model()
-    if model is None:
-        return
+            # ================== RESULT CARD ==================
+            result_style = """
+                padding:25px;
+                border-radius:15px;
+                background: linear-gradient(135deg, #ffe0b2, #ffcc80);
+                box-shadow: 2px 2px 12px rgba(0,0,0,0.08);
+                font-size:16px;
+                line-height:1.6;
+                color:#e65100;
+                margin-top:15px;
+            """
 
-    # UI Inputs
-    col1, col2 = st.columns(2)
+            if recommended_outfit.strip().lower() == pred_outfit.strip().lower():
+                result_text = (
+                    f"🎉 <b>Spot on!</b> Your outfit '<i>{recommended_outfit}</i>' "
+                    f"is perfect for your selections! ✅"
+                )
+            else:
+                result_text = (
+                    f"⚠️ Hmm… your outfit '<i>{recommended_outfit}</i>' might not match well. "
+                    f"Recommended: '<i>{pred_outfit}</i>' 👗"
+                )
 
-    with col1:
-        season = st.selectbox("Season", ["Summer", "Winter", "Rainy", "Autumn"])
-        skintone = st.selectbox("Skin Tone", ["Fair", "Medium", "Dark"])
+            st.markdown(f'<div style="{result_style}">{result_text}</div>', unsafe_allow_html=True)
 
-    with col2:
-        weather = st.selectbox("Weather", ["Hot", "Cold", "Humid", "Dry"])
-        worklevel = st.selectbox("Work Level", ["Low", "Medium", "High"])
+            # ================== TIPS CARD ==================
+            tips_style = """
+                background-color:#f3e5f5;
+                border-left:6px solid #ab47bc;
+                padding:15px;
+                border-radius:15px;
+                margin-top:10px;
+            """
+            st.markdown(f"""
+            <div style="{tips_style}">
+                💡 <b>Quick Fashion Tips:</b><br>
+                - Dress according to your skin tone, season, and activity level.<br>
+                - Prefer breathable fabrics for hot weather, warm fabrics for cold.<br>
+                - Add your personal flair – comfort and confidence matter! 🌟
+            </div>
+            """, unsafe_allow_html=True)
 
-    if st.button("Recommend Fabric"):
-        prediction = predict_fabric(model, ohe, label_encoder,
-                                    season, skintone, weather, worklevel)
-
-        st.success(f"### ✅ Recommended Fabric Group: **{prediction}**")
-
-        # Friendly messages
-        messages = {
-            "Breathable": "🪶 Best for hot climates. Soft, cool and lightweight!",
-            "Synthetic": "⚙️ Durable and strong. Good for rough use.",
-            "Warm": "🔥 Perfect for cold weather and winter season.",
-            "LightSoft": "🌸 Soft, elegant and lightweight. Great for casual & party wear.",
-            "Denim": "👖 Stylish and strong. Suitable for casual & street style."
-        }
-
-        if prediction in messages:
-            st.info(messages[prediction])
+        except Exception as e:
+            st.error("⚠️ Error during prediction. Check your model input format.")
 
 
 # ---------------- ELECTRONICS PAGE ---------------- #
