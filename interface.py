@@ -160,9 +160,9 @@ def food_page(food_model, food_vectorizer):
 def fabric_page(fabric_model):
     import streamlit as st
 
-    st.title("🧵 Styling Buddy — Fabric Recommendation")
+    st.title("🧵Styling buddy")
 
-    # ================== BANNER CARD ==================
+    # ================== BANNER CARD (Pastel Mint) ==================
     st.markdown("""
     <div style="
         padding:20px;
@@ -179,75 +179,49 @@ def fabric_page(fabric_model):
     </div>
     """, unsafe_allow_html=True)
 
-    # ================== INFO ==================
-    st.info("💡 Get fabric recommendations based on your **skin tone, weather, work level, and season**.")
-# ---------------- FABRIC PAGE ---------------- #
-def fabric_page(fabric_model):
-    import streamlit as st
-    import pandas as pd
-
-    st.title("🧵 Styling Buddy")
-
-    # ================== BANNER CARD ==================
-    st.markdown("""
-    <div style="
-        padding:20px;
-        text-align:center;
-        border-radius:15px;
-        background: linear-gradient(135deg, #d0f0c0, #a0e0a0);
-        color:#2e7d32;
-        font-size:20px;
-        font-weight:600;
-        box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-        margin-bottom:15px;
-    ">
-        👗 Dress Smart, Feel Confident 🎉
-    </div>
-    """, unsafe_allow_html=True)
-
-    # ================== INFO ==================
-    st.info("💡 Get outfit recommendations based on your **skin tone, weather, work level, and season**.")
-    st.info("💡 Uses ML-based fabric recommendations to match your comfort & style.")
+    # ================== QUICK INFO / TIPS ==================
+    st.info("💡 Get outfit recommendations based on your **skin tone, weather, work level, season, and outfit choice**.")
+    st.info("💡 Enter the outfit you are planning to wear and see if it matches your context.")
+    st.info("💡 Recommendations are dataset-based but with a pinch of fun and sass 😎")
 
     # ================== USER INPUTS ==================
     skin_tone = st.selectbox("🎨 Skin Tone", ["Fair", "Medium", "Dark"])
     weather = st.selectbox("☀️ Weather Condition", ["Hot", "Cold", "Humid", "Dry"])
     work_level = st.selectbox("💪 Work Level", ["High", "Medium", "Low"])
     season = st.selectbox("🍂 Season", ["Summer", "Winter", "Spring", "Autumn"])
+    recommended_outfit = st.text_input("👗 Enter Outfit You Plan to Wear", "Casual")
 
-    if st.button("🎯 Recommend Best Fabric"):
+    if st.button("🎯 Check Outfit Suitability"):
+        if not recommended_outfit.strip():
+            st.warning("⚠️ Please enter your outfit first! Your fashion buddy can't guess 😅")
+            return
+
+        feature_text = f"{skin_tone} {weather} {work_level} {season} {recommended_outfit}"
+
         try:
-            # Prepare input DataFrame
-            input_df = pd.DataFrame([{
-                "WorkLevel": work_level,
-                "Weather": weather,
-                "SkinTone": skin_tone,
-                "Season": season
-            }])
+            # Transform and predict
+            X = fabric_vectorizer.transform([feature_text])
+            pred_outfit = fabric_model.predict(X)[0]
 
-            # Predict using joblib model
-            pred_fabric = fabric_model.predict(input_df)[0]
-
-            # ================== RESULT CARD ==================
+            # ================== RESULT CARD (Pastel Peach) ==================
             result_style = """
                 padding:25px;
                 border-radius:15px;
                 background: linear-gradient(135deg, #ffe0b2, #ffcc80);
                 box-shadow: 2px 2px 12px rgba(0,0,0,0.08);
-                font-size:18px;
+                font-size:16px;
                 line-height:1.6;
                 color:#e65100;
                 margin-top:15px;
             """
-
-            result_text = (
-                f"✨ Based on your selections, the best fabric choice is: "
-                f"<b><i>{pred_fabric}</i></b> 👗"
-            )
+            if recommended_outfit.strip().lower() == pred_outfit.strip().lower():
+                result_text = f"🎉 <b>Spot on!</b> Your outfit '<i>{recommended_outfit}</i>' is perfect for your selections! ✅"
+            else:
+                result_text = f"⚠️ Hmm… your outfit '<i>{recommended_outfit}</i>' might not match well. Recommended: '<i>{pred_outfit}</i>' 👗"
 
             st.markdown(f'<div style="{result_style}">{result_text}</div>', unsafe_allow_html=True)
 
-            # ================== TIPS CARD ==================
+            # ================== QUICK TIPS / NOTES CARD (Pastel Lavender) ==================
             tips_style = """
                 background-color:#f3e5f5;
                 border-left:6px solid #ab47bc;
@@ -255,22 +229,18 @@ def fabric_page(fabric_model):
                 border-radius:15px;
                 margin-top:10px;
             """
-
             st.markdown(f"""
             <div style="{tips_style}">
                 💡 <b>Quick Fashion Tips:</b><br>
-                - Choose cotton or linen for hot climates.<br>
-                - Prefer wool or velvet in cold weather.<br>
-                - Select breathable fabrics for high activity levels.<br>
-                - Always balance comfort with confidence! 🌟
+                - Dress according to your skin tone, season, and activity level.<br>
+                - Prefer breathable fabrics for hot weather, warm fabrics for cold.<br>
+                - Add your personal flair – comfort and confidence matter! 🌟
             </div>
             """, unsafe_allow_html=True)
 
-        except Exception as e:
-            st.warning(f"⚠️ Something went wrong: {e}")
-
-
-
+        except ValueError:
+            st.warning("⚠️ Something went wrong with your input. Check your selections!")
+fix this accordingly
 # ---------------- ELECTRONICS PAGE ---------------- #
 
 def electronics_page(electronics_data, embed_model):
