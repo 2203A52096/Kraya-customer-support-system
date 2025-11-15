@@ -23,11 +23,13 @@ except:
 # -----------------------------------------
 # Load Fabric Model ONLY (no vectorizer needed)
 # -----------------------------------------
+
 try:
     fabric_model = pickle.load(open("fabric/fabric_model.pkl", "rb"))
 except:
     st.warning("⚠️ Fabric model not loaded properly.")
     fabric_model = None
+
 
 # -----------------------------------------
 # Load Electronics JSON
