@@ -394,7 +394,7 @@ So go ahead, spill the beans about your gadget drama – <b style="color:#00796b
         st.markdown(solution_html, unsafe_allow_html=True)
 
 # ---------------- MAIN UI ---------------- #
-def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
+def show_ui(food_model, food_vectorizer, fabric_model, fabric_vectorizer, electronics_data):
     import streamlit as st
     from sentence_transformers import SentenceTransformer
 
