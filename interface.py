@@ -315,7 +315,8 @@ So go ahead, spill the beans about your gadget drama – <b style="color:#00796b
 
         # FIND BEST MATCH
         for item in electronics_data:
-            if item['device'] != device.split()[0]:
+            clean_device = device.split()[0].strip()
+            if item['device'].lower() != clean_device.lower():
                 continue
 
             texts_to_compare = [item['problem']] + item.get('example_queries', [])
