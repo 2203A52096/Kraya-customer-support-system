@@ -184,10 +184,6 @@ def food_page(food_model, food_vectorizer):
 
 # ---------------- FABRIC PAGE ---------------- #
 def fabric_page(fabric_model_dict):
-    import streamlit as st
-    import pandas as pd
-    import time
-
     st.title("🧵 Styling Buddy 🤗✨")
 
     # ================== BANNER ==================
@@ -220,8 +216,7 @@ def fabric_page(fabric_model_dict):
     ">
         Hey fashionista! 😎 I’m your Fabric Buddy 🤗<br>
         Tell me your <b>Skin Tone, Season, Weather, and Work Level</b> and I’ll suggest the perfect fabric group for you!<br>
-        Sometimes I’ll even spill the exact fabrics you can wear. Fun + style = guaranteed! ✨👕<br>
-        Ready to see your buddy’s recommendation? Let’s goooo! 💃🎈
+        You can also pick a fabric you are thinking of wearing — I’ll give my buddy verdict! 💃🕺
     </div>
     """, unsafe_allow_html=True)
 
@@ -230,9 +225,8 @@ def fabric_page(fabric_model_dict):
     weather = st.selectbox("☀️ Weather Condition", ["Hot", "Cold", "Humid", "Dry"])
     work_level = st.selectbox("💪 Work Level", ["High", "Medium", "Low"])
     season = st.selectbox("🍂 Season", ["Summer", "Winter", "Spring", "Autumn"])
-    planned_outfit = st.text_input("👗 Enter Outfit You Plan to Wear (optional, for fun!)", "Casual")
 
-    # ================== Fabric Group Mapping ==================
+    # Fabric mapping
     fabric_map = {
         "Breathable": ["Cotton", "Linen", "Rayon"],
         "Synthetic": ["Polyester", "Nylon"],
@@ -241,7 +235,16 @@ def fabric_page(fabric_model_dict):
         "Denim": ["Denim"]
     }
 
-    # ================== Encodings ==================
+    # Flatten list of fabrics for dropdown
+    all_fabrics = []
+    for fabrics in fabric_map.values():
+        all_fabrics.extend(fabrics)
+    all_fabrics = sorted(all_fabrics)
+
+    # ================== USER FABRIC CHOICE ==================
+    user_fabric = st.selectbox("👗 Fabric You Want to Wear", all_fabrics)
+
+    # ================== ENCODINGS ==================
     encode_skin = {"Fair": "Fair", "Medium": "Medium", "Dark": "Dark"}
     encode_weather = {"Hot": "Hot", "Cold": "Cold", "Humid": "Humid", "Dry": "Dry"}
     encode_work = {"High": "High", "Medium": "Medium", "Low": "Low"}
@@ -266,7 +269,7 @@ def fabric_page(fabric_model_dict):
             pred_encoded = fabric_model_dict["model"].predict(X_encoded)[0]
             pred_group = fabric_model_dict["label"].inverse_transform([pred_encoded])[0]
 
-            # Get actual fabrics in the group
+            # Get actual fabrics in the predicted group
             fabrics_in_group = ", ".join(fabric_map[pred_group])
 
             # ======= FUNNY BUDDY RESULT =======
@@ -281,13 +284,20 @@ def fabric_page(fabric_model_dict):
                 margin-top:15px;
             """
 
-            message = (
-                f"🎉 Your Fabric Buddy says: <b>{pred_group}</b>! 🧵💫<br>"
-                f"That means you can rock these fabrics: <b>{fabrics_in_group}</b> 😎<br>"
-                f"Planned outfit: '<i>{planned_outfit}</i>' looks fun, but using fabrics from this group will make you super comfy & stylish! 🌟<br>"
-                f"Remember, your buddy only wants your wardrobe to shine! ✨💃🕺<br>"
-                f"Go ahead, hug your fabrics, strut like a superstar, and flaunt your vibe! 💖👕👗"
-            )
+            if user_fabric in fabric_map[pred_group]:
+                message = (
+                    f"🎉 Hurray! Your choice of '<i>{user_fabric}</i>' is FABULOUS for your selections! 😎💫<br>"
+                    f"Buddy prediction: <b>{pred_group}</b> – meaning all these fab fabrics are safe too: <b>{fabrics_in_group}</b> 🌟<br>"
+                    f"Looks like your fashion sense is already on point! 🕺💃<br>"
+                    f"Go ahead, flaunt that fabric, twirl a bit, and feel like a superstar! ✨👗👕"
+                )
+            else:
+                message = (
+                    f"🤔 Hmm… you chose '<i>{user_fabric}</i>', but your Fabric Buddy thinks <b>{pred_group}</b> fabrics would be more comfy & stylish! 🧵✨<br>"
+                    f"Options you can rock: <b>{fabrics_in_group}</b> 🌟<br>"
+                    f"Don’t worry, buddy loves your choice too, but consider trying one of these next time for max wow factor! 😄<br>"
+                    f"Remember: confidence + fabric = legendary combo! 💃🕺"
+                )
 
             st.markdown(f'<div style="{result_style}">{message}</div>', unsafe_allow_html=True)
 
@@ -303,17 +313,18 @@ def fabric_page(fabric_model_dict):
             st.markdown(f"""
             <div style="{tips_style}">
                 💡 <b>Fabric Buddy Tips:</b><br>
-                - Always pick fabrics suited for your weather: breathable for hot 🌞, warm for cold ❄️.<br>
-                - Skin tone + fabric color combo = instant style points 🎨💯<br>
-                - LightSoft fabrics are like clouds on your skin – silky comfort ☁️✨<br>
-                - Denim & Synthetic fabrics = durable & casual vibes 😎<br>
-                - Confidence is your best accessory, buddy! Walk, twirl, snack on confidence 💃🕺<br>
-                - Optional: Your planned outfit is always fun, but fabrics make it fabulous! 😄
+                - Pick fabrics suited for your weather: breathable for hot 🌞, warm for cold ❄️.<br>
+                - Fabrics + skin tone = instant style points 🎨💯<br>
+                - LightSoft fabrics = silky clouds on your skin ☁️✨<br>
+                - Denim & Synthetic = durable, casual vibes 😎<br>
+                - Confidence is the best accessory – twirl like a superstar! 💃🕺<br>
+                - Try new fabrics, but always let comfort be your buddy! 😄
             </div>
             """, unsafe_allow_html=True)
 
         except Exception as e:
             st.error(f"⚠️ Oopsie! Something went wrong during prediction: {e} 😅")
+
 
 
 # ---------------- ELECTRONICS PAGE ---------------- #
