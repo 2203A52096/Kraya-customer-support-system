@@ -530,10 +530,10 @@ def about_us_page():
     ">
     💻 <b>Developed By:</b><br>
     1️⃣ Ms. Kothapelly Keerthana<br>
-    2️⃣ Member 2<br>
-    3️⃣ Member 3<br>
-    4️⃣ Member 4<br>
-    5️⃣ Member 5
+    2️⃣ Ms. Panchagiri Vidya Sri<br>
+    3️⃣ Ms. Chintham Sukrutha<br>
+    4️⃣ Ms. Chenumalla Shivani<br>
+    5️⃣ Ms. Sarabudla Pranavi
     </div>
     """, unsafe_allow_html=True)
 
@@ -549,7 +549,7 @@ def about_us_page():
         box-shadow: 2px 2px 10px rgba(0,0,0,0.08);
         margin-top:15px;
     ">
-    🎓 <b>Under the Guidance of:</b> Mr. Ch. Sandeep
+    🎓 <b>Under the Guidance of:</b> Mr. Chintham Sandeep
     </div>
     """, unsafe_allow_html=True)
 
@@ -625,7 +625,7 @@ def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
             st.image(
                 img_desc,
                 caption="Kraya: Your quirky, smart, life-saving buddy 😎",
-                use_column_width=True
+                width=500
             )
         except FileNotFoundError:
             st.warning("⚠️ 'home1.png' not found in the assets folder!")
