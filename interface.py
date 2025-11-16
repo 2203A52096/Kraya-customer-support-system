@@ -511,7 +511,7 @@ def about_us_page():
     # ---------------- IMAGE + CAPTION ---------------- #
     try:
         img_about = Image.open("assets/about_us.png")
-        st.image(img_about, use_column_width=True)
+        st.image(img_about, width=500)
         st.markdown('<p style="text-align:center; font-style:italic; color:#555555;">Kraya: Always ready to assist, laugh, and guide! 🤖💜</p>', unsafe_allow_html=True)
     except FileNotFoundError:
         st.warning("⚠️ 'about_us.png' not found in the assets folder!")
