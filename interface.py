@@ -32,6 +32,8 @@ def add_styles():
 # ---------------- FOOD PAGE ---------------- #
 def food_page(food_model, food_vectorizer):
     import time
+    import streamlit as st
+    from PIL import Image
 
     # ================== CUSTOM CSS ==================
     st.markdown("""
@@ -93,6 +95,13 @@ def food_page(food_model, food_vectorizer):
     # ================== PAGE TITLE & BANNER ==================
     st.title("🍎 Foody Buddy 🤗🛒")
     st.markdown("""<div class="banner">🥗 Snack Detective Activated! Let’s Check if It’s Buddy-Approved! 🎉</div>""", unsafe_allow_html=True)
+
+    # ================== ADD IMAGE AFTER CONTENT ==================
+    try:
+        img = Image.open("assets/food.png") 
+        st.image(img, caption="Snack Detective at your service! 🕵️‍♂️🍩", use_column_width=True)
+    except FileNotFoundError:
+        st.warning("⚠️ 'food_fun.png' not found in assets folder!")
 
     # ================== INFO CARD ==================
     st.markdown("""
