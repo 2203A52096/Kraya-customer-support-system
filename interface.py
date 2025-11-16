@@ -4,6 +4,8 @@ from sentence_transformers import SentenceTransformer, util
 import numpy as np
 import random
 import pandas as pd
+import time
+from PIL import Image
 # ---------------- STYLING ---------------- #
 def add_styles():
     st.markdown(
@@ -89,6 +91,13 @@ def food_page(food_model, food_vectorizer):
             margin-top: 20px;
             color: #FF5722;
         }
+        .caption {
+            font-size: 16px;
+            color: #555555;
+            text-align: center;
+            margin-top: 5px;
+            font-style: italic;
+        }
     </style>
     """, unsafe_allow_html=True)
 
@@ -98,8 +107,9 @@ def food_page(food_model, food_vectorizer):
 
     # ================== ADD IMAGE AFTER CONTENT ==================
     try:
-        img = Image.open("assets/food.png") 
-        st.image(img, caption="Snack Detective at your service! 🕵️‍♂️🍩", use_column_width=True)
+        img = Image.open("assets/food.png")  
+        st.image(img, use_column_width=True)
+        st.markdown('<p class="caption">Snack Detective at your service! 🕵️‍♂️🍩</p>', unsafe_allow_html=True)
     except FileNotFoundError:
         st.warning("⚠️ 'food_fun.png' not found in assets folder!")
 
@@ -189,7 +199,6 @@ def food_page(food_model, food_vectorizer):
         - Bonus tip: imagine tiny dancing snacks cheering you on — it works, trust me! 💃🍩🎊
     </div>
     """, unsafe_allow_html=True)
-
 
 # ---------------- FABRIC PAGE ---------------- #
 def fabric_page(fabric_model_dict):
