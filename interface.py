@@ -238,6 +238,14 @@ def fabric_page(fabric_model_dict):
     </div>
     """, unsafe_allow_html=True)
 
+    # ================== IMAGE AFTER CONTENT ==================
+    try:
+        img = Image.open("assets/fabric.png")
+        st.image(img, use_column_width=True)
+        st.markdown('<p style="text-align:center; font-style:italic; color:#555555;">Your Fashion Buddy at work! 👗✨</p>', unsafe_allow_html=True)
+    except FileNotFoundError:
+        st.warning("⚠️ 'fabric_fun.png' not found in assets folder!")
+
     # ================== USER INPUTS ==================
     skin_tone = st.selectbox("🎨 Skin Tone", ["Fair", "Medium", "Dark"])
     weather = st.selectbox("☀️ Weather Condition", ["Hot", "Cold", "Humid", "Dry"])
@@ -254,12 +262,7 @@ def fabric_page(fabric_model_dict):
     }
 
     # Flatten list of fabrics for dropdown
-    all_fabrics = []
-    for fabrics in fabric_map.values():
-        all_fabrics.extend(fabrics)
-    all_fabrics = sorted(all_fabrics)
-
-    # ================== USER FABRIC CHOICE ==================
+    all_fabrics = sorted([f for fabrics in fabric_map.values() for f in fabrics])
     user_fabric = st.selectbox("👗 Fabric You Want to Wear", all_fabrics)
 
     # ================== ENCODINGS ==================
@@ -344,7 +347,6 @@ def fabric_page(fabric_model_dict):
             st.error(f"⚠️ Oopsie! Something went wrong during prediction: {e} 😅")
 
 
-
 # ---------------- ELECTRONICS PAGE ---------------- #
 
 def electronics_page(electronics_data, embed_model):
@@ -390,6 +392,14 @@ Here’s how I roll:<br>
 So spill the beans, the weirder your description, the more fun our buddy adventure! 🤖💬
 </div>"""
     st.markdown(intro_html, unsafe_allow_html=True)
+
+    # ================== IMAGE AFTER INTRO ==================
+    try:
+        img = Image.open("assets/electronics.png") 
+        st.image(img, use_column_width=True)
+        st.markdown('<p style="text-align:center; font-style:italic; color:#555555;">Your Tech Buddy in action! ⚡🤖</p>', unsafe_allow_html=True)
+    except FileNotFoundError:
+        st.warning("⚠️ 'electronics_fun.png' not found in assets folder!")
 
     # ================== DEVICE SELECTION ==================
     devices = ["Smartphone 📱", "Laptop 💻", "TV 📺", "Washing Machine 🧺", "Refrigerator ❄️"]
@@ -462,7 +472,6 @@ So spill the beans, the weirder your description, the more fun our buddy adventu
             if 'tips' in best_match:
                 solution_html += f'<p style="margin-top:10px; padding:10px; background:#fff3e0; border-radius:10px;">💡 <b>Extra Buddy Tips:</b> {best_match["tips"]}</p>'
             
-            # Add funny closing comment
             solution_html += f'<p style="margin-top:10px; font-style:italic; color:#6a1b9a;">🎉 Remember: Even if you break it more, at least you had fun! 😜</p>'
         else:
             solution_html += f'<h3 style="color:#d32f2f;">{random.choice(buddy_headers_fallback)}</h3>'
