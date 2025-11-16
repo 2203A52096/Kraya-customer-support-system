@@ -489,7 +489,7 @@ So spill the beans, the weirder your description, the more fun our buddy adventu
 
 
 def about_us_page():
-    st.title("ℹ️ About Kraya – Your Quirky Buddy 🤗✨")
+    st.title("ℹ️ About Kraya – The Quirky Buddy 🤗✨")
 
     # ---------------- INTRO CARD ---------------- #
     st.markdown("""
@@ -504,7 +504,7 @@ def about_us_page():
         margin-bottom:20px;
     ">
     👋 Welcome! Kraya is a friendly AI-powered assistant designed to make shopping, styling, and troubleshooting a breeze. 
-    Think of me as your fun, helpful, slightly nerdy buddy who never sleeps and loves solving problems with a smile 😎✨
+    Think of Kraya as your fun, helpful, slightly nerdy buddy who never sleeps and loves solving problems with a smile 😎✨
     </div>
     """, unsafe_allow_html=True)
 
@@ -549,7 +549,7 @@ def about_us_page():
         box-shadow: 2px 2px 10px rgba(0,0,0,0.08);
         margin-top:15px;
     ">
-    🎓 <b>Under the Guidance of:</b>Mr. Ch. Sandeep
+    🎓 <b>Under the Guidance of:</b> Mr. Ch. Sandeep
     </div>
     """, unsafe_allow_html=True)
 
@@ -704,4 +704,3 @@ def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
     # ---------------- ABOUT US PAGE ---------------- #
     elif page == "ℹ️ About Us":
         about_us_page()
-        
