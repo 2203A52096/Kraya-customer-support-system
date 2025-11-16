@@ -478,8 +478,8 @@ def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
 
     # ---------------- HOME PAGE ---------------- #
     if page == "🏠 Home":
-        st.title("🏠 Welcome to Kraya")
-        st.markdown('<div class="banner">✨ Smart Choices, Happy Living ✨</div>', unsafe_allow_html=True)
+        st.title("🏠 Welcome to ✨ Kraya ✨")
+        st.markdown('<div class="banner">✨ The funny buddy for shoppers in trouble✨</div>', unsafe_allow_html=True)
 
         # ---------------- SYSTEM DESCRIPTION ---------------- #
         st.markdown(
