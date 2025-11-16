@@ -111,7 +111,7 @@ def food_page(food_model, food_vectorizer):
         st.image(img, use_column_width=True)
         st.markdown('<p class="caption">Snack Detective at your service! 🕵️‍♂️🍩</p>', unsafe_allow_html=True)
     except FileNotFoundError:
-        st.warning("⚠️ 'food_fun.png' not found in assets folder!")
+        st.warning("⚠️ 'food.png' not found in assets folder!")
 
     # ================== INFO CARD ==================
     st.markdown("""
@@ -244,7 +244,7 @@ def fabric_page(fabric_model_dict):
         st.image(img, use_column_width=True)
         st.markdown('<p style="text-align:center; font-style:italic; color:#555555;">Your Fashion Buddy at work! 👗✨</p>', unsafe_allow_html=True)
     except FileNotFoundError:
-        st.warning("⚠️ 'fabric_fun.png' not found in assets folder!")
+        st.warning("⚠️ 'fabric.png' not found in assets folder!")
 
     # ================== USER INPUTS ==================
     skin_tone = st.selectbox("🎨 Skin Tone", ["Fair", "Medium", "Dark"])
@@ -395,11 +395,11 @@ So spill the beans, the weirder your description, the more fun our buddy adventu
 
     # ================== IMAGE AFTER INTRO ==================
     try:
-        img = Image.open("assets/electronics.png") 
+        img = Image.open("assets/electronic.png") 
         st.image(img, use_column_width=True)
         st.markdown('<p style="text-align:center; font-style:italic; color:#555555;">Your Tech Buddy in action! ⚡🤖</p>', unsafe_allow_html=True)
     except FileNotFoundError:
-        st.warning("⚠️ 'electronics_fun.png' not found in assets folder!")
+        st.warning("⚠️ 'electronics.png' not found in assets folder!")
 
     # ================== DEVICE SELECTION ==================
     devices = ["Smartphone 📱", "Laptop 💻", "TV 📺", "Washing Machine 🧺", "Refrigerator ❄️"]
