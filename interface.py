@@ -3,6 +3,7 @@ import streamlit as st
 from sentence_transformers import SentenceTransformer, util
 import numpy as np
 import random
+import pandas as pd
 # ---------------- STYLING ---------------- #
 def add_styles():
     st.markdown(
