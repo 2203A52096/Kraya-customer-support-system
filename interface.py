@@ -487,6 +487,111 @@ So spill the beans, the weirder your description, the more fun our buddy adventu
         solution_html += "</div>"
         st.markdown(solution_html, unsafe_allow_html=True)
 
+
+def about_us_page():
+    st.title("ℹ️ About Kraya – Your Quirky Buddy 🤗✨")
+
+    # ---------------- INTRO CARD ---------------- #
+    st.markdown("""
+    <div style="
+        padding:30px;
+        border-radius:20px;
+        background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+        font-size:18px;
+        color:#4a148c;
+        line-height:1.7;
+        box-shadow: 2px 2px 15px rgba(0,0,0,0.08);
+        margin-bottom:20px;
+    ">
+    👋 Welcome! Kraya is a friendly AI-powered assistant designed to make shopping, styling, and troubleshooting a breeze. 
+    Think of me as your fun, helpful, slightly nerdy buddy who never sleeps and loves solving problems with a smile 😎✨
+    </div>
+    """, unsafe_allow_html=True)
+
+    # ---------------- IMAGE + CAPTION ---------------- #
+    try:
+        img_about = Image.open("assets/about_us.png")
+        st.image(img_about, use_column_width=True)
+        st.markdown('<p style="text-align:center; font-style:italic; color:#555555;">Kraya: Always ready to assist, laugh, and guide! 🤖💜</p>', unsafe_allow_html=True)
+    except FileNotFoundError:
+        st.warning("⚠️ 'about_us.png' not found in the assets folder!")
+
+    # ---------------- DEVELOPERS ---------------- #
+    st.markdown("""
+    <div style="
+        padding:20px;
+        border-radius:15px;
+        background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        font-size:16px;
+        line-height:1.6;
+        color:#0d47a1;
+        box-shadow: 2px 2px 12px rgba(0,0,0,0.08);
+        margin-top:15px;
+    ">
+    💻 <b>Developed By:</b><br>
+    1️⃣ Ms. Kothapelly Keerthana<br>
+    2️⃣ Member 2<br>
+    3️⃣ Member 3<br>
+    4️⃣ Member 4<br>
+    5️⃣ Member 5
+    </div>
+    """, unsafe_allow_html=True)
+
+    # ---------------- GUIDANCE / MENTOR ---------------- #
+    st.markdown("""
+    <div style="
+        padding:15px;
+        border-radius:15px;
+        background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+        font-size:16px;
+        line-height:1.6;
+        color:#e65100;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.08);
+        margin-top:15px;
+    ">
+    🎓 <b>Under the Guidance of:</b>Mr. Ch. Sandeep
+    </div>
+    """, unsafe_allow_html=True)
+
+    # ---------------- MISSION ---------------- #
+    st.markdown("""
+    <div style="
+        padding:20px;
+        border-radius:15px;
+        background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+        font-size:16px;
+        line-height:1.6;
+        color:#1b5e20;
+        box-shadow: 2px 2px 12px rgba(0,0,0,0.08);
+        margin-top:15px;
+    ">
+    💡 <b>Our Mission:</b><br>
+    - Make shopping smarter, funnier, and stress-free 😄🛍️<br>
+    - Help you eat healthier with a smile 🥗🍫<br>
+    - Make your gadgets behave with quirky tips & tricks 📱⚡<br>
+    - Dress you fabulously with personalized outfit advice 👗💃<br><br>
+    ❤️ We blend technology with fun, humor, and care. Kraya is not just a tool, it's a buddy who’s always learning, playful, and here for you!
+    </div>
+    """, unsafe_allow_html=True)
+
+    # ---------------- FOOTER / CONTACT ---------------- #
+    st.markdown("""
+    <div style="
+        padding:15px;
+        border-radius:15px;
+        background: linear-gradient(135deg, #fff8e1, #ffe082);
+        font-size:16px;
+        line-height:1.6;
+        color:#f57f17;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.08);
+        margin-top:15px;
+        text-align:center;
+    ">
+    📬 Connect with us: <b>support@kraya.com</b> | Follow us on <b>Instagram, Twitter & LinkedIn</b> 🌐<br>
+    🚀 Always evolving, always quirky, always Kraya! 🤖✨
+    </div>
+    """, unsafe_allow_html=True)
+
 # ---------------- MAIN UI ---------------- #
 def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
     import streamlit as st
@@ -598,69 +703,5 @@ def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
 
     # ---------------- ABOUT US PAGE ---------------- #
     elif page == "ℹ️ About Us":
-        st.title("ℹ️ About Kraya – Your Quirky Buddy 🤗✨")
-
-        # Intro card
-        st.markdown("""
-        <div style="
-            padding:30px;
-            border-radius:20px;
-            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
-            font-size:18px;
-            color:#4a148c;
-            line-height:1.7;
-            box-shadow: 2px 2px 15px rgba(0,0,0,0.08);
-            margin-bottom:20px;
-        ">
-        👋 Welcome! Kraya is a **friendly AI-powered assistant** designed to make shopping, styling, and troubleshooting a breeze. 
-        Think of me as your fun, helpful, slightly nerdy buddy who never sleeps and loves solving problems with a smile 😎✨
-        </div>
-        """, unsafe_allow_html=True)
-
-        # Image + caption
-        try:
-            img_about = Image.open("assets/about_us.png")
-            st.image(img_about, use_column_width=True)
-            st.markdown('<p style="text-align:center; font-style:italic; color:#555555;">Kraya: Always ready to assist, laugh, and guide! 🤖💜</p>', unsafe_allow_html=True)
-        except FileNotFoundError:
-            st.warning("⚠️ 'about_us.png' not found in the assets folder!")
-
-        # Mission / team card
-        st.markdown("""
-        <div style="
-            padding:20px;
-            border-radius:15px;
-            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
-            font-size:16px;
-            line-height:1.6;
-            color:#1b5e20;
-            box-shadow: 2px 2px 12px rgba(0,0,0,0.08);
-            margin-top:15px;
-        ">
-        💡 <b>Our Mission:</b><br>
-        - Make shopping smarter, funnier, and stress-free 😄🛍️<br>
-        - Help you eat healthier with a smile 🥗🍫<br>
-        - Make your gadgets behave with quirky tips & tricks 📱⚡<br>
-        - Dress you fabulously with personalized outfit advice 👗💃<br><br>
-        ❤️ We believe in blending technology with fun, humor, and care. 
-        Kraya is not just a tool, it's a buddy who’s always learning, always playful, and always here for you!
-        </div>
-        """, unsafe_allow_html=True)
-
-        # Contact / social footer
-        st.markdown("""
-        <div style="
-            padding:15px;
-            border-radius:15px;
-            background: linear-gradient(135deg, #fff8e1, #ffe082);
-            font-size:16px;
-            line-height:1.6;
-            color:#f57f17;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.08);
-            margin-top:15px;
-            text-align:center;
-        ">
-        📬 Connect with us: <b>support@kraya.com</b> | Follow us on <b>Instagram, Twitter & LinkedIn</b> 🌐<br>
-        🚀 Always evolving, always quirky, always Kraya! 🤖✨
-        </div>
-        """, unsafe_allow_html=True)
+        about_us_page()
+        
