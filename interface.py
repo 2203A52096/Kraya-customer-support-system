@@ -29,9 +29,9 @@ def add_styles():
         """, unsafe_allow_html=True
     )
 
-# ---------------- FOOD PAGE ---------------- #
 def food_page(food_model, food_vectorizer):
     import streamlit as st
+    import numpy as np
 
     # ================== CUSTOM CSS ==================
     st.markdown("""
@@ -112,6 +112,15 @@ def food_page(food_model, food_vectorizer):
     fat = st.number_input("🥓 Fat (g)", min_value=0.0)
     sugar_val = st.number_input("🍬 Sugar (g)", min_value=0.0)
 
+    # ================== RULE-BASED FUNCTION ==================
+    def rule_based_prediction(calories, protein, carbs, fiber, fat, sugar):
+        if calories > 400 or sugar > 20 or fat > 15:
+            return "Weight Gain 💪"
+        elif protein > 10 and fiber > 5 and calories < 300:
+            return "Weight Loss 🏃‍♀️"
+        else:
+            return "Balanced 😇"
+
     # ================== ANALYZE BUTTON ==================
     if st.button("🔮 Check If You Should Buy"):
         if not food_model or not food_vectorizer:
@@ -122,26 +131,39 @@ def food_page(food_model, food_vectorizer):
             st.warning("⚠️ Please enter the ingredients first! The AI can't guess 🤖")
             return
 
-        # Prepare features and predict
+        # ===== ML Prediction =====
         feature_text = f"{ingredients} {calories} {protein} {carbs} {fiber} {fat} {sugar_val}"
         X = food_vectorizer.transform([feature_text])
         pred_label = food_model.predict(X)[0]
 
-        # ================== RESULT CARD ==================
-        if pred_label.lower() in label.lower():
+        # ===== Rule-Based Prediction =====
+        rule_label = rule_based_prediction(calories, protein, carbs, fiber, fat, sugar_val)
+
+        # ===== Funny Messages Logic =====
+        if pred_label.lower() == rule_label.lower():
             result_color = "#d4edda"
             badge_class = "badge-healthy"
-            emoji = "✅"
-            message = f"This product matches your <b>{label}</b> goal. Go ahead and buy it! 🛒😋"
+            emoji = "🥳"
+            message = f"{emoji} Bingo! This {ingredients.split(',')[0].strip()} is spot-on for your <b>{label}</b> goal. 🛒💃 Grab it before it disappears!"
+        elif pred_label.lower() in label.lower() and rule_label.lower() not in label.lower():
+            result_color = "#fff3cd"
+            badge_class = "badge-unhealthy"
+            emoji = "😎"
+            message = f"{emoji} Hmm… AI loves it, but your macros say 'meh'. 🤔 Maybe you entered a sneaky sugar trick? Adjust ingredients for glory! 🍩🚀"
+        elif rule_label.lower() in label.lower() and pred_label.lower() not in label.lower():
+            result_color = "#fff3cd"
+            badge_class = "badge-unhealthy"
+            emoji = "😅"
+            message = f"{emoji} LOL! Numbers say it's okay, but AI is confused. 🤯 Double-check your ingredient magic, food wizard! 🧙‍♀️🍕"
         else:
             result_color = "#f8d7da"
             badge_class = "badge-unhealthy"
-            emoji = "❌"
-            message = f"The AI predicts <b>{pred_label}</b>. Better skip this product if you want <b>{label}</b>. 🚫🥴"
+            emoji = "💀"
+            message = f"{emoji} Yikes! Both AI and numbers warn 🚨. This {ingredients.split(',')[0].strip()} is a 'Nope' for your <b>{label}</b> goal. Skip it or face the snack regret! 😵‍💫"
 
         st.markdown(f"""
         <div class="result-box" style="background:{result_color};">
-            <span class="{badge_class}">{emoji} Suitable!</span> {message}
+            <span class="{badge_class}">🔮 Verdict!</span> {message}
         </div>
         """, unsafe_allow_html=True)
 
@@ -152,9 +174,11 @@ def food_page(food_model, food_vectorizer):
         - Enter all ingredients and nutrients for best prediction. 🕵️‍♀️<br>
         - Double-check calories and macros. AI is smart but not psychic. 🤖<br>
         - Use this as guidance for shopping, not a replacement for your nutritionist. 🥼<br>
-        - If unsure, choose something green and leafy. 🥦💚
+        - If unsure, choose something green and leafy. 🥦💚<br>
+        - Remember: AI predicts, but your taste buds rule! 😋
     </div>
     """, unsafe_allow_html=True)
+
 
 # ---------------- FABRIC PAGE ---------------- #
 def fabric_page(fabric_model_dict):
