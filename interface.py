@@ -54,6 +54,7 @@ def food_page(food_model, food_vectorizer):
             border-radius: 12px;
             font-style: italic;
             margin-bottom: 15px;
+            line-height: 1.5;
         }
         .result-box {
             padding: 20px;
@@ -90,20 +91,22 @@ def food_page(food_model, food_vectorizer):
     """, unsafe_allow_html=True)
 
     # ================== PAGE TITLE & BANNER ==================
-    st.title("🍎 Foody shopping buddy")
-    st.markdown("""<div class="banner">🥗 Should You Buy It? Let's Find Out!</div>""", unsafe_allow_html=True)
+    st.title("🍎 Foody Buddy 🤗🛒")
+    st.markdown("""<div class="banner">🥗 Snack Detective Activated! Let’s Check if It’s Buddy-Approved! 🎉</div>""", unsafe_allow_html=True)
 
     # ================== INFO CARD ==================
     st.markdown("""
     <div class="info-box">
-        🎉 <b>Welcome to the Food Mood-o-Meter!</b> 😋<br><br>
-        Enter your product details and your goal (Weight Loss, Gain, or Balanced).<br>
-        Our AI will give you a fun, quirky verdict so you can shop smart! 🛒💡
+        Hey hey hey! 😄 I’m your Foody Buddy! 🤗<br>
+        I will help you figure out if that snack you’re eyeing is your new BFF 🍕🍩<br>
+        I’m good at numbers (calories, protein, carbs… you name it!) and amazing at taste-checking with my imaginary taste buds 😋<br>
+        Spill the beans (and sugar, and chocolate, and maybe a veggie or two) and I’ll tell you if it’s going to make your day awesome or… mildly hilarious 😜<br>
+        Sit back, grab a snack for yourself while we analyze your snack. You deserve it! 🥳
     </div>
     """, unsafe_allow_html=True)
 
     # ================== USER INPUT ==================
-    st.markdown('<p class="section-header">🕵️‍♂️ Product Details</p>', unsafe_allow_html=True)
+    st.markdown('<p class="section-header">🕵️‍♂️ Snack Confessions Time!</p>', unsafe_allow_html=True)
     ingredients = st.text_area("📝 Ingredients (comma-separated)", "sugar, salt, whole grain, vegetable oil")
     label = st.selectbox("🎯 Your Goal", ["Weight Loss 🏃‍♀️", "Weight Gain 💪", "Balanced 😇"])
     calories = st.number_input("🔥 Calories per serving", min_value=0)
@@ -114,52 +117,67 @@ def food_page(food_model, food_vectorizer):
     sugar_val = st.number_input("🍬 Sugar (g)", min_value=0.0)
 
     # ================== ANALYZE BUTTON ==================
-    if st.button("🔮 Check If You Should Buy"):
+    if st.button("🔮 Foody Buddy, Analyze!"):
         if not food_model or not food_vectorizer:
-            st.warning("⚠️ Food AI is sleeping. Please load the model!")
+            st.warning("⚠️ Oops! My buddy powers are napping… please load the model! 😴")
             return
 
         if not ingredients.strip():
-            st.warning("⚠️ Please enter the ingredients first! The AI can't guess 🤖")
+            st.warning("⚠️ I can’t read empty snacks! Enter some ingredients, buddy! 🤓")
             return
 
         # ===== ML Prediction: ingredients + numeric features =====
-        # Combine ingredients with numeric inputs
         feature_text = f"{ingredients} {calories} {protein} {carbs} {fiber} {fat} {sugar_val}"
         X = food_vectorizer.transform([feature_text])
         pred_label = food_model.predict(X)[0]
 
-        # ===== Funny Messages & Animated Emoji =====
+        # ===== Funny Buddy Messages =====
+        first_ing = ingredients.split(',')[0].strip()
         if pred_label.lower() in label.lower():
             result_color = "#d4edda"
             badge_class = "badge-healthy"
-            emoji_sequence = ["🥳", "🎉", "🛒", "💃"]
-            message = f"This {ingredients.split(',')[0].strip()} is perfect for your <b>{label}</b> goal. Go grab it! 😋"
+            emoji_sequence = ["🥳", "🎉", "🛒", "🍕"]
+            message = (
+                f"🎊 Woohoo! Looks like {first_ing} is giving a big high-five to your <b>{label}</b> goal! ✋😄<br>"
+                f"Your Foody Buddy approves this snack 100%! 🏆<br>"
+                f"Imagine confetti raining down and little cartoon snacks dancing around your plate 💃🍩🍪<br>"
+                f"Calories, protein, carbs? Nailed it! Even your macros are cheering! 🎯💪<br>"
+                f"Go grab it and enjoy like the snack superstar you are! 😋🤗"
+            )
         else:
             result_color = "#f8d7da"
             badge_class = "badge-unhealthy"
-            emoji_sequence = ["💀", "🚫", "🥴", "😵‍💫"]
-            message = f"Oops! AI predicts '{pred_label}', which is off-track for your <b>{label}</b> goal. Maybe skip it! 😵"
+            emoji_sequence = ["😅", "🤔", "🙈", "🍩"]
+            message = (
+                f"🤔 Hmmm… {first_ing} might be a little tricky for your <b>{label}</b> goal.<br>"
+                f"But don’t worry! Your Foody Buddy isn’t here to judge, just to giggle along with you 😄<br>"
+                f"Maybe it’s slightly off-target, but hey — calories, sugar, and fun levels all balanced-ish! ⚖️🍬<br>"
+                f"Pro tip: sometimes a snack can be both naughty and nice — like a cookie wearing sunglasses 😎🍪<br>"
+                f"Eat if you must, laugh a lot, and tell me how it goes! 🎉🤗"
+            )
 
-        # Display animated verdict
+        # ===== Display animated verdict =====
         result_container = st.empty()
         for emoji in emoji_sequence:
             result_container.markdown(f"""
             <div class="result-box" style="background:{result_color};">
-                <span class="{badge_class}">{emoji} Verdict!</span> {message}
+                <span class="{badge_class}">{emoji} Buddy Verdict!</span><br> {message}
             </div>
             """, unsafe_allow_html=True)
             time.sleep(0.3)
 
     # ================== PRO TIPS CARD ==================
-    st.markdown('<p class="section-header">💡 Pro Tips</p>', unsafe_allow_html=True)
+    st.markdown('<p class="section-header">💡 Buddy Tips for Snacking Fun</p>', unsafe_allow_html=True)
     st.markdown("""
     <div class="info-box" style="background: linear-gradient(135deg, #fff8e1, #ffe0b2); border-left: 6px solid #ff9800;">
-        - Enter all ingredients and numeric details for best prediction. 🕵️‍♀️<br>
-        - Double-check calories, macros, and fiber. AI is smart but not psychic. 🤖<br>
-        - Use this as guidance for shopping, not a replacement for your nutritionist. 🥼<br>
-        - If unsure, choose something green and leafy. 🥦💚<br>
-        - Remember: AI predicts, but your taste buds rule! 😋
+        😄 Snack like a champion! Here’s what your buddy suggests:<br>
+        - Always tell me all the ingredients. Secrets make me giggle 🤫🍫<br>
+        - Veggies are friends too! Mix them with your snack for extra fun 🥦🎉<br>
+        - Protein and fiber make you strong and keep your tummy happy 💪🍗<br>
+        - Too many calories? No worries — we’ll pretend we’re counting imaginary points 🏅😂<br>
+        - Sugar is sweet, but laughter is sweeter! Don’t forget to smile while munching 🍭😄<br>
+        - Remember: I’m your buddy, not a diet guru. Eat, laugh, snack, repeat! 🎈🍕🤗<br>
+        - Bonus tip: imagine tiny dancing snacks cheering you on — it works, trust me! 💃🍩🎊
     </div>
     """, unsafe_allow_html=True)
 
