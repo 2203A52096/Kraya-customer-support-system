@@ -462,8 +462,6 @@ So spill the beans, the weirder your description, the more fun our buddy adventu
 
 # ---------------- MAIN UI ---------------- #
 def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
-    import streamlit as st
-    from sentence_transformers import SentenceTransformer
     from PIL import Image
 
     # Apply global styles
@@ -479,14 +477,34 @@ def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
     # ---------------- HOME PAGE ---------------- #
     if page == "🏠 Home":
         st.title("🏠 Welcome to ✨ Kraya ✨")
-        st.markdown('<div class="banner">✨ The funny buddy for shoppers in trouble✨</div>', unsafe_allow_html=True)
+        st.markdown(
+            '<div class="banner">✨ The funny buddy for shoppers in trouble ✨</div>',
+            unsafe_allow_html=True
+        )
 
         # ---------------- SYSTEM DESCRIPTION ---------------- #
         st.markdown(
             """
             Kraya is your **personal customer support buddy** – yes, the one that’s always chill, 
-            sometimes sarcastic, and totally obsessed with helping you! 😎<br><br>
+            sometimes sarcastic, and totally obsessed with helping you! 😎
+            """,
+            unsafe_allow_html=True
+        )
 
+        # ---------------- FIRST IMAGE (AFTER DESCRIPTION) ---------------- #
+        try:
+            img_desc = Image.open("assets/home1.png")
+            st.image(
+                img_desc,
+                caption="Kraya: Your quirky, smart, life-saving buddy 😎",
+                width=400  # adjust size
+            )
+        except FileNotFoundError:
+            st.warning("⚠️ 'home1.png' not found in the assets folder!")
+
+        # ---------------- ADDITIONAL SYSTEM DESCRIPTION ---------------- #
+        st.markdown(
+            """
             Here’s the lowdown on what I do:<br>
             🍎 **Food**: ML-powered health analyzer. I’ll tell you if that snack is your friend or foe. 🥗😅<br>
             📱 **Electronics**: AI-powered troubleshooting. Your gadgets have drama? I got the tea ☕🔧<br>
@@ -495,16 +513,16 @@ def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
             unsafe_allow_html=True
         )
 
-        # ---------------- HOME IMAGE ---------------- #
+        # ---------------- SECOND IMAGE (ORIGINAL PLACE) ---------------- #
         try:
-            img = Image.open("assets/home1.png")
+            img_banner = Image.open("assets/home2.png")
             st.image(
-                img,
-                caption="Kraya: Your quirky, smart, life-saving buddy 😎",
-                width=400  # Adjust width as needed
+                img_banner,
+                caption="Kraya in action: Helping you shop smart and slay! 💃",
+                width=600  # adjust size
             )
         except FileNotFoundError:
-            st.warning("⚠️ Home image not found! Please check that 'assets/home1.png' exists.")
+            st.warning("⚠️ 'home2.png' not found in the assets folder!")
 
         # ---------------- NEW INFORMATIVE PASTEL CARD ---------------- #
         st.markdown("""
