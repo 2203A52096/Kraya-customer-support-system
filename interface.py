@@ -490,6 +490,8 @@ So spill the beans, the weirder your description, the more fun our buddy adventu
 # ---------------- MAIN UI ---------------- #
 def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
     from PIL import Image
+    from sentence_transformers import SentenceTransformer
+    import streamlit as st
 
     # Apply global styles
     add_styles()
@@ -498,82 +500,14 @@ def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
     st.sidebar.title("🛍️ Lifestyle Helper")
     page = st.sidebar.radio(
         "Navigate",
-        ["🏠 Home", "🍎 Food", "📱 Electronics", "🧵 Fabric"]
+        ["🏠 Home", "🍎 Food", "📱 Electronics", "🧵 Fabric", "ℹ️ About Us"]
     )
 
     # ---------------- HOME PAGE ---------------- #
     if page == "🏠 Home":
-        st.title("🏠 Welcome to ✨ Kraya ✨")
-        st.markdown(
-            '<div class="banner">✨ The funny buddy for shoppers in trouble ✨</div>',
-            unsafe_allow_html=True
-        )
+        # ... existing home page code ...
 
-        # ---------------- SYSTEM DESCRIPTION ---------------- #
-        st.markdown(
-            """
-            Kraya is your **personal customer support buddy** – yes, the one that’s always chill, 
-            sometimes sarcastic, and totally obsessed with helping you! 😎
-            """,
-            unsafe_allow_html=True
-        )
-
-        # ---------------- FIRST IMAGE (AFTER DESCRIPTION) ---------------- #
-        try:
-            img_desc = Image.open("assets/home1.png")
-            st.image(
-                img_desc,
-                caption="Kraya: Your quirky, smart, life-saving buddy 😎",
-                width=600  # adjust size
-            )
-        except FileNotFoundError:
-            st.warning("⚠️ 'home1.png' not found in the assets folder!")
-
-        # ---------------- ADDITIONAL SYSTEM DESCRIPTION ---------------- #
-        st.markdown(
-            """
-            Here’s the lowdown on what I do:<br>
-            🍎 **Food**: ML-powered health analyzer. I’ll tell you if that snack is your friend or foe. 🥗😅<br>
-            📱 **Electronics**: AI-powered troubleshooting. Your gadgets have drama? I got the tea ☕🔧<br>
-            🧵 **Fabric**: Personalized outfit recommendations. Dress smart, slay harder! 👗💃
-            """,
-            unsafe_allow_html=True
-        )
-
-        # ---------------- SECOND IMAGE (ORIGINAL PLACE) ---------------- #
-        try:
-            img_banner = Image.open("assets/home2.png")
-            st.image(
-                img_banner,
-                caption="Kraya in action: Helping you shop smart and slay! 💃",
-                use_column_width=True  # adjust size
-            )
-        except FileNotFoundError:
-            st.warning("⚠️ 'home2.png' not found in the assets folder!")
-
-        # ---------------- NEW INFORMATIVE PASTEL CARD ---------------- #
-        st.markdown("""
-        <div style="
-            padding:20px;
-            border-radius:15px;
-            background: linear-gradient(135deg, #e1f5fe, #b3e5fc);
-            color:#0d47a1;
-            font-size:16px;
-            line-height:1.6;
-            box-shadow: 2px 2px 12px rgba(0,0,0,0.08);
-            margin-top:15px;
-        ">
-            💡 <b>Pro Tips & FAQs:</b><br><br>
-            1️⃣ Navigate using the sidebar like a boss to reach Food, Electronics, or Fabric pages.<br>
-            2️⃣ Fill in ALL the details — I’m smart, but I’m not psychic 🤖✨<br>
-            3️⃣ For Food: list ingredients, calories, macros, and your goal — I’ll judge (nicely) 🥗💪<br>
-            4️⃣ For Electronics: spill all the gadget drama. The weirder, the better! 📱🤯<br>
-            5️⃣ For Fabric: give me skin tone, weather, season, and outfit vibes — I’ll roast or praise accordingly 😎👗<br>
-            6️⃣ Remember: I’m your guide, not a replacement for your nutritionist, tech expert, or stylist. But I am super funny 😜<br>
-            7️⃣ Have fun! I live to help, crack jokes, and make your shopping & styling smarter.<br><br>
-            📌 Check back often — I’m learning new tricks every day! 🤖✨
-        </div>
-        """, unsafe_allow_html=True)
+        pass  # Keep your existing Home page logic here
 
     # ---------------- FOOD PAGE ---------------- #
     elif page == "🍎 Food":
@@ -596,3 +530,72 @@ def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
         else:
             embed_model = SentenceTransformer('all-MiniLM-L6-v2')
             electronics_page(electronics_data, embed_model)
+
+    # ---------------- ABOUT US PAGE ---------------- #
+    elif page == "ℹ️ About Us":
+        st.title("ℹ️ About Kraya – Your Quirky Buddy 🤗✨")
+
+        # Intro card
+        st.markdown("""
+        <div style="
+            padding:30px;
+            border-radius:20px;
+            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+            font-size:18px;
+            color:#4a148c;
+            line-height:1.7;
+            box-shadow: 2px 2px 15px rgba(0,0,0,0.08);
+            margin-bottom:20px;
+        ">
+        👋 Welcome! Kraya is a **friendly AI-powered assistant** designed to make shopping, styling, and troubleshooting a breeze. 
+        Think of me as your fun, helpful, slightly nerdy buddy who never sleeps and loves solving problems with a smile 😎✨
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Image + caption
+        try:
+            img_about = Image.open("assets/about_us.png")  # Replace with your image
+            st.image(img_about, use_column_width=True)
+            st.markdown('<p style="text-align:center; font-style:italic; color:#555555;">Kraya: Always ready to assist, laugh, and guide! 🤖💜</p>', unsafe_allow_html=True)
+        except FileNotFoundError:
+            st.warning("⚠️ 'about_us.png' not found in the assets folder!")
+
+        # Team / mission card
+        st.markdown("""
+        <div style="
+            padding:20px;
+            border-radius:15px;
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            font-size:16px;
+            line-height:1.6;
+            color:#1b5e20;
+            box-shadow: 2px 2px 12px rgba(0,0,0,0.08);
+            margin-top:15px;
+        ">
+        💡 <b>Our Mission:</b><br>
+        - Make shopping smarter, funnier, and stress-free 😄🛍️<br>
+        - Help you eat healthier with a smile 🥗🍫<br>
+        - Make your gadgets behave with quirky tips & tricks 📱⚡<br>
+        - Dress you fabulously with personalized outfit advice 👗💃<br><br>
+        ❤️ We believe in blending technology with fun, humor, and care. 
+        Kraya is not just a tool, it's a buddy who’s always learning, always playful, and always here for you!
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Contact / social media / footer
+        st.markdown("""
+        <div style="
+            padding:15px;
+            border-radius:15px;
+            background: linear-gradient(135deg, #fff8e1, #ffe082);
+            font-size:16px;
+            line-height:1.6;
+            color:#f57f17;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.08);
+            margin-top:15px;
+            text-align:center;
+        ">
+        📬 Connect with us: <b>support@kraya.com</b> | Follow us on <b>Instagram, Twitter & LinkedIn</b> 🌐<br>
+        🚀 Always evolving, always quirky, always Kraya! 🤖✨
+        </div>
+        """, unsafe_allow_html=True)
