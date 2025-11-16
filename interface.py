@@ -480,6 +480,7 @@ def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
         st.title("🏠 Welcome to Kraya")
         st.markdown('<div class="banner">✨ Smart Choices, Happy Living ✨</div>', unsafe_allow_html=True)
 
+        # ---------------- SYSTEM DESCRIPTION ---------------- #
         st.markdown(
             """
             Kraya is your **personal customer support buddy** – yes, the one that’s always chill, 
@@ -494,7 +495,19 @@ def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
         )
 
         # ---------------- HOME IMAGE ---------------- #
-        st.image("assets/home1.png", caption="Kraya: Your quirky, smart, life-saving buddy 😎", use_column_width=True)
+        st.markdown(
+            """
+            <div style="
+                text-align:center;
+                margin: 15px 0;
+            ">
+                <img src="assets/home1.png" 
+                     style="width:60%; max-width:400px; border-radius:15px; box-shadow: 2px 2px 12px rgba(0,0,0,0.15);"/>
+                <p>Kraya: Your quirky, smart, life-saving buddy 😎</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
         # ---------------- NEW INFORMATIVE PASTEL CARD ---------------- #
         st.markdown("""
@@ -529,8 +542,8 @@ def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
 
     # ---------------- FABRIC PAGE ---------------- #
     elif page == "🧵 Fabric":
-        if not fabric_model :
-            st.warning("⚠️ Fabric model or vectorizer not loaded properly!")
+        if not fabric_model:
+            st.warning("⚠️ Fabric model not loaded properly!")
         else:
             fabric_page(fabric_model)
 
