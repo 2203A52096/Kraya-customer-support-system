@@ -461,12 +461,14 @@ So spill the beans, the weirder your description, the more fun our buddy adventu
         st.markdown(solution_html, unsafe_allow_html=True)
 
 # ---------------- MAIN UI ---------------- #
-def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
+def show_ui(food_model, food_vectorizer, fabric_model, fabric_vectorizer, electronics_data):
+    import streamlit as st
+    from sentence_transformers import SentenceTransformer
 
     # Apply global styles
     add_styles()
 
-    # Sidebar navigation
+    # ---------------- SIDEBAR ---------------- #
     st.sidebar.title("🛍️ Lifestyle Helper")
     page = st.sidebar.radio(
         "Navigate",
@@ -475,11 +477,9 @@ def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
 
     # ---------------- HOME PAGE ---------------- #
     if page == "🏠 Home":
-        # Existing banner and intro content
         st.title("🏠 Welcome to Kraya")
         st.markdown('<div class="banner">✨ Smart Choices, Happy Living ✨</div>', unsafe_allow_html=True)
 
-        # ---------------- SYSTEM DESCRIPTION ---------------- #
         st.markdown(
             """
             Kraya is your **personal customer support buddy** – yes, the one that’s always chill, 
@@ -501,7 +501,7 @@ def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
         <div style="
             padding:20px;
             border-radius:15px;
-            background: linear-gradient(135deg, #e1f5fe, #b3e5fc); /* soft pastel blue */
+            background: linear-gradient(135deg, #e1f5fe, #b3e5fc);
             color:#0d47a1;
             font-size:16px;
             line-height:1.6;
@@ -519,3 +519,25 @@ def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
             📌 Check back often — I’m learning new tricks every day! 🤖✨
         </div>
         """, unsafe_allow_html=True)
+
+    # ---------------- FOOD PAGE ---------------- #
+    elif page == "🍎 Food":
+        if not food_model or not food_vectorizer:
+            st.warning("⚠️ Food model or vectorizer not loaded properly!")
+        else:
+            food_page(food_model, food_vectorizer)
+
+    # ---------------- FABRIC PAGE ---------------- #
+    elif page == "🧵 Fabric":
+        if not fabric_model or not fabric_vectorizer:
+            st.warning("⚠️ Fabric model or vectorizer not loaded properly!")
+        else:
+            fabric_page(fabric_model, fabric_vectorizer)
+
+    # ---------------- ELECTRONICS PAGE ---------------- #
+    elif page == "📱 Electronics":
+        if not electronics_data:
+            st.warning("⚠️ Electronics data not loaded properly!")
+        else:
+            embed_model = SentenceTransformer('all-MiniLM-L6-v2')
+            electronics_page(electronics_data, embed_model)
