@@ -529,10 +529,10 @@ def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
 
     # ---------------- FABRIC PAGE ---------------- #
     elif page == "🧵 Fabric":
-        if not fabric_model or not fabric_vectorizer:
+        if not fabric_model :
             st.warning("⚠️ Fabric model or vectorizer not loaded properly!")
         else:
-            fabric_page(fabric_model, fabric_vectorizer)
+            fabric_page(fabric_model)
 
     # ---------------- ELECTRONICS PAGE ---------------- #
     elif page == "📱 Electronics":
