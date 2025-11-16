@@ -474,53 +474,48 @@ def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
     )
 
     # ---------------- HOME PAGE ---------------- #
-    if page == "🏠 Home":
-        # Existing banner and intro content
-        st.title("🏠 Welcome to Kraya")
-        st.markdown('<div class="banner">✨ Smart Choices, Happy Living ✨</div>', unsafe_allow_html=True)
-        st.markdown(
-            """
-            Kraya is your **personal customer support system**:
-            - <span class="badge badge-food">🍎 Food</span>: ML-powered food health analyzer.
-            - <span class="badge badge-electronics">📱 Electronics</span>: AI-powered troubleshooting.
-            - <span class="badge badge-fabric">🧵 Fabric</span>: Personalized fabric recommendations.
-            """,
-            unsafe_allow_html=True
-        )
+if page == "🏠 Home":
+    # Existing banner and intro content
+    st.title("🏠 Welcome to Kraya")
+    st.markdown('<div class="banner">✨ Smart Choices, Happy Living ✨</div>', unsafe_allow_html=True)
 
-        # ---------------- NEW INFORMATIVE PASTEL CARD ---------------- #
-        st.markdown("""
-        <div style="
-            padding:20px;
-            border-radius:15px;
-            background: linear-gradient(135deg, #e1f5fe, #b3e5fc); /* soft pastel blue */
-            color:#0d47a1;
-            font-size:16px;
-            line-height:1.6;
-            box-shadow: 2px 2px 12px rgba(0,0,0,0.08);
-            margin-top:15px;
-        ">
-            💡 <b>Pro Tips & FAQs:</b><br><br>
-            1️⃣ Navigate using the sidebar to quickly access Food, Electronics, or Fabric pages.<br>
-            2️⃣ Fill in all inputs for more accurate AI suggestions. Partial info may reduce prediction quality.<br>
-            3️⃣ For Food: enter ingredients, nutrients, and your goal for a quick recommendation.<br>
-            4️⃣ For Electronics: describe your gadget issue in detail to get step-by-step troubleshooting.<br>
-            5️⃣ For Fabric: provide skin tone, weather, season, and activity level to get outfit advice.<br>
-            6️⃣ Remember: AI provides guidance based on patterns in the dataset. Use your own judgment too!<br>
-            7️⃣ Have fun! Kraya loves a little humor 😎 while helping you make smart choices.<br><br>
-            📌 Keep checking back! The system is continuously learning to give better suggestions.
-        </div>
-        """, unsafe_allow_html=True)
+    # ---------------- SYSTEM DESCRIPTION ---------------- #
+    st.markdown(
+        """
+        Kraya is your **personal customer support buddy** – yes, the one that’s always chill, 
+        sometimes sarcastic, and totally obsessed with helping you! 😎<br><br>
 
-    # ---------------- FOOD PAGE ---------------- #
-    elif page == "🍎 Food":
-        food_page(food_model, food_vectorizer)
+        Here’s the lowdown on what I do:<br>
+        🍎 **Food**: ML-powered health analyzer. I’ll tell you if that snack is your friend or foe. 🥗😅<br>
+        📱 **Electronics**: AI-powered troubleshooting. Your gadgets have drama? I got the tea ☕🔧<br>
+        🧵 **Fabric**: Personalized outfit recommendations. Dress smart, slay harder! 👗💃
+        """,
+        unsafe_allow_html=True
+    )
 
-    # ---------------- FABRIC PAGE ---------------- #
-    elif page == "🧵 Fabric":
-        fabric_page(fabric_model)
+    # ---------------- HOME IMAGE ---------------- #
+    st.image("assets/home1.png", caption="Kraya: Your quirky, smart, life-saving buddy 😎", use_column_width=True)
 
-    # ---------------- ELECTRONICS PAGE ---------------- #
-    elif page == "📱 Electronics":
-        embed_model = SentenceTransformer('all-MiniLM-L6-v2')
-        electronics_page(electronics_data, embed_model)
+    # ---------------- NEW INFORMATIVE PASTEL CARD ---------------- #
+    st.markdown("""
+    <div style="
+        padding:20px;
+        border-radius:15px;
+        background: linear-gradient(135deg, #e1f5fe, #b3e5fc); /* soft pastel blue */
+        color:#0d47a1;
+        font-size:16px;
+        line-height:1.6;
+        box-shadow: 2px 2px 12px rgba(0,0,0,0.08);
+        margin-top:15px;
+    ">
+        💡 <b>Pro Tips & FAQs:</b><br><br>
+        1️⃣ Navigate using the sidebar like a boss to reach Food, Electronics, or Fabric pages.<br>
+        2️⃣ Fill in ALL the details — I’m smart, but I’m not psychic 🤖✨<br>
+        3️⃣ For Food: list ingredients, calories, macros, and your goal — I’ll judge (nicely) 🥗💪<br>
+        4️⃣ For Electronics: spill all the gadget drama. The weirder, the better! 📱🤯<br>
+        5️⃣ For Fabric: give me skin tone, weather, season, and outfit vibes — I’ll roast or praise accordingly 😎👗<br>
+        6️⃣ Remember: I’m your guide, not a replacement for your nutritionist, tech expert, or stylist. But I am super funny 😜<br>
+        7️⃣ Have fun! I live to help, crack jokes, and make your shopping & styling smarter.<br><br>
+        📌 Check back often — I’m learning new tricks every day! 🤖✨
+    </div>
+    """, unsafe_allow_html=True)
