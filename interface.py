@@ -519,7 +519,7 @@ def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
             st.image(
                 img_banner,
                 caption="Kraya in action: Helping you shop smart and slay! 💃",
-                width=800  # adjust size
+                use_column_width=True  # adjust size
             )
         except FileNotFoundError:
             st.warning("⚠️ 'home2.png' not found in the assets folder!")
