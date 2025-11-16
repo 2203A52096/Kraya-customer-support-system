@@ -464,6 +464,7 @@ So spill the beans, the weirder your description, the more fun our buddy adventu
 def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
     import streamlit as st
     from sentence_transformers import SentenceTransformer
+    from PIL import Image
 
     # Apply global styles
     add_styles()
@@ -495,19 +496,15 @@ def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
         )
 
         # ---------------- HOME IMAGE ---------------- #
-        st.markdown(
-            """
-            <div style="
-                text-align:center;
-                margin: 15px 0;
-            ">
-                <img src="assets/home1.png" 
-                     style="width:60%; max-width:400px; border-radius:15px; box-shadow: 2px 2px 12px rgba(0,0,0,0.15);"/>
-                <p>Kraya: Your quirky, smart, life-saving buddy 😎</p>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+        try:
+            img = Image.open("assets/home1.png")
+            st.image(
+                img,
+                caption="Kraya: Your quirky, smart, life-saving buddy 😎",
+                width=400  # Adjust width as needed
+            )
+        except FileNotFoundError:
+            st.warning("⚠️ Home image not found! Please check that 'assets/home1.png' exists.")
 
         # ---------------- NEW INFORMATIVE PASTEL CARD ---------------- #
         st.markdown("""
