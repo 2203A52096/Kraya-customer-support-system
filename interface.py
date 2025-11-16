@@ -28,10 +28,10 @@ def add_styles():
         </style>
         """, unsafe_allow_html=True
     )
-
+# ---------------- FOOD PAGE ---------------- #
 def food_page(food_model, food_vectorizer):
     import streamlit as st
-    import numpy as np
+    import time
 
     # ================== CUSTOM CSS ==================
     st.markdown("""
@@ -62,6 +62,7 @@ def food_page(food_model, food_vectorizer):
             font-size: 18px;
             line-height:1.6;
             box-shadow: 1px 1px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
         }
         .badge-healthy {
             color: #155724;
@@ -89,7 +90,7 @@ def food_page(food_model, food_vectorizer):
     """, unsafe_allow_html=True)
 
     # ================== PAGE TITLE & BANNER ==================
-    st.title("🍎 Foody shoping buddy")
+    st.title("🍎 Foody shopping buddy")
     st.markdown("""<div class="banner">🥗 Should You Buy It? Let's Find Out!</div>""", unsafe_allow_html=True)
 
     # ================== INFO CARD ==================
@@ -112,15 +113,6 @@ def food_page(food_model, food_vectorizer):
     fat = st.number_input("🥓 Fat (g)", min_value=0.0)
     sugar_val = st.number_input("🍬 Sugar (g)", min_value=0.0)
 
-    # ================== RULE-BASED FUNCTION ==================
-    def rule_based_prediction(calories, protein, carbs, fiber, fat, sugar):
-        if calories > 400 or sugar > 20 or fat > 15:
-            return "Weight Gain 💪"
-        elif protein > 10 and fiber > 5 and calories < 300:
-            return "Weight Loss 🏃‍♀️"
-        else:
-            return "Balanced 😇"
-
     # ================== ANALYZE BUTTON ==================
     if st.button("🔮 Check If You Should Buy"):
         if not food_model or not food_vectorizer:
@@ -131,48 +123,40 @@ def food_page(food_model, food_vectorizer):
             st.warning("⚠️ Please enter the ingredients first! The AI can't guess 🤖")
             return
 
-        # ===== ML Prediction =====
+        # ===== ML Prediction: ingredients + numeric features =====
+        # Combine ingredients with numeric inputs
         feature_text = f"{ingredients} {calories} {protein} {carbs} {fiber} {fat} {sugar_val}"
         X = food_vectorizer.transform([feature_text])
         pred_label = food_model.predict(X)[0]
 
-        # ===== Rule-Based Prediction =====
-        rule_label = rule_based_prediction(calories, protein, carbs, fiber, fat, sugar_val)
-
-        # ===== Funny Messages Logic =====
-        if pred_label.lower() == rule_label.lower():
+        # ===== Funny Messages & Animated Emoji =====
+        if pred_label.lower() in label.lower():
             result_color = "#d4edda"
             badge_class = "badge-healthy"
-            emoji = "🥳"
-            message = f"{emoji} Bingo! This {ingredients.split(',')[0].strip()} is spot-on for your <b>{label}</b> goal. 🛒💃 Grab it before it disappears!"
-        elif pred_label.lower() in label.lower() and rule_label.lower() not in label.lower():
-            result_color = "#fff3cd"
-            badge_class = "badge-unhealthy"
-            emoji = "😎"
-            message = f"{emoji} Hmm… AI loves it, but your macros say 'meh'. 🤔 Maybe you entered a sneaky sugar trick? Adjust ingredients for glory! 🍩🚀"
-        elif rule_label.lower() in label.lower() and pred_label.lower() not in label.lower():
-            result_color = "#fff3cd"
-            badge_class = "badge-unhealthy"
-            emoji = "😅"
-            message = f"{emoji} LOL! Numbers say it's okay, but AI is confused. 🤯 Double-check your ingredient magic, food wizard! 🧙‍♀️🍕"
+            emoji_sequence = ["🥳", "🎉", "🛒", "💃"]
+            message = f"This {ingredients.split(',')[0].strip()} is perfect for your <b>{label}</b> goal. Go grab it! 😋"
         else:
             result_color = "#f8d7da"
             badge_class = "badge-unhealthy"
-            emoji = "💀"
-            message = f"{emoji} Yikes! Both AI and numbers warn 🚨. This {ingredients.split(',')[0].strip()} is a 'Nope' for your <b>{label}</b> goal. Skip it or face the snack regret! 😵‍💫"
+            emoji_sequence = ["💀", "🚫", "🥴", "😵‍💫"]
+            message = f"Oops! AI predicts '{pred_label}', which is off-track for your <b>{label}</b> goal. Maybe skip it! 😵"
 
-        st.markdown(f"""
-        <div class="result-box" style="background:{result_color};">
-            <span class="{badge_class}">🔮 Verdict!</span> {message}
-        </div>
-        """, unsafe_allow_html=True)
+        # Display animated verdict
+        result_container = st.empty()
+        for emoji in emoji_sequence:
+            result_container.markdown(f"""
+            <div class="result-box" style="background:{result_color};">
+                <span class="{badge_class}">{emoji} Verdict!</span> {message}
+            </div>
+            """, unsafe_allow_html=True)
+            time.sleep(0.3)
 
     # ================== PRO TIPS CARD ==================
     st.markdown('<p class="section-header">💡 Pro Tips</p>', unsafe_allow_html=True)
     st.markdown("""
     <div class="info-box" style="background: linear-gradient(135deg, #fff8e1, #ffe0b2); border-left: 6px solid #ff9800;">
-        - Enter all ingredients and nutrients for best prediction. 🕵️‍♀️<br>
-        - Double-check calories and macros. AI is smart but not psychic. 🤖<br>
+        - Enter all ingredients and numeric details for best prediction. 🕵️‍♀️<br>
+        - Double-check calories, macros, and fiber. AI is smart but not psychic. 🤖<br>
         - Use this as guidance for shopping, not a replacement for your nutritionist. 🥼<br>
         - If unsure, choose something green and leafy. 🥦💚<br>
         - Remember: AI predicts, but your taste buds rule! 😋
