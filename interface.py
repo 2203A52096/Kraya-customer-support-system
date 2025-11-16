@@ -594,9 +594,6 @@ def about_us_page():
 
 # ---------------- MAIN UI ---------------- #
 def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
-    import streamlit as st
-    from PIL import Image
-    from sentence_transformers import SentenceTransformer
 
     # Apply global styles
     add_styles()
@@ -628,7 +625,7 @@ def show_ui(food_model, food_vectorizer, fabric_model, electronics_data):
             st.image(
                 img_desc,
                 caption="Kraya: Your quirky, smart, life-saving buddy 😎",
-                width=600
+                use_column_width=True
             )
         except FileNotFoundError:
             st.warning("⚠️ 'home1.png' not found in the assets folder!")
