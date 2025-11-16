@@ -31,7 +31,6 @@ def add_styles():
     )
 # ---------------- FOOD PAGE ---------------- #
 def food_page(food_model, food_vectorizer):
-    import streamlit as st
     import time
 
     # ================== CUSTOM CSS ==================
@@ -331,9 +330,9 @@ def fabric_page(fabric_model_dict):
 # ---------------- ELECTRONICS PAGE ---------------- #
 
 def electronics_page(electronics_data, embed_model):
-    st.title("📱 Electronics fixing buddy")
+    st.title("📱 Electronics Fixing Buddy 🤖✨")
 
-    # ================== BANNER (Pastel Purple Gradient) ==================
+    # ================== BANNER ==================
     st.markdown("""
     <div style="
         padding:20px; 
@@ -341,18 +340,18 @@ def electronics_page(electronics_data, embed_model):
         border-radius:15px; 
         background: linear-gradient(135deg, #e1bee7, #ce93d8);
         color:#6a1b9a;
-        font-size:20px;
-        font-weight:600;
+        font-size:22px;
+        font-weight:700;
         box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
         margin-bottom:20px;
     ">
-    ⚡ Quick Fixes for Smarter Living ⚡
+    ⚡ Quick Fixes for Smarter Living – Your Tech Buddy is Here! ⚡
     </div>
     """, unsafe_allow_html=True)
 
-    # ================== INTRO CARD (Pastel Blue) ==================
+    # ================== INTRO CARD ==================
     intro_card_style = """
-        padding:40px; 
+        padding:35px; 
         border-radius:20px; 
         background:linear-gradient(135deg, #e3f2f9, #c7e8f6); 
         box-shadow: 2px 2px 20px rgba(0,0,0,0.08);
@@ -363,18 +362,15 @@ def electronics_page(electronics_data, embed_model):
     """
 
     intro_html = f"""<div style="{intro_card_style}">
-🎉 <b>Welcome to the Electronics Help Desk!</b> 🛠️<br><br>
-Stressed out because your <b style="color:#0277bd;">gadget is acting up</b>? 
-Don’t worry, you’re in <b style="color:#f57f17;">good hands</b> (or circuits 😎)!<br><br>
-Here’s what I do:<br>
-1️⃣ <b style="color:#00796b;">Step-by-step troubleshooting 🔧</b> – I break things down so even your grandma could fix it.<br>
-2️⃣ <b style="color:#ff8f00;">Fun and quirky tips 😜</b> – Expect some tech humor along the way!<br>
-3️⃣ <b style="color:#d32f2f;">Professional advice if needed 📞</b> – When it’s above our paygrade, I’ll tell you straight.<br><br>
-Think of me as your <b style="color:#6a1b9a;">friendly, slightly sarcastic, tech-savvy buddy</b> 
-who’s always ready to <b style="color:#fbc02d;">save the day ⚡</b>.<br>
-So go ahead, spill the beans about your gadget drama – <b style="color:#00796b;">the weirder, the better 🤖💬!</b><br><br>
+🎉 <b>Welcome, gadget wizard!</b> 🛠️<br><br>
+Feeling frustrated because your <b style="color:#0277bd;">device is misbehaving</b>? 
+Fear not! I’m your <b style="color:#6a1b9a;">friendly, slightly nerdy buddy</b> ready to save the day ⚡<br><br>
+Here’s how I roll:<br>
+1️⃣ <b style="color:#00796b;">Step-by-step fixes 🔧</b> – so simple even your cat could watch you do it 😹<br>
+2️⃣ <b style="color:#ff8f00;">Funny, quirky tips 😜</b> – expect random tech humor and puns!<br>
+3️⃣ <b style="color:#d32f2f;">Serious advice 📞</b> – only when things get really spicy 🌶️<br><br>
+So spill the beans, the weirder your description, the more fun our buddy adventure! 🤖💬
 </div>"""
-
     st.markdown(intro_html, unsafe_allow_html=True)
 
     # ================== DEVICE SELECTION ==================
@@ -387,20 +383,18 @@ So go ahead, spill the beans about your gadget drama – <b style="color:#00796b
     # ================== GET SUPPORT ==================
     if st.button("🛠️ Get Support"):
         if not user_input.strip():
-            st.warning("⚠️ Please describe your problem first! Your tech buddy can’t guess 😅")
+            st.warning("⚠️ Come on, buddy needs some clues! Describe the problem 😅")
             return
 
         if not electronics_data:
-            st.warning("⚠️ Oops! Electronics data is missing. Can’t provide tips without it.")
+            st.warning("⚠️ Whoops! I don’t have any electronics data loaded 😬")
             return
 
-        # EMBEDDING THE USER QUERY
         user_emb = embed_model.encode(user_input, convert_to_tensor=True)
 
         best_match = None
         max_score = -1
 
-        # FIND BEST MATCH
         for item in electronics_data:
             clean_device = device.split()[0].strip()
             if item['device'].lower() != clean_device.lower():
@@ -414,7 +408,7 @@ So go ahead, spill the beans about your gadget drama – <b style="color:#00796b
                     max_score = score
                     best_match = item
 
-        # ================== SOLUTION CARD (PASTEL PINK) ==================
+        # ================== SOLUTION CARD ==================
         solution_card_style = """
             padding:25px; 
             border-radius:15px; 
@@ -426,29 +420,44 @@ So go ahead, spill the beans about your gadget drama – <b style="color:#00796b
             margin-top:15px;
         """
 
-        funny_headers = ["😎 Tech Tip:", "🛠️ Pro Hack:", "💡 Quick Fix:", "🤔 Try this:"]
-        fallback_headers = ["😬 Hmmm…", "🤖 Brainstorming…", "⚡ Device acting up…", "📞 Call the experts!"]
-
         solution_html = f'<div style="{solution_card_style}">'
+
+        buddy_headers_good = [
+            "😎 Buddy Tip Incoming:", 
+            "🛠️ Genius Hack:", 
+            "💡 Quick Fix Alert:", 
+            "🤔 Try This Clever Move:"
+        ]
+        buddy_headers_fallback = [
+            "😬 Hmm… Not sure:", 
+            "🤖 Brainstorming Mode:", 
+            "⚡ Device Acting Up:", 
+            "📞 Call in Reinforcements:"
+        ]
+
         if best_match and max_score > 0.6:
+            solution_html += f'<h3 style="color:#d81b60;">{random.choice(buddy_headers_good)}</h3>'
             steps = best_match["solution"].split(", ")
-            solution_html += f'<h3 style="color:#d81b60;">{random.choice(funny_headers)}</h3>'
             for i, step in enumerate(steps, start=1):
                 solution_html += f'<p style="margin:5px 0;">🔹 <b>Step {i}:</b> {step} ✅</p>'
+
             if 'tips' in best_match:
-                solution_html += f'<p style="margin-top:10px; padding:10px; background:#fff3e0; border-radius:10px;">💡 <b>Extra Tips:</b> {best_match["tips"]}</p>'
+                solution_html += f'<p style="margin-top:10px; padding:10px; background:#fff3e0; border-radius:10px;">💡 <b>Extra Buddy Tips:</b> {best_match["tips"]}</p>'
+            
+            # Add funny closing comment
+            solution_html += f'<p style="margin-top:10px; font-style:italic; color:#6a1b9a;">🎉 Remember: Even if you break it more, at least you had fun! 😜</p>'
         else:
-            solution_html += f'<h3 style="color:#d32f2f;">{random.choice(fallback_headers)}</h3>'
-            solution_html += "<p>I couldn’t find an exact fix 😅, but you can try these:</p>"
+            solution_html += f'<h3 style="color:#d32f2f;">{random.choice(buddy_headers_fallback)}</h3>'
+            solution_html += "<p>I couldn’t find an exact fix 😅, but try some buddy-approved tricks:</p>"
             solution_html += "<ul style='margin-left:20px;'>"
             solution_html += "<li>🔌 Double-check your cables and connections</li>"
-            solution_html += "<li>🔄 Restart your device</li>"
-            solution_html += "<li>💾 Update the software if possible</li>"
-            solution_html += "<li>📞 Contact official support if all else fails</li>"
+            solution_html += "<li>🔄 Restart your device – it loves a nap 😴</li>"
+            solution_html += "<li>💾 Update the software if possible – gadgets like to stay trendy 💅</li>"
+            solution_html += "<li>📞 Call official support if all else fails – don’t worry, they speak human too 😎</li>"
             solution_html += "</ul>"
+            solution_html += f'<p style="margin-top:10px; font-style:italic; color:#6a1b9a;">🎉 Your buddy is cheering you on! You got this! 💪🤖</p>'
 
         solution_html += "</div>"
-
         st.markdown(solution_html, unsafe_allow_html=True)
 
 # ---------------- MAIN UI ---------------- #
